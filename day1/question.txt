@@ -1,0 +1,26 @@
+SECTION -1
+INSTALLATION AND INTRODUCTION 
+1.Create a window which cannot be having a width lesser than 200 and height not more than 
+800 .
+2.Create a window , with Text component displaying details as mentioned below 
+SECTION -2 
+1. Create a window with the following parameters .1 non clickable rectangle and 3 clickable 
+circles, on click the color of the non clickable rectangle must change to the color of the clicked
+circle and the associated color must be displayed as text.
+
+2. Create a window with three rectangles as shown , with increase and decrease written . On 
+clicking of increase the area of rect must increase . On clicking of decrease the area of 
+rectangle must decrease. [Additional , on double click on the screen the binding must be 
+broken and the initial values must be retained ]
+[Additional , the increase and decrease should not function if the width are min→50 max→200]
+3.Create a window with text in center describing the font type .Change the font family based 
+on mouse click event .Loop through the font list.
+Q
+4.Create a window , with a flag to make a rectangle visible or not based on mouse click 
+event .
+Default rectangle visible , on click it disappears , click again it reappears.
+
+5.Create three rectangles clicking on first must make the second and third opaque . Clicking 
+on second must make 1st and 3rd opaque . Clicking on 3rd must make 1st and 2nd opaque .
+6. [Additional] Create the following pattern.Change the rectangle color based on mouse click 
+anywhere on the window.

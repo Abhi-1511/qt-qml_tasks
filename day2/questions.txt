@@ -1,0 +1,23 @@
+1.Create a Item with 2 rectangles adjacent to each other on top-left corner of the 
+screen.Based on mouse click on the item ,move it to the right by 20 pixels. 
+2.Create a Rectangle with a text component in it , when we click on the Rectangle increase 
+the size of both rectangle and the text proportionally.
+3.Create 5 Rectangles in a Row , Each rectangle must have a text component with the color of
+the rectangle written on it . Based on the mouse click on each rectangle ,the color of the 
+window must change.
+4.Create a Column of 5 Rectangles .Clicking on the 1
+st rectangle must reduce the opacity of 
+all rectangles by 0.1 . Clicking on the 2
+nd must increase the opacity of all the rectangles by 
+0.1 . Clicking on the 3
+rd rectangle must increase the height of all rectangles by 2. Clicking on 
+the 4
+th rectangle must decrease the height of all rectangles by 2.Clicking on the 5th Rectangle
+must make all rectangles invisible /visible alternatively.
+5. Display 4 images in a row , using different methods. Display the source of image in the 
+form of text below the image. Create two buttons using custom components with ‘+’ and ‘-’ 
+symbol on them .Clicking on + should increase the opacity .Clicking on – should decrease the 
+opacity of the images
+6.[Additional ]Create custom component to create 4 buttons.Clicking on one button the first 
+time should disable all the other buttons.Clicking on it again must enable all the other 
+buttons.
