@@ -1,0 +1,21 @@
+SECTION-4
+1.Create a clickable rectangle component , for every 10 clicks emit a signal and print it on the
+console .
+2.Create two external button components with a number displayed on them. On Click in first 
+component increment the value of the second and vice versa. Use the signal and slot 
+concept .
+3.[Additional] Create two pages using custom components .Clicking on GO button of 1
+st page 
+we need to display the 2
+nd page that has BACK button ,clicking on back button displays 1st
+Page .Change the title of window based on page being displayed.
+SECTION -5
+5.1[19,20,21]
+1.Create a text component , that gets its value based on user input in textInput component , 
+after editing is finished .
+2.Create a text component , that gets its value based on user input in textInput component , 
+simultaneously as we type.
+3.Create a form with 3 textInput component . The first textInput must accept name not more 
+than 20 characters.The 2nd textInput component must accept only numerical characters not 
+more than 3 digits to accept age. The 3rd textInput component must accept the email id of 
+the user .
