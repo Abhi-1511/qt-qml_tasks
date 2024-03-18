@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Registration1.qml</file>
+        <file>Registration2.qml</file>
+        <file>Login.qml</file>
+        <file>Popup.qml</file>
+        <file>Loading.qml</file>
+        <file>Details.qml</file>
+        <file>Successfull.qml</file>
+        <file>Togglebar.qml</file>
+    </qresource>
+</RCC>
