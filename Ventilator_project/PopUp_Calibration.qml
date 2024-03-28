@@ -11,7 +11,7 @@ Rectangle {
         width:parent.width
         height:parent.height
         color:"white"
-        opacity:0.3
+        opacity:0.1
     }
     }
 

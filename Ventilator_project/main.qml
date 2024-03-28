@@ -30,6 +30,13 @@ Window {
             popUpCalibrationid.visible=true
             popUpCalibrationid.enabled=true
         }
+        onGotovaluepage: {
+            valuepageid.visible=true
+            valuepageid.enabled=true
+            openscreenid.visible=false
+            openscreenid.enabled=false
+        }
+
     }
     Modepcv{
         id:modepcvid
@@ -70,10 +77,52 @@ Window {
             popUpCalibrationid.visible=false
             popUpCalibrationid.enabled=false
         }
+
     }
+    Value_page{
+        id:valuepageid
+        visible:false
+        onGotoopenscreen:{
+            openscreenid.visible=true
+            openscreenid.enabled=true
+        }
+    }
+    Bottom_components{
+        id:bottomcomponentsid
+        visible:false
+
+        onOpenmodepcv: {
+            modepcvid.visible=true
+            modepcvid.enabled=true
+        }
+        onGotopopuplock: {
+            bottomcomponentsid.visible=false
+            bottomcomponentsid.enabled=false
+            popuplockid.visible=true
+            popuplockid.enabled=true
+        }
+        onGotopopupunlock: {
+            bottomcomponentsid.visible=false
+            bottomcomponentsid.enabled=false
+            popupunlockid.visible=true
+            popupunlockid.enabled=true
+        }
+        onGotovaluepage: {
+            valuepageid.visible=true
+            valuepageid.enabled=true
+            bottomcomponentsid.visible=false
+            bottomcomponentsid.enabled=false
+        }
+
+    }
+
     Component.onCompleted:{
         popuplockid.gotoopenscreenlock.connect(openscreenid.unlockscreen)
-        popupunlockid.gotoopenscreenlock.connect(openscreenid.unlockscreen)
+        popupunlockid.gotoopenscreenlock.connect(openscreenid.unlockscreenoncancel)
+        openscreenid.gotovaluepage.connect(valuepageid.openvaluedrawer)
+        popuplockid.gotoopenscreenlock.connect(bottomcomponentsid.unlockscreen)
+        popupunlockid.gotoopenscreenlock.connect(bottomcomponentsid.unlockscreenoncancel)
+        bottomcomponentsid.gotovaluepage.connect(valuepageid.openvaluedrawer)
     }
 
 }

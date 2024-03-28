@@ -16,14 +16,24 @@ Item {
     signal gotopopuplock()
     signal gotopopupunlock()
     signal gotocalibrationpopup()
+    signal gotovaluepage()
     property alias lockfactor:itemid.lockconfirm
     property alias lockrectid:lockrect.enabled
+    property alias toprectids:toprect.enabled
     function unlockscreen(){
         lockconfirm=true
         openscreenid.visible=true
         openscreenid.enabled=true
         popuplockid.visible=false
         popuplockid.enabled=false
+    }
+    function unlockscreenoncancel(){
+        lockconfirm=true
+        openscreenid.visible=true
+        openscreenid.enabled=true
+        popupunlockid.visible=false
+        popupunlockid.enabled=false
+
     }
 
     Rectangle{
@@ -64,9 +74,7 @@ Item {
                         background: Rectangle {
                             color: "black"
                         }
-
                     }
-
 
                     Rectangle {
                         width: 20
@@ -75,11 +83,10 @@ Item {
                         anchors.right: parent.right;anchors.rightMargin: 10
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
-                            text: "\u25BD" // Hexadecimal Unicode escape sequence
+                            text: "\u25BD"
                             font.pixelSize: 16 // Adjust the font size as needed
                             color: "white" // Set the color of the down arrow symbol
                         }
-
                     }
                 }
             }
@@ -878,9 +885,7 @@ Item {
                             color: "#e34c22"
                             implicitWidth: 28
                         }
-
                         foreground: null
-
                         tickmark: Item {
                             implicitWidth: 8
                             implicitHeight: 4
@@ -892,7 +897,6 @@ Item {
                                 color: "#ffffff" // White color for tickmarks
                             }
                         }
-
                         minorTickmark: Item {
                             implicitWidth: 8
                             implicitHeight: 2
@@ -907,10 +911,6 @@ Item {
                     }
                 }
             }
-
-
-
-
         }
         /////////////////////////
         Rectangle{
@@ -990,6 +990,12 @@ Item {
                     font.bold: true
                     font.pointSize: parent.width*0.10
                 }
+                MouseArea{
+                    anchors.fill:parent
+                    onClicked: {
+                        gotovaluepage()
+                    }
+                }
             }
             Rectangle{
                 id:peeprect
@@ -1065,7 +1071,6 @@ Item {
                     font.pointSize: parent.width*0.10
                 }
             }
-
             Rectangle{
                 id:inspTimeRect
                 width:parent.width/7.2727
@@ -1103,37 +1108,32 @@ Item {
                     font.pointSize: parent.width*0.10
                 }
             }
-            Rectangle{
-                id:lockrect
-                width:parent.width/7.2727
-                height:parent.height
-                color:"white"
-                anchors.right:playrect.left
-                border.width:2
-                border.color:"black"
-                enabled:true
+            Rectangle {
+                id: lockrect
+                width: parent.width / 7.2727
+                height: parent.height
+                color: "white"
+                anchors.right: playrect.left
+                border.width: 2
+                border.color: "black"
+                enabled: true
                 Image {
-                    width:parent.width*0.8
-                    height:parent.height*0.8
-                    source: "file:///C:/Users/Abhi/Desktop/lock.png"
+                    id: lockImage
+                    width: parent.width * 0.8
+                    height: parent.height * 0.8
                     anchors.centerIn: parent
                     fillMode: Image.PreserveAspectFit
+                    source: lockconfirm===false ? "file:///C:/Users/Abhi/Desktop/lock.png" : "file:///C:/Users/Abhi/Desktop/locked.png"
                 }
-                MouseArea{
-                    anchors.fill:parent
+                MouseArea {
+                    anchors.fill: parent
                     onClicked: {
-                        console.log("clickedlock")
-                        if(toprect.enabled===true){
+                        if (toprect.enabled===true) {
                             gotopopuplock()
-                            //lockconfirm=true
-                            console.log("top visible")
-                            lockrect.enabled=true
 
-                        }else{
-                             gotopopupunlock()
-                            lockconfirm=false
-                            console.log("top invisible")
-                            lockrect.enabled=true
+                        } else {
+                            gotopopupunlock()
+                            lockconfirm = false
 
                         }
                     }
@@ -1147,15 +1147,15 @@ Item {
                 anchors.right:parent.right
                 border.width:2
                 border.color:"black"
+                enabled: lockconfirm===true?false:true
                 Image {
                     width:parent.width*0.8
                     height:parent.height*0.8
                     source: "file:///C:/Users/Abhi/Desktop/play.png"
-                    anchors.centerIn: parent // Ensure the image fills the entire rectangle
-                    fillMode: Image.PreserveAspectFit // Preserve the aspect ratio while fitting inside the rectangle
+                    anchors.centerIn: parent
+                    fillMode: Image.PreserveAspectFit
                 }
             }
-
         }
     }
 }

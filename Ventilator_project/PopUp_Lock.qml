@@ -13,7 +13,7 @@ Rectangle {
         width:parent.width
         height:parent.height
         color:"white"
-        opacity:0.8
+        opacity:0.1
     }
     }
 

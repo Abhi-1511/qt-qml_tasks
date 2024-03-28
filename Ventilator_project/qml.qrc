@@ -7,5 +7,7 @@
         <file>PopUp_Lock.qml</file>
         <file>PopUp_Unlock.qml</file>
         <file>PopUp_Calibration.qml</file>
+        <file>Value_page.qml</file>
+        <file>Bottom_components.qml</file>
     </qresource>
 </RCC>
