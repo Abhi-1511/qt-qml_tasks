@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Open_screen.qml</file>
+        <file>Modepcv.qml</file>
+        <file>Header.qml</file>
+        <file>PopUp_Lock.qml</file>
+        <file>PopUp_Unlock.qml</file>
+        <file>PopUp_Calibration.qml</file>
+    </qresource>
+</RCC>
