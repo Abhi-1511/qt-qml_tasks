@@ -19,8 +19,11 @@ Item {
     signal gotovaluepage()
     signal gotosaveprofile()
     signal gotoremoveprofile()
+    signal openvaluechangepopup()
+
     property alias lockfactor:itemid.lockconfirm
     property alias lockrectid:lockrect.enabled
+    //property var lockcolor:
     function unlockscreen(){
         lockconfirm=true
         openscreenid.visible=true
@@ -374,6 +377,12 @@ Item {
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.08
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        openvaluechangepopup()
+                    }
                 }
             }
             Rectangle{
@@ -937,7 +946,7 @@ Item {
                     height: parent.height * 0.8
                     anchors.centerIn: parent
                     fillMode: Image.PreserveAspectFit
-                    source: lockconfirm===false ? "file:///C:/Users/Abhi/Desktop/lock.png" : "file:///C:/Users/Abhi/Desktop/locked.png"
+                    source: lockconfirm===false?"file:///C:/Users/Abhi/Desktop/lock.png" : "file:///C:/Users/Abhi/Desktop/locked.png"
                 }
                 MouseArea {
                     anchors.fill: parent

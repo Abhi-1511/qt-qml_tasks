@@ -23,6 +23,8 @@ Window {
         onOpenmodepcv: {
             modepcvid.visible=true
             modepcvid.enabled=true
+            openscreenid.visible=false
+            openscreenid.enabled=false
         }
         onGotopopuplock: {
             openscreenid.visible=false
@@ -58,6 +60,12 @@ Window {
             openscreenid.enabled=false
             deleteprofileid.enabled=true
             deleteprofileid.visible=true
+
+        }
+
+        onOpenvaluechangepopup: {
+            valuechangepopupid.visible=true
+            valuechangepopupid.enabled=true
 
         }
 
@@ -171,6 +179,16 @@ Window {
         }
 
     }
+    Value_change_popup{
+        id:valuechangepopupid
+        visible:false
+        onGotoopenscreen: {
+            valuechangepopupid.visible=false
+            valuechangepopupid.enabled=false
+            openscreenid.visible=true
+            openscreenid.enabled=true
+        }
+    }
 
     Component.onCompleted:{
         popuplockid.gotoopenscreenlock.connect(openscreenid.unlockscreen)
@@ -178,8 +196,9 @@ Window {
         openscreenid.gotovaluepage.connect(valuepageid.openvaluedrawer)
         //headerid.shownotifications.connect(alarmpopupid.g)
         // popuplockid.gotoopenscreenlock.connect(bottomcomponentsid.unlockscreen)
-        // popupunlockid.gotoopenscreenlock.connect(bottomcomponentsid.unlockscreenoncancel)
-        // bottomcomponentsid.gotovaluepage.connect(valuepageid.openvaluedrawer)
+        //popupunlockid.gotoopenscreenlock.connect(bottomcomponentsid.unlockscreenoncancel)
+        //bottomcomponentsid.gotovaluepage.connect(valuepageid.openvaluedrawer)
+        //openscreenid.openvaluechangepopup.connect(valuechangepopupid.valuesassign)
     }
 
 }

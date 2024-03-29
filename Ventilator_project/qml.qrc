@@ -12,5 +12,6 @@
         <file>Save_profile_popup.qml</file>
         <file>Delete_profile_popup.qml</file>
         <file>Alarm_popup.qml</file>
+        <file>Value_change_popup.qml</file>
     </qresource>
 </RCC>
