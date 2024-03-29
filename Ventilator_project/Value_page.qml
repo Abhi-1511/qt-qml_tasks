@@ -7,12 +7,23 @@ import QtGraphicalEffects 1.12
 import QtQuick.Controls 1.4
 import QtQuick 2.4
 
-Item {
+Rectangle {
     id: itemid
     width: mainwindowid.width
     height: mainwindowid.height
+    //signal gotoopenscreenwithvalue()
+    Open_screen{
+        enabled:false
+        Rectangle{
+            width:parent.width
+            height:parent.height
+            color:"white"
+            opacity:0.1
+        }
+    }
+
     signal gotoopenscreen()
-Header{}
+    //Header{}
 
     Drawer {
         id: drawer
@@ -20,16 +31,24 @@ Header{}
         height:parent.height/1.55
         y:parent.height*0.11
         onClosed: gotoopenscreen()
+        Rectangle{
+            id:midrect
+            width:parent.width
+            height:parent.height
+            color: "black"
+        }
+
         Label {
 
             width:parent.width
-            height:parent.height
+            height:parent.height*0.8
 
-            Rectangle{
-                id:midrect
-                width:parent.width
-                height:parent.height
-                color: "black"
+
+
+            //y:parent.height*0.11+parent.height/1.55
+
+
+
                 Rectangle{
                     id:peakRect
                     width:parent.width/5
@@ -359,12 +378,40 @@ Header{}
                 }
 
             }
-        }
-    }
 
-    // Function to open the drawer
+        // Rectangle{
+        //     width:parent.width
+        //     height:parent.height*0.2
+        //     color:"black"
+        //     anchors.bottom:parent.bottom
+        Rectangle{
+            color:"green"
+            id:rectidc
+            width:parent.width/4
+            height:parent.height*0.08
+            border.width:2
+            border.color: "gray"
+            radius:10
+            anchors.bottom: parent.bottom;anchors.bottomMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+            Text {
+                anchors.centerIn: parent
+                id: cancleid
+                text: qsTr("Cancel")
+                font.pointSize: parent.height*0.4
+                color:"white"
+                font.bold: true
+            }
+            MouseArea{
+                anchors.fill:parent
+                onClicked: {
+                    drawer.close()
+                }
+            }
+        }
+        }
+    // }
     function openvaluedrawer() {
         drawer.open()
     }
-    Bottom_components{}
 }

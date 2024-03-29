@@ -37,6 +37,9 @@ Rectangle {
             color: "green"
             anchors.bottom: parent.bottom;anchors.bottomMargin: 20
             anchors.left: parent.left;anchors.leftMargin: 20
+            radius:15
+            border.width:2
+            border.color:"black"
             Text {
                 anchors.centerIn: parent
                 text: "Confirm"
@@ -57,10 +60,13 @@ Rectangle {
             color: "gray"
             anchors.bottom: parent.bottom;anchors.bottomMargin: 20
             anchors.right: parent.right;anchors.rightMargin: 20
+            radius:15
+            border.width:2
+            border.color:"black"
 
             Text {
                 anchors.centerIn: parent
-                text: "Cancle"
+                text: "Cancel"
                 color: "white"
                 font.pointSize: 15
             }

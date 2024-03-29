@@ -9,5 +9,8 @@
         <file>PopUp_Calibration.qml</file>
         <file>Value_page.qml</file>
         <file>Bottom_components.qml</file>
+        <file>Save_profile_popup.qml</file>
+        <file>Delete_profile_popup.qml</file>
+        <file>Alarm_popup.qml</file>
     </qresource>
 </RCC>

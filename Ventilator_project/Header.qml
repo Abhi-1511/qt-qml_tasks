@@ -10,6 +10,7 @@ Item {
     id:itemid
     width: mainwindowid.width
     height: mainwindowid.height
+    signal shownotifications()
         Rectangle{
             id:toprect
             width:parent.width
@@ -119,6 +120,13 @@ Item {
                         color:"white"
                         font.bold: true
                         font.pointSize: parent.width*0.05
+                    }
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {
+                            console.log("shownotificationsignal")
+                            shownotifications()
+                        }
                     }
                 }
 

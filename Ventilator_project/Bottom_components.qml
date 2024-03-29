@@ -8,10 +8,10 @@ import QtQuick.Controls 1.4
 import QtQuick 2.2
 
 Item {
-    id:itemid
+    id:itemidb
     width: mainwindowid.width
     height: mainwindowid.height
-     property bool lockconfirm:false
+     property bool lockconfirm1:false
     signal openmodepcv()
     signal gotopopuplock()
     signal gotopopupunlock()
@@ -19,17 +19,17 @@ Item {
     Open_screen{
         visible :false
     }
-    property alias lockfactor:itemid.lockconfirm
-    property alias lockrectid:lockrect.enabled
+    property alias lockfactor:itemidb.lockconfirm1
+
     function unlockscreen(){
-        lockconfirm=true
+        lockconfirm1=true
         openscreenid.visible=true
         openscreenid.enabled=true
         popuplockid.visible=false
         popuplockid.enabled=false
     }
     function unlockscreenoncancel(){
-        lockconfirm=true
+        lockconfirm1=true
         openscreenid.visible=true
         openscreenid.enabled=true
         popupunlockid.visible=false
@@ -50,7 +50,7 @@ Item {
                     anchors.left:parent.left
                     border.width:2
                     border.color:"black"
-                    enabled: lockconfirm===true?false:true
+                    enabled: lockconfirm1===true?false:true
                     Text {
                         anchors.top: parent.top;anchors.topMargin: 10
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -85,7 +85,7 @@ Item {
                     anchors.left:modeRect.right
                     border.width:2
                     border.color:"black"
-                    enabled: lockconfirm===true?false:true
+                    enabled: lockconfirm1===true?false:true
                     Text {
                         anchors.top: parent.top;anchors.topMargin: 10
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -128,7 +128,7 @@ Item {
                     anchors.left:insprect.right
                     border.width:2
                     border.color:"black"
-                    enabled: lockconfirm===true?false:true
+                    enabled: lockconfirm1===true?false:true
                     Text {
                         anchors.top: parent.top;anchors.topMargin: 10
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -165,7 +165,7 @@ Item {
                     anchors.left:peeprect.right
                     border.width:2
                     border.color:"black"
-                    enabled: lockconfirm===true?false:true
+                    enabled: lockconfirm1===true?false:true
                     Text {
                         anchors.top: parent.top;anchors.topMargin: 10
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -202,7 +202,7 @@ Item {
                     anchors.right:lockrect.left
                     border.width:2
                     border.color:"black"
-                    enabled: lockconfirm===true?false:true
+                    enabled: lockconfirm1===true?false:true
                     Text {
                         anchors.top: parent.top;anchors.topMargin: 10
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -246,20 +246,20 @@ Item {
                         height: parent.height * 0.8
                         anchors.centerIn: parent
                         fillMode: Image.PreserveAspectFit
-                        source: lockconfirm===false ? "file:///C:/Users/Abhi/Desktop/lock.png" : "file:///C:/Users/Abhi/Desktop/locked.png"
+                        source: lockconfirm1===false ? "file:///C:/Users/Abhi/Desktop/lock.png" : "file:///C:/Users/Abhi/Desktop/locked.png"
                     }
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            // if (toprectids===true) {
-                            //     gotopopuplock()
-                            //     console.log(midrect.height)
+                            if (toprectids===true) {
+                                gotopopuplock()
+                                console.log(midrect.height)
 
-                            // } else {
-                            //     gotopopupunlock()
-                            //     lockconfirm = false
+                            } else {
+                                gotopopupunlock()
+                                lockconfirm1 = false
 
-                            // }
+                            }
                         }
                     }
                 }
@@ -271,7 +271,7 @@ Item {
                     anchors.right:parent.right
                     border.width:2
                     border.color:"black"
-                    enabled: lockconfirm===true?false:true
+                    enabled: lockconfirm1===true?false:true
                     Image {
                         width:parent.width*0.8
                         height:parent.height*0.8

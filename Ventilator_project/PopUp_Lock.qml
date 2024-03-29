@@ -63,7 +63,7 @@ Rectangle {
 
             Text {
                 anchors.centerIn: parent
-                text: "Cancle"
+                text: "Cancel"
                 color: "white"
                 font.pointSize: 15
             }

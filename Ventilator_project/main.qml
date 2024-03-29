@@ -8,8 +8,18 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
+
     Open_screen{
         id:openscreenid
+        Header{
+            id:headerid
+            onShownotifications: {
+                alarmpopupid.visible=true
+                alarmpopupid.enabled=true
+                openscreenid.visible=false
+                openscreenid.enabled=false
+            }
+        }
         onOpenmodepcv: {
             modepcvid.visible=true
             modepcvid.enabled=true
@@ -35,6 +45,20 @@ Window {
             valuepageid.enabled=true
             openscreenid.visible=false
             openscreenid.enabled=false
+        }
+        onGotosaveprofile: {
+            openscreenid.visible=false
+            openscreenid.enabled=false
+            saveprofileid.enabled=true
+            saveprofileid.visible=true
+
+        }
+        onGotoremoveprofile: {
+            openscreenid.visible=false
+            openscreenid.enabled=false
+            deleteprofileid.enabled=true
+            deleteprofileid.visible=true
+
         }
 
     }
@@ -85,33 +109,65 @@ Window {
         onGotoopenscreen:{
             openscreenid.visible=true
             openscreenid.enabled=true
+            valuepageid.visible=false
+            valuepageid.enabled=false
         }
     }
-    Bottom_components{
-        id:bottomcomponentsid
-        visible:false
+    // Bottom_components{
+    //     id:bottomcomponentsid
+    //     visible:false
+    //     onOpenmodepcv: {
+    //         modepcvid.visible=true
+    //         modepcvid.enabled=true
+    //     }
+    //     onGotopopuplock: {
+    //         bottomcomponentsid.visible=false
+    //         bottomcomponentsid.enabled=false
+    //         popuplockid.visible=true
+    //         popuplockid.enabled=true
+    //     }
+    //     onGotopopupunlock: {
+    //         bottomcomponentsid.visible=false
+    //         bottomcomponentsid.enabled=false
+    //         popupunlockid.visible=true
+    //         popupunlockid.enabled=true
+    //     }
+    //     onGotovaluepage: {
+    //         valuepageid.visible=true
+    //         valuepageid.enabled=true
+    //         bottomcomponentsid.visible=false
+    //         bottomcomponentsid.enabled=false
+    //     }
 
-        onOpenmodepcv: {
-            modepcvid.visible=true
-            modepcvid.enabled=true
+    // }
+    Save_profile_popup{
+        id:saveprofileid
+        visible:false
+        onGotoopenscreen: {
+            openscreenid.visible=true
+            openscreenid.enabled=true
+            saveprofileid.visible=false
+            saveprofileid.enabled=false
         }
-        onGotopopuplock: {
-            bottomcomponentsid.visible=false
-            bottomcomponentsid.enabled=false
-            popuplockid.visible=true
-            popuplockid.enabled=true
+    }
+    Delete_profile_popup{
+        id:deleteprofileid
+        visible:false
+        onGotoopenscreen: {
+            openscreenid.visible=true
+            openscreenid.enabled=true
+            deleteprofileid.visible=false
+            deleteprofileid.enabled=false
         }
-        onGotopopupunlock: {
-            bottomcomponentsid.visible=false
-            bottomcomponentsid.enabled=false
-            popupunlockid.visible=true
-            popupunlockid.enabled=true
-        }
-        onGotovaluepage: {
-            valuepageid.visible=true
-            valuepageid.enabled=true
-            bottomcomponentsid.visible=false
-            bottomcomponentsid.enabled=false
+    }
+    Alarm_popup{
+        visible:false
+        id:alarmpopupid
+        onGotoopenscreen: {
+            openscreenid.visible=true
+            openscreenid.enabled=true
+            alarmpopupid.visible=false
+            alarmpopupid.enabled=false
         }
 
     }
@@ -120,9 +176,12 @@ Window {
         popuplockid.gotoopenscreenlock.connect(openscreenid.unlockscreen)
         popupunlockid.gotoopenscreenlock.connect(openscreenid.unlockscreenoncancel)
         openscreenid.gotovaluepage.connect(valuepageid.openvaluedrawer)
-        popuplockid.gotoopenscreenlock.connect(bottomcomponentsid.unlockscreen)
-        popupunlockid.gotoopenscreenlock.connect(bottomcomponentsid.unlockscreenoncancel)
-        bottomcomponentsid.gotovaluepage.connect(valuepageid.openvaluedrawer)
+        //headerid.shownotifications.connect(alarmpopupid.g)
+        // popuplockid.gotoopenscreenlock.connect(bottomcomponentsid.unlockscreen)
+        // popupunlockid.gotoopenscreenlock.connect(bottomcomponentsid.unlockscreenoncancel)
+        // bottomcomponentsid.gotovaluepage.connect(valuepageid.openvaluedrawer)
     }
 
 }
+
+
