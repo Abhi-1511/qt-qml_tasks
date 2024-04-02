@@ -10,8 +10,8 @@ Item {
         Rectangle{
             width:parent.width
             height:parent.height
-            color:"white"
-            opacity:0.1
+            color:"lightblue"
+            opacity:0.002
         }
     }
     // function g(){

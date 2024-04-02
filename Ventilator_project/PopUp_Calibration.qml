@@ -2,26 +2,19 @@ import QtQuick 2.15
 
 Rectangle {
     id:itemid1
-    width:mainwindowid.width
-    height:mainwindowid.height
+    width:mainwindowid.width*0.7
+    height:mainwindowid.height/2
+    anchors.centerIn: parent
+    color:"transparent"
     signal gotoopenscreen()
-    Open_screen{
-    enabled:false
+
     Rectangle{
         width:parent.width
         height:parent.height
-        color:"white"
-        opacity:0.1
-    }
-    }
-
-    Rectangle{
-        width:parent.width*0.7
-        height:parent.height/2
         color:"black"
         border.width:5
         border.color: "red"
-        anchors.centerIn: parent
+
         radius:15
 
         Text {

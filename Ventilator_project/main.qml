@@ -7,8 +7,6 @@ Window {
     height: 500
     visible: true
     title: qsTr("Hello World")
-
-
     Open_screen{
         id:openscreenid
         Header{
@@ -18,6 +16,12 @@ Window {
                 alarmpopupid.enabled=true
                 openscreenid.visible=false
                 openscreenid.enabled=false
+            }
+            onGotograph: {
+                openscreenid.visible=false
+                openscreenid.enabled=false
+                graphid.visible=true
+                graphid.enabled=false
             }
         }
         onOpenmodepcv: {
@@ -33,7 +37,7 @@ Window {
             popuplockid.enabled=true
         }
         onGotopopupunlock: {
-            openscreenid.visible=false
+
             openscreenid.enabled=false
             popupunlockid.visible=true
             popupunlockid.enabled=true
@@ -41,11 +45,12 @@ Window {
         onGotocalibrationpopup: {
             popUpCalibrationid.visible=true
             popUpCalibrationid.enabled=true
+            openscreenid.visible=true
+            openscreenid.enabled=false
         }
         onGotovaluepage: {
             valuepageid.visible=true
             valuepageid.enabled=true
-            openscreenid.visible=false
             openscreenid.enabled=false
         }
         onGotosaveprofile: {
@@ -62,13 +67,22 @@ Window {
             deleteprofileid.visible=true
 
         }
-
-        onOpenvaluechangepopup: {
-            valuechangepopupid.visible=true
-            valuechangepopupid.enabled=true
-
+        onGotodevicelogpage: {
+            openscreenid.visible=false
+            openscreenid.enabled=false
+            devicelogid.visible=true
+            devicelogid.enabled=true
         }
-
+        onGotodevicesettings:{
+            openscreenid.visible=false
+            openscreenid.enabled=false
+            devicesettingsid.visible=true
+            devicesettingsid.enabled=true
+        }
+        // onGotoholdpage: {
+        //     openscreenid.enabled=false
+        //     holdid.visible=true
+        // }
     }
     Modepcv{
         id:modepcvid
@@ -93,11 +107,12 @@ Window {
     PopUp_Unlock{
         id:popupunlockid
         visible:false
-        onGotoopenscreen: {
+        onGotoopenscreenlock: {
             openscreenid.visible=true
             openscreenid.enabled=true
             popupunlockid.visible=false
             popupunlockid.enabled=false
+
         }
     }
     PopUp_Calibration{
@@ -120,34 +135,8 @@ Window {
             valuepageid.visible=false
             valuepageid.enabled=false
         }
-    }
-    // Bottom_components{
-    //     id:bottomcomponentsid
-    //     visible:false
-    //     onOpenmodepcv: {
-    //         modepcvid.visible=true
-    //         modepcvid.enabled=true
-    //     }
-    //     onGotopopuplock: {
-    //         bottomcomponentsid.visible=false
-    //         bottomcomponentsid.enabled=false
-    //         popuplockid.visible=true
-    //         popuplockid.enabled=true
-    //     }
-    //     onGotopopupunlock: {
-    //         bottomcomponentsid.visible=false
-    //         bottomcomponentsid.enabled=false
-    //         popupunlockid.visible=true
-    //         popupunlockid.enabled=true
-    //     }
-    //     onGotovaluepage: {
-    //         valuepageid.visible=true
-    //         valuepageid.enabled=true
-    //         bottomcomponentsid.visible=false
-    //         bottomcomponentsid.enabled=false
-    //     }
 
-    // }
+    }
     Save_profile_popup{
         id:saveprofileid
         visible:false
@@ -157,11 +146,26 @@ Window {
             saveprofileid.visible=false
             saveprofileid.enabled=false
         }
+        onGotoheader: {
+            headerid.appendvalue(str)
+            deleteprofileid.appendvalue(str)
+            saveprofileid.visible=false
+            saveprofileid.enabled=false
+            openscreenid.visible=true
+            openscreenid.enabled=true
+        }
     }
     Delete_profile_popup{
         id:deleteprofileid
         visible:false
         onGotoopenscreen: {
+            openscreenid.visible=true
+            openscreenid.enabled=true
+            deleteprofileid.visible=false
+            deleteprofileid.enabled=false
+        }
+        onGotoheader: {
+            headerid.deletevalue(removeid)
             openscreenid.visible=true
             openscreenid.enabled=true
             deleteprofileid.visible=false
@@ -179,6 +183,25 @@ Window {
         }
 
     }
+    Device_log{
+        id:devicelogid
+        visible:false
+    }
+    Device_settings{
+        id:devicesettingsid
+        visible:false
+        onGotosuccesspage: {
+            devicesettingsid.opacity=0.8
+            devicesettingsid.enabled=false
+            successid.visible=true
+            successid.enabled=true
+        }
+    }
+    Success{
+        id:successid
+        visible:false
+    }
+
     Value_change_popup{
         id:valuechangepopupid
         visible:false
@@ -189,16 +212,23 @@ Window {
             openscreenid.enabled=true
         }
     }
+    Graph{
+        id:graphid
+        visible:false
+    }
+    Slider_valuepopup{
+        id:slideid
+        visible:false
+    }
 
     Component.onCompleted:{
         popuplockid.gotoopenscreenlock.connect(openscreenid.unlockscreen)
-        popupunlockid.gotoopenscreenlock.connect(openscreenid.unlockscreenoncancel)
+        popupunlockid.gotoopenscreen.connect(openscreenid.unlockscreenoncancel)
         openscreenid.gotovaluepage.connect(valuepageid.openvaluedrawer)
-        //headerid.shownotifications.connect(alarmpopupid.g)
-        // popuplockid.gotoopenscreenlock.connect(bottomcomponentsid.unlockscreen)
-        //popupunlockid.gotoopenscreenlock.connect(bottomcomponentsid.unlockscreenoncancel)
-        //bottomcomponentsid.gotovaluepage.connect(valuepageid.openvaluedrawer)
-        //openscreenid.openvaluechangepopup.connect(valuechangepopupid.valuesassign)
+        openscreenid.openvaluechangepopup.connect(valuechangepopupid.assignedvalues)
+        valuechangepopupid.gotoopenscreen.connect(openscreenid.alotedvalue)
+        valuepageid.openvaluechangepopup.connect(valuechangepopupid.assignedvalues)
+        valuechangepopupid.gotoopenscreen.connect(valuepageid.alotedvalue)
     }
 
 }

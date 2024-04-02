@@ -7,35 +7,61 @@ import QtGraphicalEffects 1.12
 import QtQuick.Controls 1.4
 import QtQuick 2.4
 
-Rectangle {
+Item {
     id: itemid
-    width: mainwindowid.width
-    height: mainwindowid.height
-    Open_screen{
-        enabled:false
-        Rectangle{
-            width:parent.width
-            height:parent.height
-            color:"white"
-            opacity:0.1
+    width:mainwindowid.width*0.8
+    height:mainwindowid.height/1.55
+    y:parent.height*0.11
+    signal openvaluechangepopup(int ids,int val1)
+    function alotedvalue(textfieldid,alotval){
+        foropacity.opacity=0
+        switch(textfieldid) {
+        case 11:
+            insppressmvalue.text = alotval;
+            break;
+        case 12:
+            insptimemvalue.text = alotval;
+            break;
+        case 13:
+            braethratemvalue.text = alotval;
+            break;
+        case 14:
+            iemvalue.text = alotval;
+            break;
+        case 15:
+            risetimemvalue.text = alotval;
+            break;
+        case 16:
+            insptrigmvalue.text = alotval;
+            break;
+        case 17:
+            tidalvolmvalue.text = alotval;
+            break;
+        case 18:
+            minutevolmvalue.text = alotval;
+            break;
+        case 19:
+            peepvalue.text = alotval;
+            break;
+        case 20:
+            exptrigvalue.text = alotval;
+            break;
+        case 21:
+            presssup.text = alotval;
+            break;
+        default:
+            console.error("Invalid text field ID:", textfieldid);
         }
+
     }
 
     signal gotoopenscreen()
-    Drawer {
-        id: drawer
-        width:parent.width*0.8
-        height:parent.height/1.55
-        y:parent.height*0.11
-        onClosed: gotoopenscreen()
-        Rectangle{
-            id:midrect
-            width:parent.width
-            height:parent.height
-            color: "black"
-        }
 
-
+    Rectangle{
+        id:midrect
+        width:parent.width
+        height:parent.height
+        color: "black"
         Label {
             id:label1
             visible:true
@@ -59,8 +85,8 @@ Rectangle {
                 Text {
                     anchors.top: parent.top;anchors.topMargin: -6
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: peekpmtext
-                    text: qsTr("Peek P.")
+                    id: insppressmtext
+                    text: qsTr("Insp. Press")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.1
@@ -68,8 +94,8 @@ Rectangle {
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: peekpmvalue
-                    text: qsTr("0")
+                    id: insppressmvalue
+                    text: "5"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -77,11 +103,18 @@ Rectangle {
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: peekpmtype
+                    id: insppressmtype
                     text: qsTr("cmH2O")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.08
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                       foropacity.opacity=0.2
+                        openvaluechangepopup(11,insppressmvalue.text)
+                    }
                 }
             }
             Rectangle{
@@ -100,8 +133,8 @@ Rectangle {
                 Text {
                     anchors.top: parent.top;anchors.topMargin: -6
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: breathratemtext
-                    text: qsTr("Breath Rate")
+                    id: insptimemtext
+                    text: qsTr("Insp. Time")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.1
@@ -109,7 +142,7 @@ Rectangle {
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: breathratemvalue
+                    id: insptimemvalue
                     text: qsTr("0")
                     color:"white"
                     font.bold: true
@@ -118,11 +151,18 @@ Rectangle {
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: breathratemtype
-                    text: qsTr("BPM")
+                    id: insptimemtype
+                    text: qsTr("sec")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.08
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                       foropacity.opacity=0.2
+                        openvaluechangepopup(12,insptimemvalue.text)
+                    }
                 }
             }
             Rectangle{
@@ -141,8 +181,8 @@ Rectangle {
                 Text {
                     anchors.top: parent.top;anchors.topMargin: -6
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: spontbrmtext
-                    text: qsTr("Spont BR")
+                    id: braethratemtext
+                    text: qsTr("Breath Rate")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.1
@@ -150,7 +190,7 @@ Rectangle {
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: spontbrmvalue
+                    id: braethratemvalue
                     text: qsTr("0")
                     color:"white"
                     font.bold: true
@@ -159,11 +199,18 @@ Rectangle {
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: spontbrmtype
-                    text: qsTr("%")
+                    id: braethratemtype
+                    text: qsTr("BPM")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.08
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                       foropacity.opacity=0.2
+                        openvaluechangepopup(13,braethratemvalue.text)
+                    }
                 }
             }
             Rectangle{
@@ -182,8 +229,8 @@ Rectangle {
                 Text {
                     anchors.top: parent.top;anchors.topMargin: -6
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: tviemtext
-                    text: qsTr("TV(i/e)")
+                    id: iemtext
+                    text: qsTr("I:E")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.1
@@ -191,20 +238,19 @@ Rectangle {
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: tviemvalue
+                    id: iemvalue
                     text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
                 }
-                Text {
-                    anchors.bottom: parent.bottom;anchors.bottomMargin: 5
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: tviemtype
-                    text: qsTr("mL")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.08
+
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                       foropacity.opacity=0.2
+                        openvaluechangepopup(14,iemvalue.text)
+                    }
                 }
             }
             Rectangle{
@@ -212,7 +258,7 @@ Rectangle {
                 width:parent.width/5
                 height:parent.height/2.4
                 anchors.left:parent.left;anchors.leftMargin: parent.width/10
-                anchors.top:parent.top;anchors.topMargin: itemid.height/2.8
+                anchors.top:parent.top;anchors.topMargin: itemid.height/2
                 RadialGradient {
                     anchors.fill: parent
                     gradient: Gradient {
@@ -223,8 +269,8 @@ Rectangle {
                 Text {
                     anchors.top: parent.top;anchors.topMargin: -6
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: fio2mtext
-                    text: qsTr("FiO2")
+                    id: risetimemtext
+                    text: qsTr("Rise. Time")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.1
@@ -232,7 +278,49 @@ Rectangle {
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: fio2mvalue
+                    id: risetimemvalue
+                    text: qsTr("0")
+                    color:"white"
+                    font.bold: true
+                    font.pointSize: parent.width*0.2
+                }
+
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                       foropacity.opacity=0.2
+                        openvaluechangepopup(15,risetimemvalue.text)
+                    }
+                }
+
+            }
+            Rectangle{
+                id:insptrigrect
+                width:parent.width/5
+                height:parent.height/2.4
+                //color:"yellow"
+                anchors.left:fioRect.right
+                anchors.top:parent.top;anchors.topMargin: itemid.height/2
+                RadialGradient {
+                    anchors.fill: parent
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#89AAD3" }
+                        GradientStop { position: 0.4; color: "black" }
+                    }
+                }
+                Text {
+                    anchors.top: parent.top;anchors.topMargin: -6
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    id: insptrigmtext
+                    text: qsTr("Insp. Trig.")
+                    color:"white"
+                    font.bold: true
+                    font.pointSize: parent.width*0.1
+                }
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    id: insptrigmvalue
                     text: qsTr("0")
                     color:"white"
                     font.bold: true
@@ -241,45 +329,18 @@ Rectangle {
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: fio2mtype
-                    text: qsTr("%")
+                    id: braethratemtype2
+                    text: qsTr("Trigger Sensitiveity Level")
                     color:"white"
                     font.bold: true
-                    font.pointSize: parent.width*0.08
+                    font.pointSize: parent.width*0.05
                 }
-
-            }
-            Rectangle{
-                id:ieratiorect
-                width:parent.width/5
-                height:parent.height/2.4
-                //color:"yellow"
-                anchors.left:fioRect.right
-                anchors.top:parent.top;anchors.topMargin: itemid.height/2.8
-                RadialGradient {
+                MouseArea{
                     anchors.fill: parent
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#89AAD3" }
-                        GradientStop { position: 0.4; color: "black" }
+                    onClicked: {
+                       foropacity.opacity=0.2
+                        openvaluechangepopup(16,insptrigmtext.text)
                     }
-                }
-                Text {
-                    anchors.top: parent.top;anchors.topMargin: -6
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: ieratiomtext
-                    text: qsTr("I:E Ratio")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.1
-                }
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: ieratiomvalue
-                    text: qsTr("0:0")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.2
                 }
 
             }
@@ -287,8 +348,8 @@ Rectangle {
                 id:spo2rect
                 width:parent.width/5
                 height:parent.height/2.4
-                anchors.left:ieratiorect.right
-                anchors.top:parent.top;anchors.topMargin: itemid.height/2.8
+                anchors.left:insptrigrect.right
+                anchors.top:parent.top;anchors.topMargin: itemid.height/2
                 RadialGradient {
                     anchors.fill: parent
                     gradient: Gradient {
@@ -299,8 +360,8 @@ Rectangle {
                 Text {
                     anchors.top: parent.top;anchors.topMargin: -6
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: spo2hrmtext
-                    text: qsTr("SpO2/HR")
+                    id: tidalvolmtext
+                    text: qsTr("Tidal Vol.")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.1
@@ -308,8 +369,8 @@ Rectangle {
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: spo2hrmvalue
-                    text: qsTr("__/__")
+                    id: tidalvolmvalue
+                    text: qsTr("300")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.1
@@ -317,11 +378,18 @@ Rectangle {
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
                     anchors.horizontalCenter: parent.horizontalCenter
-                    id: spo2hrmtype
-                    text: qsTr("%")
+                    id: tidalvolmtype
+                    text: qsTr("mL")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.08
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                       foropacity.opacity=0.2
+                        openvaluechangepopup(17,tidalvolmvalue.text)
+                    }
                 }
             }
             Rectangle{
@@ -329,7 +397,7 @@ Rectangle {
                 width:parent.width/5
                 height:parent.height/2.4
                 anchors.left:spo2rect.right
-                anchors.top:parent.top;anchors.topMargin: itemid.height/2.8
+                anchors.top:parent.top;anchors.topMargin: itemid.height/2
                 RadialGradient {
                     anchors.fill: parent
                     gradient: Gradient {
@@ -364,6 +432,13 @@ Rectangle {
                     font.bold: true
                     font.pointSize: parent.width*0.08
                 }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                       foropacity.opacity=0.2
+                        openvaluechangepopup(18,minutevolmvalue.text)
+                    }
+                }
             }
             Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
@@ -383,268 +458,266 @@ Rectangle {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                        drawer2.open()
-
+                        midrect2.visible=true
+                        midrect2.enabled=true
                     }
                 }
             }
         }
-    Rectangle{
-        color:"green"
-        id:rectidc
-        width:parent.width/4
-        height:parent.height*0.08
-        border.width:2
-        border.color: "gray"
-        radius:10
-        anchors.bottom: parent.bottom;anchors.bottomMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
-        Text {
-            anchors.centerIn: parent
-            id: cancleid
-            text: qsTr("Cancel")
-            font.pointSize: parent.height*0.4
-            color:"white"
-            font.bold: true
-        }
-        MouseArea{
-            anchors.fill:parent
-            onClicked: {
-                drawer.close()
-            }
-        }
-    }
-    Drawer{
-        id: drawer2
-        width:parent.width*0.8
-        height:parent.height/1.55
-        y:parent.height*0.11
-        onClosed: gotoopenscreen()
-
-        edge:Qt.RightEdge
 
         Rectangle{
-            id:midrect2
-            width:parent.width
-            height:parent.height
-            color: "black"
-        }
-
-
-        Label {
-            id:label2
-            visible:true
-            enabled:true
-            width:parent.width
-            height:parent.height*0.8
-            Rectangle{
-                id:peakRect2
-                width:parent.width/5
-                height:parent.height/2.4
-                color:"black"
-                anchors.top:parent.top;anchors.topMargin: 10
-                anchors.left:parent.left;anchors.leftMargin: parent.width/10
-                RadialGradient {
-                    anchors.fill: parent
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#89AAD3" }
-                        GradientStop { position: 0.4; color: "black" }
-                    }
-                }
-                Text {
-                    anchors.top: parent.top;anchors.topMargin: -6
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: peekpmtext2
-                    text: qsTr("Peek P.")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.1
-                }
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: peekpmvalue2
-                    text: qsTr("0")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.2
-                }
-                Text {
-                    anchors.bottom: parent.bottom;anchors.bottomMargin: 5
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: peekpmtype2
-                    text: qsTr("cmH2O")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.08
-                }
+            color:"green"
+            id:rectidc
+            width:parent.width/4
+            height:parent.height*0.08
+            border.width:2
+            border.color: "gray"
+            radius:10
+            anchors.bottom: parent.bottom;anchors.bottomMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+            Text {
+                anchors.centerIn: parent
+                id: cancleid
+                text: qsTr("Cancel")
+                font.pointSize: parent.height*0.4
+                color:"white"
+                font.bold: true
             }
-            Rectangle{
-                id:breathrect2
-                width:parent.width/5
-                height:parent.height/2.4
-                anchors.top:parent.top;anchors.topMargin: 10
-                anchors.left:peakRect2.right
-                RadialGradient {
-                    anchors.fill: parent
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#89AAD3" }
-                        GradientStop { position: 0.4; color: "black" }
-                    }
+            MouseArea{
+                anchors.fill:parent
+                onClicked: {
+                    gotoopenscreen()
                 }
-                Text {
-                    anchors.top: parent.top;anchors.topMargin: -6
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: breathratemtext2
-                    text: qsTr("Breath Rate")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.1
-                }
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: breathratemvalue2
-                    text: qsTr("0")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.2
-                }
-                Text {
-                    anchors.bottom: parent.bottom;anchors.bottomMargin: 5
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: breathratemtype2
-                    text: qsTr("BPM")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.08
-                }
-            }
-
-
-            Rectangle{
-                id:fioRect2
-                width:parent.width/5
-                height:parent.height/2.4
-                anchors.left:parent.left;anchors.leftMargin: parent.width/10
-                anchors.top:parent.top;anchors.topMargin: itemid.height/2.8
-                RadialGradient {
-                    anchors.fill: parent
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#89AAD3" }
-                        GradientStop { position: 0.4; color: "black" }
-                    }
-                }
-                Text {
-                    anchors.top: parent.top;anchors.topMargin: -6
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: fio2mtext2
-                    text: qsTr("FiO2")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.1
-                }
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: fio2mvalue2
-                    text: qsTr("0")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.2
-                }
-                Text {
-                    anchors.bottom: parent.bottom;anchors.bottomMargin: 5
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: fio2mtype2
-                    text: qsTr("%")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.08
-                }
-
-            }
-            Rectangle{
-                id:ieratiorect2
-                width:parent.width/5
-                height:parent.height/2.4
-                anchors.left:fioRect2.right
-                anchors.top:parent.top;anchors.topMargin: itemid.height/2.8
-                RadialGradient {
-                    anchors.fill: parent
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#89AAD3" }
-                        GradientStop { position: 0.4; color: "black" }
-                    }
-                }
-                Text {
-                    anchors.top: parent.top;anchors.topMargin: -6
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: ieratiomtext2
-                    text: qsTr("I:E Ratio")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.1
-                }
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: ieratiomvalue2
-                    text: qsTr("0:0")
-                    color:"white"
-                    font.bold: true
-                    font.pointSize: parent.width*0.2
-                }
-
-            }
-
-
-            Rectangle {
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                id: lefttbutton
-                color: "black"
-                width: 40
-                height: 100
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "►"
-                    font.pixelSize: 50
-                    color: "white"
-                }
-            }
-        }
-    Rectangle{
-        color:"green"
-        id:rectidc2
-        width:parent.width/4
-        height:parent.height*0.08
-        border.width:2
-        border.color: "gray"
-        radius:10
-        anchors.bottom: parent.bottom;anchors.bottomMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
-        Text {
-            anchors.centerIn: parent
-            id: cancleid2
-            text: qsTr("Cancel")
-            font.pointSize: parent.height*0.4
-            color:"white"
-            font.bold: true
-        }
-        MouseArea{
-            anchors.fill:parent
-            onClicked: {
-                drawer2.close()
             }
         }
     }
-}
-}
+    Rectangle{
+        id:midrect2
+        width:parent.width
+        height:parent.height
+        color: "black"
+        visible:false
+        Rectangle{
+            id:peakRect2
+            width:parent.width/5
+            height:parent.height/2.4
+            color:"black"
+            anchors.top:parent.top;anchors.topMargin: 10
+            anchors.left:parent.left;anchors.leftMargin: parent.width/10
+            RadialGradient {
+                anchors.fill: parent
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#89AAD3" }
+                    GradientStop { position: 0.4; color: "black" }
+                }
+            }
+            Text {
+                anchors.top: parent.top;anchors.topMargin: -6
+                anchors.horizontalCenter: parent.horizontalCenter
+                id: insppressmtext2
+                text: qsTr("PEEP")
+                color:"white"
+                font.bold: true
+                font.pointSize: parent.width*0.1
+            }
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                id: peepvalue
+                text: qsTr("2")
+                color:"white"
+                font.bold: true
+                font.pointSize: parent.width*0.2
+            }
+            Text {
+                anchors.bottom: parent.bottom;anchors.bottomMargin: 5
+                anchors.horizontalCenter: parent.horizontalCenter
+                id: insppressmtype2
+                text: qsTr("cmH2O")
+                color:"white"
+                font.bold: true
+                font.pointSize: parent.width*0.08
+            }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                   foropacity.opacity=0.2
+                    openvaluechangepopup(19,peepvalue.text)
+                }
+            }
+        }
+        Rectangle{
+            id:breathrect2
+            width:parent.width/5
+            height:parent.height/2.4
+            anchors.top:parent.top;anchors.topMargin: 10
+            anchors.left:peakRect2.right
+            RadialGradient {
+                anchors.fill: parent
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#89AAD3" }
+                    GradientStop { position: 0.4; color: "black" }
+                }
+            }
+            Text {
+                anchors.top: parent.top;anchors.topMargin: -6
+                anchors.horizontalCenter: parent.horizontalCenter
+                id: insptimemtext2
+                text: qsTr("Breath Rate")
+                color:"white"
+                font.bold: true
+                font.pointSize: parent.width*0.1
+            }
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                id: exptrigvalue
+                text: qsTr("0")
+                color:"white"
+                font.bold: true
+                font.pointSize: parent.width*0.2
+            }
+            Text {
+                anchors.bottom: parent.bottom;anchors.bottomMargin: 5
+                anchors.horizontalCenter: parent.horizontalCenter
+                id: insptimemtype2
+                text: qsTr("%")
+                color:"white"
+                font.bold: true
+                font.pointSize: parent.width*0.08
+            }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                   foropacity.opacity=0.2
+                    openvaluechangepopup(20,exptrigvalue.text)
+                }
+            }
+        }
+
+
+        Rectangle{
+            id:fioRect2
+            width:parent.width/5
+            height:parent.height/2.4
+            anchors.left:parent.left;anchors.leftMargin: parent.width/10
+            anchors.top:parent.top;anchors.topMargin: itemid.height/2
+            enabled: false
+
+            RadialGradient {
+                anchors.fill: parent
+
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#89AAD3" }
+                    GradientStop { position: 0.4; color: "black" }
+                }
+            }
+            Text {
+                anchors.top: parent.top;anchors.topMargin: -6
+                anchors.horizontalCenter: parent.horizontalCenter
+                id: risetimemtext2
+                text: qsTr("Press. Sup.")
+                color:"white"
+                font.bold: true
+                font.pointSize: parent.width*0.1
+
+            }
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                id: presssup
+                text: qsTr("0")
+                color:"white"
+                font.bold: true
+
+                font.pointSize: parent.width*0.2
+            }
+            Text {
+                anchors.bottom: parent.bottom;anchors.bottomMargin: 5
+                anchors.horizontalCenter: parent.horizontalCenter
+                id: risetimemtype2
+                text: qsTr("cmH2O")
+                color:"white"
+                font.bold: true
+
+                font.pointSize: parent.width*0.08
+            }
+            MouseArea{
+                anchors.fill: parent
+
+                onClicked: {
+
+                   foropacity.opacity=0.2
+                    openvaluechangepopup(21,presssup.text)
+                }
+            }
+
+        }
+
+
+
+        Rectangle {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            id: lefttbutton
+            color: "black"
+            width: 40
+            height: 100
+
+            Text {
+                anchors.centerIn: parent
+                text: "►"
+                font.pixelSize: 50
+                color: "white"
+            }
+            MouseArea{
+                anchors.fill:parent
+                onClicked: {
+                    midrect2.visible=false
+                    midrect2.enabled=false
+                    midrect.visible=true
+                    midrect.enabled=true
+                }
+            }
+        }
+
+        Rectangle{
+            color:"green"
+            id:rectidc2
+            width:parent.width/4
+            height:parent.height*0.08
+            border.width:2
+            border.color: "gray"
+            radius:10
+            anchors.bottom: parent.bottom;anchors.bottomMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+            Text {
+                anchors.centerIn: parent
+                id: cancleid2
+                text: qsTr("Cancel")
+                font.pointSize: parent.height*0.4
+                color:"white"
+                font.bold: true
+            }
+            MouseArea{
+                anchors.fill:parent
+                onClicked: {
+                    gotoopenscreen()
+                }
+            }
+        }
+    }
 
     function openvaluedrawer() {
-        drawer.open()
+        midrect.visible=true
+        midrect.enabled=true
+    }
+    Rectangle{
+        id:foropacity
+        width:parent.width
+        height:parent.height
+        color:"#adc4de"
+        opacity:0
     }
 }

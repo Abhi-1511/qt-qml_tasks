@@ -5,15 +5,15 @@ Rectangle {
     width:mainwindowid.width
     height:mainwindowid.height
     signal gotoopenscreen()
-
+    signal gotoheader(string str)
     Open_screen{
-    enabled:false
-    Rectangle{
-        width:parent.width
-        height:parent.height
-        color:"white"
-        opacity:0.1
-    }
+        enabled:false
+        Rectangle{
+            width:parent.width
+            height:parent.height
+            color:"lightblue"
+            opacity:0.1
+        }
     }
     Rectangle{
         width:parent.width/2.5
@@ -35,64 +35,65 @@ Rectangle {
             text:"Profile Name : "
         }
 
-    TextField {
-            id: comboBox
+        TextField {
+            id: textfieldid
             anchors.left:deletetext.right;anchors.leftMargin: 10
             anchors.top:parent.top;anchors.topMargin: 70
             width: 150
             height:30
-            placeholderText: "Default"
+            placeholderText: ""
         }
-    Rectangle {
-        id: confirmRect
-        width: parent.width * 0.4
-        height: parent.height * 0.2
-        color: "green"
-        anchors.bottom: parent.bottom;anchors.bottomMargin: 20
-        anchors.left: parent.left;anchors.leftMargin: 20
-        radius:15
-        border.width:2
-        border.color:"black"
-        Text {
-            anchors.centerIn: parent
-            text: "Confirm"
-            color: "white"
-            font.pointSize: 15
-        }
+        Rectangle {
+            id: confirmRect
+            width: parent.width * 0.4
+            height: parent.height * 0.2
+            color: "green"
+            anchors.bottom: parent.bottom;anchors.bottomMargin: 20
+            anchors.left: parent.left;anchors.leftMargin: 20
+            radius:15
+            border.width:2
+            border.color:"black"
+            Text {
+                anchors.centerIn: parent
+                text: "Confirm"
+                color: "white"
+                font.pointSize: 15
+            }
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                // Add your confirm action here
-                console.log("Confirm clicked")
-                gotoopenscreen()
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    console.log("Confirm clicked")
+                    gotoheader(textfieldid.text)
+                    textfieldid.text=""
+                }
             }
         }
-    }
-    Rectangle {
-        id: cancleRect
-        width: parent.width * 0.4
-        height: parent.height * 0.2
-        color: "gray"
-        anchors.bottom: parent.bottom;anchors.bottomMargin: 20
-        anchors.right: parent.right;anchors.rightMargin: 20
-        radius:15
-        border.width:2
-        border.color:"black"
-        Text {
-            anchors.centerIn: parent
-            text: "Cancel"
-            color: "white"
-            font.pointSize: 15
-        }
+        Rectangle {
+            id: cancleRect
+            width: parent.width * 0.4
+            height: parent.height * 0.2
+            color: "gray"
+            anchors.bottom: parent.bottom;anchors.bottomMargin: 20
+            anchors.right: parent.right;anchors.rightMargin: 20
+            radius:15
+            border.width:2
+            border.color:"black"
+            Text {
+                anchors.centerIn: parent
+                text: "Cancel"
+                color: "white"
+                font.pointSize: 15
+            }
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                console.log("Cancle clicked")
-                gotoopenscreen()
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    console.log("Cancle clicked")
+                    gotoopenscreen()
+                    textfieldid.text=""
+                }
             }
         }
-    }
     }
 }

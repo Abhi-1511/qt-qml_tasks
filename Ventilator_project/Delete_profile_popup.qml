@@ -1,12 +1,17 @@
 import QtQuick 2.15
+import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Extras 1.4
+import QtGraphicalEffects 1.12
+import QtQuick.Controls 1.4
+import QtQuick 2.2
 Rectangle {
     id:itemid1
     width:mainwindowid.width
     height:mainwindowid.height
     signal gotoopenscreen()
-
-
+    signal gotoheader(int removeid)
     Open_screen{
     enabled:false
     Rectangle{
@@ -16,6 +21,15 @@ Rectangle {
         opacity:0.1
     }
     }
+    function appendvalue(name){
+        mannualComboBox.model.append({text: name});
+        openscreenid.visible=true
+        openscreenid.enabled=true
+        saveprofileid.visible=false
+        saveprofileid.enabled=false
+    }
+
+
     Rectangle{
         width:parent.width/2.5
         height:parent.height/2.5
@@ -36,18 +50,37 @@ Rectangle {
             text:"Profile Name : "
         }
 
-    ComboBox {
-            id: comboBox
-            anchors.left:deletetext.right;anchors.leftMargin: 10
+        ComboBox{
+            id: mannualComboBox
+            width: parent.width/2.5
+            height: parent.height/6
             anchors.top:parent.top;anchors.topMargin: 70
-            width: 150
-            height:30
-            model: ["Option 1", "Option 2"]
-            currentIndex: 0 // Default selected index
+            anchors.right: parent.right;anchors.rightMargin: 50
+            model: ListModel {
+                ListElement { text: "Default" }
+                ListElement { text: "Abhishek" }
+            }
+            currentIndex: 0
+            style: ComboBoxStyle {
 
-            // Handle when an option is selected
-            onActivated: {
-                console.log("Selected option:", comboBox.currentText)
+                textColor: "white"
+                background: Rectangle {
+                    color: "black"
+                }
+
+            }
+            Rectangle {
+                width: 20
+                height: mannualComboBox.height
+                color: "black"
+                anchors.right: parent.right;anchors.rightMargin: 10
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: "\u25BD" // Hexadecimal Unicode escape sequence
+                    font.pixelSize: 16 // Adjust the font size as needed
+                    color: "white" // Set the color of the down arrow symbol
+                }
+
             }
         }
     Rectangle {
@@ -69,10 +102,10 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                // Add your confirm action here
-                console.log("Confirm clicked")
-                gotoopenscreen()
+            onClicked: { 
+                gotoheader(mannualComboBox.currentIndex)
+                 mannualComboBox.model.remove(mannualComboBox.currentIndex);
+                mannualComboBox.currentIndex=0
             }
         }
     }
@@ -98,6 +131,7 @@ Rectangle {
             onClicked: {
                 console.log("Cancle clicked")
                 gotoopenscreen()
+                 mannualComboBox.currentIndex=0
             }
         }
     }

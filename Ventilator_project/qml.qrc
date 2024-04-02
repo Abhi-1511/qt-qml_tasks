@@ -13,5 +13,15 @@
         <file>Delete_profile_popup.qml</file>
         <file>Alarm_popup.qml</file>
         <file>Value_change_popup.qml</file>
+        <file>Device_log.qml</file>
+        <file>Device_settings.qml</file>
+        <file>Please_wait.qml</file>
+        <file>Flashscreen.qml</file>
+        <file>Success.qml</file>
+        <file>Hold.qml</file>
+        <file>Release.qml</file>
+        <file>Save_delete_combobox.qml</file>
+        <file>Graph.qml</file>
+        <file>Slider_valuepopup.qml</file>
     </qresource>
 </RCC>

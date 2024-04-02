@@ -10,7 +10,25 @@ Item {
     id:itemid
     width: mainwindowid.width
     height: mainwindowid.height
+    signal gotograph
+
     signal shownotifications()
+     property int countDownValue: 5
+    function appendvalue(name){
+        mannualComboBox.model.append({text: name});
+        openscreenid.visible=true
+        openscreenid.enabled=true
+        saveprofileid.visible=false
+        saveprofileid.enabled=false
+    }
+    function deletevalue(val){
+       mannualComboBox.model.remove(val);
+        openscreenid.visible=true
+        openscreenid.enabled=true
+        saveprofileid.visible=false
+        saveprofileid.enabled=false
+    }
+
         Rectangle{
             id:toprect
             width:parent.width
@@ -30,23 +48,18 @@ Item {
                     width: parent.width
                     height: parent.height
                     model: ListModel {
-                        ListElement { text: "Default" }
-                        ListElement { text: "Option 1" }
-                        ListElement { text: "Option 2" }
-                        ListElement { text: "Option 3" }
+                        ListElement { text: "Default           " }
+                        ListElement { text: "Abhishek" }
                     }
                     currentIndex: 0
-
                     style: ComboBoxStyle {
 
-                        textColor: "white" // Set the text color to white directly on ComboBoxStyle
+                        textColor: "white"
                         background: Rectangle {
                             color: "black"
                         }
 
                     }
-
-
                     Rectangle {
                         width: 20
                         height: mannualComboBox.height
@@ -69,25 +82,78 @@ Item {
                 height:parent.height
                 color:"black"
                 anchors.left:defaultRect.right
-                Rectangle{
-                    id:notificationrect
-                    width:parent.width/4
-                    height:parent.height
-                    radius:50
-                    color:"#89AAD3"
-                    anchors.left:parent.left;
+                Rectangle {
+                    id: notificationrect
+                    width: parent.width / 4
+                    height: parent.height
+                    radius: 50
+                    color: "#89AAD3"
+                    anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
 
                     Image {
-                        width:parent.width*0.6
-                        height:parent.height*0.6
-                        anchors.left:parent.left
+                        id: firstImage
+                        width: parent.width * 0.6
+                        height: parent.height * 0.6
+                        anchors.left: parent.left
                         source: "file:///C:/Users/Abhi/Desktop/notification.png"
                         anchors.verticalCenter: parent.verticalCenter
                         fillMode: Image.PreserveAspectFit // Preserve the aspect ratio while fitting inside the rectangle
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                secondImage.visible = true; // Show the second image
+                                timer.start(); // Start the timer
+                                countDownValue = 5; // Set initial countdown value
+                                countdowntext.visible = true; // Show countdown text
+                            }
+                        }
+
+                        Text {
+                            id: countdowntext
+                            text: countDownValue.toString()
+                            color: "orange"
+                            visible: false // Initially hidden
+                            font.pointSize: parent.width * 0.3
+                            anchors.bottom: parent.bottom
+                        }
+
+
+                        Timer {
+                            id: timer
+                            interval: 1000 // 1 second
+                            repeat: true // Repeat until stopped
+                            running: false // Initially not running
+                            onTriggered: {
+                                 // Decrement countdown value
+                                if (countDownValue === 0) {
+                                    timer.stop(); // Stop the timer when countdown reaches 0
+                                    secondImage.visible = false; // Hide the second image
+                                    countdowntext.visible = false; // Hide the countdown text
+                                    countDownValue=5
+                                    countdowntext.text = countDownValue.toString();
+                                } else {
+                                    countDownValue--;
+                                    countdowntext.text = countDownValue.toString(); // Update countdown text
+
+                                }
+                            }
+                        }
                     }
 
+                    Image {
+                        id: secondImage
+                        width: parent.width * 0.6
+                        height: parent.height * 0.6
+                        anchors.left: parent.left
+                        source: "file:///C:/Users/Abhi/Desktop/redline.png"
+                        anchors.verticalCenter: parent.verticalCenter
+                        fillMode: Image.PreserveAspectFit // Preserve the aspect ratio while fitting inside the rectangle
+                        visible: false // Initially hidden
+                    }
                 }
+
                 Rectangle{
                     id:settingsrect
                     width:parent.width/4
@@ -103,6 +169,15 @@ Item {
                         source: "file:///C:/Users/Abhi/Desktop/settings.png"
                         anchors.verticalCenter: parent.verticalCenter
                         fillMode: Image.PreserveAspectFit // Preserve the aspect ratio while fitting inside the rectangle
+                    }
+                    MouseArea{
+                        anchors.fill:parent
+                        onClicked: {
+                            slideid.visible=true
+                            slideid.enabled=true
+                            openscreenid.visible=false
+                            openscreenid.enabled=false
+                        }
                     }
                 }
                 Rectangle{
@@ -149,6 +224,13 @@ Item {
                         ListElement { iconSource: "file:///Users/Abhi/Desktop/home.png" }
                         ListElement { iconSource: "file:///Users/Abhi/Desktop/home.png"}
                     }
+                    MouseArea{
+                        anchors.fill:parent
+                        onClicked:{
+                            gotograph()
+                        }
+                    }
+
                     currentIndex: 0
 
                     //         delegate: Image {

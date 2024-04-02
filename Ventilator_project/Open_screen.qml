@@ -12,31 +12,70 @@ Item {
     width: mainwindowid.width
     height: mainwindowid.height
     property bool lockconfirm:false
+    property bool inpause:false
+    property bool changeimage:false
+    property bool startconfirm:false
+    property real fillPercentage: 0
+    property int waittime:3
+    property int buffertime:0
+    signal gotoholdpage()
     signal openmodepcv()
     signal gotopopuplock()
     signal gotopopupunlock()
-    signal gotocalibrationpopup()
     signal gotovaluepage()
     signal gotosaveprofile()
+    signal gotodevicesettings()
     signal gotoremoveprofile()
-    signal openvaluechangepopup()
-
-    property alias lockfactor:itemid.lockconfirm
-    property alias lockrectid:lockrect.enabled
-    //property var lockcolor:
+    signal gotodevicelogpage()
+    signal gotocalibrationpopup()
+    signal openvaluechangepopup(int ids,int val1)
     function unlockscreen(){
         lockconfirm=true
+        foropacity.opacity=0
         openscreenid.visible=true
         openscreenid.enabled=true
         popuplockid.visible=false
         popuplockid.enabled=false
     }
     function unlockscreenoncancel(){
-        lockconfirm=true
+        lockconfirm=false
+        foropacity.opacity=0
         openscreenid.visible=true
         openscreenid.enabled=true
         popupunlockid.visible=false
         popupunlockid.enabled=false
+
+    }
+    function alotedvalue(textfieldid,alotval){
+        foropacity.opacity=0
+        switch(textfieldid) {
+        case 1:
+            peekpmvalue.text = alotval;
+            break;
+        case 2:
+            breathratemvalue.text = alotval;
+            break;
+        case 3:
+            spontbrmvalue.text = alotval;
+            break;
+        case 4:
+            tviemvalue.text = alotval;
+            break;
+        case 5:
+            fio2mvalue.text = alotval;
+            break;
+        case 6:
+            ieratiomvalue.text = alotval;
+            break;
+        case 7:
+            spo2hrmvalue.text = alotval;
+            break;
+        case 8:
+            minutevolmvalue.text = alotval;
+            break;
+        default:
+            console.error("Invalid text field ID:", textfieldid);
+        }
 
     }
 
@@ -77,7 +116,6 @@ Item {
                     }
                 }
             }
-
             Drawer {
                 id: drawer
                 width: 0.4 * mainwindowid.width
@@ -157,6 +195,13 @@ Item {
                                 color:"white"
                                 font.pointSize: 12
                             }
+                            MouseArea{
+                                anchors.fill:parent
+                                onClicked: {
+                                    gotodevicelogpage()
+                                    drawer.close()
+                                }
+                            }
                         }
                         Rectangle{
                             id:devicesettingsrect
@@ -171,6 +216,13 @@ Item {
                                 anchors.verticalCenter: parent.verticalCenter
                                 color:"white"
                                 font.pointSize: 12
+                            }
+                            MouseArea{
+                                anchors.fill:parent
+                                onClicked: {
+                                    gotodevicesettings()
+                                    drawer.close()
+                                }
                             }
                         }
                         Rectangle{
@@ -213,7 +265,7 @@ Item {
                                 anchors.fill:parent
                                 onClicked: {
                                     gotoremoveprofile()
-                                     drawer.close()
+                                    drawer.close()
                                 }
                             }
                         }
@@ -341,7 +393,6 @@ Item {
                 id:peakRect
                 width:parent.width/5.7142
                 height:parent.height/2.2
-                color:"black"
                 anchors.top:parent.top;anchors.topMargin: 10
                 anchors.left:parent.left;anchors.leftMargin: parent.width/10
                 RadialGradient {
@@ -364,7 +415,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: peekpmvalue
-                    text: qsTr("0")
+                    text: "0"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -381,7 +432,8 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                        openvaluechangepopup()
+                        foropacity.opacity=0.1
+                        openvaluechangepopup(1,peekpmvalue.text)
                     }
                 }
             }
@@ -411,7 +463,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: breathratemvalue
-                    text: qsTr("0")
+                    text: "0"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -424,6 +476,12 @@ Item {
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.08
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        openvaluechangepopup(2,breathratemvalue.text)
+                    }
                 }
             }
             Rectangle{
@@ -466,6 +524,12 @@ Item {
                     font.bold: true
                     font.pointSize: parent.width*0.08
                 }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        openvaluechangepopup(3,spontbrmvalue.text)
+                    }
+                }
             }
             Rectangle{
                 id:tvrect
@@ -506,6 +570,12 @@ Item {
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.08
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        openvaluechangepopup(4,tviemvalue.text)
+                    }
                 }
             }
             Rectangle{
@@ -549,6 +619,12 @@ Item {
                     font.bold: true
                     font.pointSize: parent.width*0.08
                 }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        openvaluechangepopup(5,fio2mvalue.text)
+                    }
+                }
 
             }
             Rectangle{
@@ -578,10 +654,16 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: ieratiomvalue
-                    text: qsTr("0:0")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        openvaluechangepopup(6,ieratiomvalue.text)
+                    }
                 }
 
             }
@@ -626,6 +708,12 @@ Item {
                     font.bold: true
                     font.pointSize: parent.width*0.08
                 }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        openvaluechangepopup(7,spo2hrmvalue.text)
+                    }
+                }
             }
             Rectangle{
                 id:minuteVolrect
@@ -669,14 +757,41 @@ Item {
                     font.bold: true
                     font.pointSize: parent.width*0.08
                 }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        foropacity.opacity=0.2
+                        openvaluechangepopup(8,minutevolmvalue.text)
+                    }
+                }
             }
             Rectangle {
-                anchors.right: parent.right;anchors.rightMargin: 40
+                anchors.right: parent.right
+                anchors.rightMargin: 40
                 width: itemid.width / 6
                 height: parent.height
                 color: "black"
+                focus:true
+
+
+                Canvas {
+                    id: gaugeCanvas
+                    anchors.left:parent.left;anchors.leftMargin: 40
+                    anchors.bottom: parent.bottom
+                    width:parent.width-40
+                    height:parent.height
+                    onPaint: {
+                        var ctx = getContext("2d");
+                        ctx.clearRect(0, 0, width, height);
+                        ctx.fillStyle = "black";
+                        ctx.fillRect(0, 0, width, height);
+                        ctx.fillStyle = "#FF0000";
+                        ctx.fillRect(0, height * (1 - fillPercentage), width, height * fillPercentage);
+                    }
+                }
 
                 Gauge {
+                    id: gauge
                     minimumValue: 0
                     maximumValue: 60
                     tickmarkStepSize: 15
@@ -684,7 +799,7 @@ Item {
                     font.pixelSize: 20
                     anchors.centerIn: parent
                     anchors.horizontalCenterOffset: -4
-                    height:itemid.height/1.6
+                    height: itemid.height / 1.6
                     style: GaugeStyle {
                         valueBar: Rectangle {
                             color: "#e34c22"
@@ -715,7 +830,23 @@ Item {
                         }
                     }
                 }
+
+                // Handle key press event
+                Timer {
+                    id: timerforgauge
+                    interval:100
+                    running: false
+                    repeat: true
+                    onTriggered: {
+                        if (fillPercentage < 1) {
+                            fillPercentage += 0.01;
+                            gaugeCanvas.requestPaint();
+                        }
+                        else timerforgauge.stop()
+                    }
+                }
             }
+
         }
         /////////////////////////
         Rectangle{
@@ -947,41 +1078,244 @@ Item {
                     anchors.centerIn: parent
                     fillMode: Image.PreserveAspectFit
                     source: lockconfirm===false?"file:///C:/Users/Abhi/Desktop/lock.png" : "file:///C:/Users/Abhi/Desktop/locked.png"
+                    onSourceChanged: {
+                        console.log("lockImage"+lockImage.source)
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        if (midrect.enabled===true) {
+                        if (lockconfirm===false) {
                             gotopopuplock()
 
-                        } else {
+                        } else if(lockconfirm===true) {
+                            foropacity.opacity=0.2
                             gotopopupunlock()
-                            lockconfirm = false
-
                         }
                     }
                 }
             }
-            Rectangle{
-                id:playrect
-                width:parent.width/6.1538
-                height:parent.height
-                color:"white"
-                anchors.right:parent.right
-                border.width:2
-                border.color:"black"
-                enabled: lockconfirm===true?false:true
+            Rectangle {
+                id: playrect
+                width: parent.width / 6.1538
+                height: parent.height
+                color: "white"
+                anchors.right: parent.right
+                border.width: 2
+                border.color: "black"
+                enabled: lockconfirm === true ? false : true
+
                 Image {
-                    width:parent.width*0.8
-                    height:parent.height*0.8
-                    source: "file:///C:/Users/Abhi/Desktop/play.png"
+                    width: parent.width * 0.8
+                    height: parent.height * 0.8
+                    source: changeimage===false?"file:///C:/Users/Abhi/Desktop/play.png":"file:///C:/Users/Abhi/Desktop/pause.jpg"
                     anchors.centerIn: parent
                     fillMode: Image.PreserveAspectFit
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: {
+                        if(startconfirm===false&&changeimage===false){
+                            popupforstart.visible = true
+
+                            foropacity.opacity = 0.2
+                            timer.start()
+                            buffertime=0
+                        }
+
+
+                        else if(startconfirm===true&&changeimage===false&&buffertime<=3) {
+                            timerstartflag.stop()
+                            changeimage=true
+                            waittime=3
+                            console.log("machine started")
+                            console.log(buffertime+" else buffertime")
+                            changingtext.text="Hold for "+waittime+" sec"
+                            startconfirm=false
+                            inpause=true
+                            buffertime=0
+                            timerforgauge.start()
+                        }
+                        else if(changeimage===true&&inpause===true){
+                            console.log("do you want to pause")
+                            pausenotificationrect.visible=true
+                            midrect.enabled=false
+                            foropacity.opacity=0.2
+                            inpause=false
+                        }
+                    }
+
+                    onReleased: {
+                        timer.stop()
+                        console.log("released")
+                        timerstartflag.start()
+                        timerstartflag.running=true
+                        buffertime=0
+
+                        if (popupforstart.visible) {
+                            popupforstart.visible = false
+                            foropacity.opacity = 0
+                        }
+                    }
                 }
             }
         }
     }
+    Rectangle{
+        id:foropacity
+        width:parent.width
+        height:parent.height
+        color:"lightblue"
+        opacity:openscreenid.enabled?0:0.2
+    }
+
+
+    Rectangle {
+        id: popupforstart
+        width: parent.width / 2
+        height: parent.height / 4
+        color: "black"
+        anchors.centerIn: parent
+        border.width: 3
+        border.color: "white"
+        visible: false
+
+        BusyIndicator {
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+            running: timer.running
+        }
+
+        Text {
+            id:changingtext
+            anchors.top: parent.top
+            anchors.topMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Hold for "+waittime+" sec"
+            font.pointSize: parent.width * 0.02
+            font.bold: true
+            color: "white"
+        }
+    }
+    Timer {
+        id: timerwaittime
+        interval:1000
+        running: popupforstart.visible === true ? true : false
+        repeat: true
+        onTriggered: {
+            if(waittime>0){
+                waittime-=1
+            }
+        }
+    }
+    Timer {
+        id: timerstartflag
+        interval:1000
+        running: false
+        repeat: true
+        onTriggered: {
+            buffertime+=1
+            if(buffertime>=3){
+                timerstartflag.repeat=false
+                timerstartflag.running=false
+                startconfirm=false
+            }
+            console.log("started timer")
+            console.log("start confirm value:"+startconfirm)
+        }
+    }
+    Timer {
+        id: timer
+        interval:3000
+        running: popupforstart.visible === true ? true : false
+        repeat: true
+        onTriggered: {
+            timer.running = false;
+            changingtext.text="Now release the button and click to start"
+            startconfirm=true
+        }
+    }
+    Rectangle {
+        id:pausenotificationrect
+        width: parent.width/1.5
+        height: parent.height/3
+        color: "black"
+        anchors.centerIn: parent
+        border.width: 3
+        border.color: "white"
+        visible:false
+
+        Text {
+            anchors.top: parent.top
+            anchors.topMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+            id: pleasewaittext
+            text: "Do You want to Pause"
+            font.pointSize: parent.width * 0.04
+            font.bold: true
+            color: "white"
+        }
+        Rectangle {
+            id: confirmRect
+            width: parent.width * 0.4
+            height: parent.height * 0.3
+            color: "green"
+            anchors.bottom: parent.bottom;anchors.bottomMargin: 20
+            anchors.left: parent.left;anchors.leftMargin: 20
+            radius:15
+            border.width:2
+            border.color:"black"
+            Text {
+                anchors.centerIn: parent
+                text: "Confirm"
+                color: "white"
+                font.pointSize: 15
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    startconfirm=false
+                    changeimage=false
+                    pausenotificationrect.visible=false
+                    foropacity.opacity=0
+                    timerforgauge.stop()
+                    midrect.enabled=true
+                }
+            }
+        }
+        Rectangle {
+            id: cancleRect
+            width: parent.width * 0.4
+            height: parent.height * 0.3
+            color: "gray"
+            anchors.bottom: parent.bottom;anchors.bottomMargin: 20
+            anchors.right: parent.right;anchors.rightMargin: 20
+            radius:15
+            border.width:2
+            border.color:"black"
+            Text {
+                anchors.centerIn: parent
+                text: "Cancel"
+                color: "white"
+                font.pointSize: 15
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    pausenotificationrect.visible=false
+                    foropacity.opacity=0
+                    midrect.enabled=true
+                }
+            }
+        }
+
+    }
 }
+
 
 
 
