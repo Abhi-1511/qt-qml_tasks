@@ -14,7 +14,6 @@ Item {
     anchors.centerIn: parent
     x:mainwindowid.width/3
     y:mainwindowid.height/3
-    //property int textvalue:0
     property int alotedvalue:0
     property int givenvalue:0
     property int givenid:0
@@ -28,8 +27,6 @@ Item {
         valuechangepopupid.enabled=true
         openscreenid.visible=true
         openscreenid.enabled=false
-        // openscreenid.opacity=0.1
-
         givenvalue=val2
         givenvalueupdater=val2
         givenid=id_s

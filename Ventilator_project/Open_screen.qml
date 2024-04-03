@@ -22,7 +22,7 @@ Item {
     signal openmodepcv()
     signal gotopopuplock()
     signal gotopopupunlock()
-    signal gotovaluepage()
+    signal gotovaluepage(int flag1)
     signal gotosaveprofile()
     signal gotodevicesettings()
     signal gotoremoveprofile()
@@ -415,7 +415,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: peekpmvalue
-                    text: "0"
+                    text: "5"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -463,7 +463,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: breathratemvalue
-                    text: "0"
+                    text: "8"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -510,7 +510,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: spontbrmvalue
-                    text: qsTr("0")
+                    text: qsTr("12")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -557,7 +557,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: tviemvalue
-                    text: qsTr("0")
+                    text: qsTr("6")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -605,7 +605,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: fio2mvalue
-                    text: qsTr("0")
+                    text: qsTr("15")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -654,7 +654,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: ieratiomvalue
-                    text: qsTr("0")
+                    text: qsTr("23")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -694,7 +694,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: spo2hrmvalue
-                    text: qsTr("__/__")
+                    text: qsTr("11")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.1
@@ -743,7 +743,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: minutevolmvalue
-                    text: qsTr("0")
+                    text: qsTr("26")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -929,7 +929,7 @@ Item {
                 MouseArea{
                     anchors.fill:parent
                     onClicked: {
-                        gotovaluepage()
+                        gotovaluepage(2)
                     }
                 }
             }
@@ -972,7 +972,7 @@ Item {
                 MouseArea{
                     anchors.fill:parent
                     onClicked: {
-                        gotovaluepage()
+                        gotovaluepage(2)
                     }
                 }
             }
@@ -1015,7 +1015,7 @@ Item {
                 MouseArea{
                     anchors.fill:parent
                     onClicked: {
-                        gotovaluepage()
+                        gotovaluepage(2)
                     }
                 }
             }
@@ -1058,7 +1058,7 @@ Item {
                 MouseArea{
                     anchors.fill:parent
                     onClicked: {
-                        gotovaluepage()
+                        gotovaluepage(2)
                     }
                 }
             }
@@ -1222,8 +1222,6 @@ Item {
                 timerstartflag.running=false
                 startconfirm=false
             }
-            console.log("started timer")
-            console.log("start confirm value:"+startconfirm)
         }
     }
     Timer {

@@ -15,17 +15,23 @@ Item {
     Header{}
     function updatePvcText() {
         switch (breathcombo.currentText) {
-        case "Assist/Control":
+        case "Assist/Control                        ":
+            if(ventmodecombo.currentText==="Volume")
             pcvtext.text = "VCV";
+            if(ventmodecombo.currentText==="Pressure                              ")
+            pcvtext.text = "PCV";
             break;
         case "Support":
-            pcvtext.text = "Support-PRVC";
+            pcvtext.text = "CPAP";
             break;
         case "Intermittent":
-            pcvtext.text = "SIMV";
+            if(ventmodecombo.currentText==="Volume")
+           pcvtext.text = "VC-SIMV (PS)";
+            if(ventmodecombo.currentText==="Pressure                              ")
+            pcvtext.text = "PC-SIMV(PS)";
             break;
         case "PRVC":
-            pcvtext.text = "SIMV-PRVC";
+            pcvtext.text = "PRVC";
             break;
         default:
             pcvtext.text = "PCV";

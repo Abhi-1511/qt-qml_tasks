@@ -11,8 +11,27 @@ Item {
     id:itemid
     width: mainwindowid.width
     height: mainwindowid.height
-    property int minValue: 0
-    property int maxValue: 100
+    property int firstvalue:0
+    property int secondvalue:0
+    property int fromvalue:0
+    property int tovalue:0
+    property string textheading:""
+    property int ids:0
+    signal gobacktoslidescreen(int fvalue,int svalue,int idss,bool dis)
+    function getvalues(a,b,c,d,e,f){
+        firstvalue=a
+        secondvalue=b
+        fromvalue=c
+        tovalue=d
+        textheading=e
+        ids=f
+        control.first.value=a
+        control.second.value=b
+        slideid.visible=false
+        slideid.enabled=false
+        slidepopupid.visible=true
+        slidepopupid.enabled=true
+    }
     Header{}
     Rectangle{
         id:fullminusheader
@@ -22,7 +41,7 @@ Item {
         color:"black"
         Text {
             id: topleft
-            text: qsTr("Units : L\t\t\t\t\tMinute V")
+            text: textheading
             color:"white"
             anchors.bottom:rectid1.top;anchors.bottomMargin: 10
             anchors.left: parent.left;anchors.leftMargin: 100
@@ -46,6 +65,151 @@ Item {
                 border.width:4
                 border.color:"#2665ad"
 
+                RangeSlider{
+                    id: control
+                    first.value: firstvalue
+                    second.value: secondvalue
+                    from:fromvalue
+                    to:tovalue
+                    orientation: Qt.Vertical
+                    anchors.centerIn: parent
+
+                    Rectangle {
+                        x: control.leftPadding + control.availableWidth / 2 - width / 2
+                        y: control.topPadding + control.second.visualPosition * (control.availableHeight - height/5)
+                        implicitWidth: 40
+                        implicitHeight: (control.first.visualPosition - control.second.visualPosition) * control.availableHeight
+                        width: implicitWidth
+                        height: implicitHeight
+                        radius: 5
+                        color: "#21be2b"
+                    }
+                    background: Rectangle {
+                        x: control.leftPadding + control.availableWidth / 2 - width / 2
+                        y: control.topPadding
+                        implicitWidth: 40
+                        implicitHeight: 260
+                        width: implicitWidth
+                        height: control.availableHeight
+                        radius: 5
+                        color: "#bdbebf"
+                        MouseArea{
+                            anchors.fill:parent
+                            onClicked: {
+                                mouse.accepted = true
+                            }
+                        }
+
+                    }
+
+                    first.handle: Rectangle {
+                        x: control.leftPadding + control.availableWidth / 2 - width / 2
+                        y: control.topPadding + control.first.visualPosition * (control.availableHeight - height)
+                        implicitWidth: 50
+                        implicitHeight: 35
+                        radius: 13
+                        color: control.first.pressed ? "#f0f0f0" : "#f6f6f6"
+
+                        Text {
+                            id: ltext
+                            anchors.centerIn: parent
+                            text: "L"
+                            color:"blue"
+                            font.bold:true
+                        }
+                        Rectangle{
+                            id:borderidfirst
+                            anchors.left:parent.left;anchors.leftMargin: -10
+                            anchors.top:parent.top;anchors.topMargin: -5
+                            anchors.bottom:parent.bottom;anchors.bottomMargin: -10
+                            width:parent.width+110
+                            height:parent.height+20
+                            color:"transparent"
+                            border.width:2
+                            border.color:"red"
+                            visible: false
+                        }
+                        MouseArea{
+                            anchors.fill:borderidfirst
+                            onClicked: {
+                                borderidfirst.visible=true
+                                borderidsec.visible=false
+                            }
+
+                        }
+
+
+
+                        Rectangle{
+                            width:40
+                            height:40
+                            anchors.left:parent.left;anchors.leftMargin:100
+                            color:"white"
+                            border.width:2
+                            border.color: "black"
+                            Text {
+                                id: firstval
+                                anchors.centerIn: parent
+                                text:control.first.value
+                                color:"black"
+                            }
+                        }
+                    }
+
+
+                    second.handle: Rectangle {
+                        x: control.leftPadding + control.availableWidth / 2 - width / 2
+                        y: control.topPadding + control.second.visualPosition * (control.availableHeight - height)
+                        implicitWidth: 50
+                        implicitHeight: 35
+                        radius: 13
+                        color: control.second.pressed ? "#f0f0f0" : "#f6f6f6"
+                        border.color: "#bdbebf"
+
+                        Text {
+                            id: htext
+                            anchors.centerIn: parent
+                            text: "H"
+                            color:"red"
+                            font.bold:true
+                        }
+                        Rectangle{
+                            id:borderidsec
+                            anchors.right:parent.right;anchors.rightMargin: -10
+                            anchors.top:parent.top;anchors.topMargin: -5
+                            anchors.bottom:parent.bottom;anchors.bottomMargin: -10
+                            width:parent.width+110
+                            height:parent.height+20
+                            color:"transparent"
+                            border.width:2
+                            border.color:"red"
+                            visible:false
+                        }
+                        MouseArea{
+                            anchors.fill:borderidsec
+                            onClicked: {
+                                borderidsec.visible=true
+                                borderidfirst.visible=false
+                            }
+
+                        }
+
+                        Rectangle{
+                            width:40
+                            height:40
+                            anchors.right:parent.right;anchors.rightMargin:100
+                            color:"white"
+                            border.width:2
+                            border.color: "black"
+                            Text {
+                                id: secondval
+                                anchors.centerIn: parent
+                                text: control.second.value
+                                color:"black"
+                            }
+                        }
+                    }
+                }
             }
         }
         Rectangle {
@@ -55,6 +219,7 @@ Item {
             width: parent.width * 0.1
             color: "black"
             Rectangle {
+                id:upid
                 anchors.bottom:parent.bottom;anchors.bottomMargin: 300
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: parent.height * 0.2
@@ -70,13 +235,18 @@ Item {
                     MouseArea{
                         anchors.fill:parent
                         onClicked: {
-
+                            if(borderidfirst.visible===true){
+                                control.first.value++
+                            }
+                            else if(borderidsec.visible===true){
+                                control.second.value++
+                            }
                         }
                     }
                 }
             }
             Rectangle {
-
+                id:downid
                 anchors.bottom:parent.bottom;anchors.bottomMargin: 200
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: parent.height * 0.2
@@ -93,12 +263,18 @@ Item {
                 MouseArea{
                     anchors.fill:parent
                     onClicked: {
-                        givenvalue-=1
+                        onClicked: {
+                            if(borderidfirst.visible===true)
+                                control.first.value--
+                            else if(borderidsec.visible===true)
+                                control.second.value--
+                        }
                     }
                 }
 
             }
             Rectangle {
+                id:resetid
                 anchors.bottom:parent.bottom;anchors.bottomMargin: 100
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: parent.height * 0.2
@@ -115,7 +291,8 @@ Item {
                 MouseArea{
                     anchors.fill:parent
                     onClicked: {
-
+                        control.first.value=firstvalue
+                        control.second.value=secondvalue
                     }
                 }
 
@@ -127,7 +304,7 @@ Item {
                 width: parent.width*0.5
                 anchors.bottom:parent.bottom;anchors.bottomMargin: 30
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: checkbox.checked ? "green" : "lightgray"
+                color: checkbox.checked ? "gray" : "lightgray"
                 border.color: "gray"
                 border.width: 2
                 radius: 3
@@ -139,11 +316,11 @@ Item {
             }
 
             Text {
+                id:enableid
                 anchors.bottom:parent.bottom;anchors.bottomMargin: 50
-
                 anchors.left: checkBoxBackground.right
                 anchors.leftMargin: 5
-                text: "Enable"
+                text: "Enabled State"
                 color:"white"
             }
 
@@ -152,11 +329,25 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 anchors.rightMargin: 5
-                visible: false // Hide the actual checkbox
-                checked: false // Initial state of the checkbox
+                visible: false
+                checked: false
                 onCheckedChanged: {
-                    rectid1.enabled = !checked
-                }
+                        if (checked) {
+                            control.enabled = false;
+                            upid.enabled=false
+                            downid.enabled=false
+                            resetid.enabled=false
+                            borderidfirst.visible=false
+                            borderidsec.visible=false
+                            enableid.text="Disabled State"
+                        } else {
+                            control.enabled = true;
+                            upid.enabled=true
+                            downid.enabled=true
+                            resetid.enabled=true
+                            enableid.text="Enabled State"
+                        }
+                    }
             }
 
 
@@ -179,10 +370,15 @@ Item {
             MouseArea{
                 anchors.fill:parent
                 onClicked: {
-                    slideid.visible=false
-                    slideid.enabled=false
-                    openscreenid.visible=true
-                    openscreenid.enabled=true
+                    slideid.visible=true
+                    slideid.enabled=true
+                    slidepopupid.visible=false
+                    slidepopupid.enabled=false
+                    gobacktoslidescreen(control.first.value,control.second.value,ids,checkbox.checked)
+                    borderidsec.visible=false
+                    borderidfirst.visible=false
+                    borderidsec.enabled=false
+                    borderidfirst.enabled=false
                 }
             }
         }

@@ -10,8 +10,8 @@ Item {
     id:itemid
     width: mainwindowid.width
     height: mainwindowid.height
-    signal gotograph
-
+    signal gotograph()
+    property bool checkalarmtimer: true
     signal shownotifications()
      property int countDownValue: 5
     function appendvalue(name){
@@ -103,10 +103,17 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                secondImage.visible = true; // Show the second image
-                                timer.start(); // Start the timer
-                                countDownValue = 5; // Set initial countdown value
-                                countdowntext.visible = true; // Show countdown text
+                                if(checkalarmtimer===true||countdowntext.visible === false){
+                                secondImage.visible = true;
+                                timer.start();
+                                countDownValue = 5;
+                                countdowntext.visible = true;
+                                checkalarmtimer=false
+                                }else{
+                                    secondImage.visible = false;
+                                    countdowntext.visible = false;
+                                    checkalarmtimer=true
+                                }
                             }
                         }
 
@@ -122,15 +129,14 @@ Item {
 
                         Timer {
                             id: timer
-                            interval: 1000 // 1 second
-                            repeat: true // Repeat until stopped
-                            running: false // Initially not running
+                            interval: 1000
+                            repeat: true
+                            running: false
                             onTriggered: {
-                                 // Decrement countdown value
-                                if (countDownValue === 0) {
-                                    timer.stop(); // Stop the timer when countdown reaches 0
-                                    secondImage.visible = false; // Hide the second image
-                                    countdowntext.visible = false; // Hide the countdown text
+                                if (countDownValue === 0||countdowntext.visible === false) {
+                                    timer.stop();
+                                    secondImage.visible = false;
+                                    countdowntext.visible = false;
                                     countDownValue=5
                                     countdowntext.text = countDownValue.toString();
                                 } else {

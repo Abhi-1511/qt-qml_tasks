@@ -12,7 +12,15 @@ Item {
     width:mainwindowid.width*0.8
     height:mainwindowid.height/1.55
     y:parent.height*0.11
+    property int b:0
     signal openvaluechangepopup(int ids,int val1)
+    function signalfromopenscreen(c){
+        b=c
+    }
+    function signalfromgraph(d){
+        b=d
+    }
+
     function alotedvalue(textfieldid,alotval){
         foropacity.opacity=0
         switch(textfieldid) {
@@ -95,7 +103,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: insppressmvalue
-                    text: "5"
+                    text: "15"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -112,7 +120,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                       foropacity.opacity=0.2
+                        foropacity.opacity=0.2
                         openvaluechangepopup(11,insppressmvalue.text)
                     }
                 }
@@ -143,7 +151,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: insptimemvalue
-                    text: qsTr("0")
+                    text: "2"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -160,7 +168,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                       foropacity.opacity=0.2
+                        foropacity.opacity=0.2
                         openvaluechangepopup(12,insptimemvalue.text)
                     }
                 }
@@ -191,7 +199,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: braethratemvalue
-                    text: qsTr("0")
+                    text: qsTr("12")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -208,7 +216,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                       foropacity.opacity=0.2
+                        foropacity.opacity=0.2
                         openvaluechangepopup(13,braethratemvalue.text)
                     }
                 }
@@ -239,7 +247,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: iemvalue
-                    text: qsTr("0")
+                    text: qsTr("3")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -248,7 +256,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                       foropacity.opacity=0.2
+                        foropacity.opacity=0.2
                         openvaluechangepopup(14,iemvalue.text)
                     }
                 }
@@ -279,7 +287,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: risetimemvalue
-                    text: qsTr("0")
+                    text: qsTr("1")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -288,7 +296,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                       foropacity.opacity=0.2
+                        foropacity.opacity=0.2
                         openvaluechangepopup(15,risetimemvalue.text)
                     }
                 }
@@ -338,7 +346,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                       foropacity.opacity=0.2
+                        foropacity.opacity=0.2
                         openvaluechangepopup(16,insptrigmtext.text)
                     }
                 }
@@ -387,7 +395,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                       foropacity.opacity=0.2
+                        foropacity.opacity=0.2
                         openvaluechangepopup(17,tidalvolmvalue.text)
                     }
                 }
@@ -418,7 +426,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: minutevolmvalue
-                    text: qsTr("0")
+                    text: qsTr("4")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -435,7 +443,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                       foropacity.opacity=0.2
+                        foropacity.opacity=0.2
                         openvaluechangepopup(18,minutevolmvalue.text)
                     }
                 }
@@ -486,7 +494,14 @@ Item {
             MouseArea{
                 anchors.fill:parent
                 onClicked: {
-                    gotoopenscreen()
+                    if(b===2)
+                        gotoopenscreen()
+                    else if(b===1){
+                        graphid.enabled=true
+                        graphid.visible=true
+                        valuepageid.visible=false
+                        valuepageid.enabled=false
+                    }
                 }
             }
         }
@@ -541,7 +556,7 @@ Item {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                   foropacity.opacity=0.2
+                    foropacity.opacity=0.2
                     openvaluechangepopup(19,peepvalue.text)
                 }
             }
@@ -572,7 +587,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 id: exptrigvalue
-                text: qsTr("0")
+                text: qsTr("5")
                 color:"white"
                 font.bold: true
                 font.pointSize: parent.width*0.2
@@ -589,7 +604,7 @@ Item {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                   foropacity.opacity=0.2
+                    foropacity.opacity=0.2
                     openvaluechangepopup(20,exptrigvalue.text)
                 }
             }
@@ -647,7 +662,7 @@ Item {
 
                 onClicked: {
 
-                   foropacity.opacity=0.2
+                    foropacity.opacity=0.2
                     openvaluechangepopup(21,presssup.text)
                 }
             }
@@ -703,7 +718,14 @@ Item {
             MouseArea{
                 anchors.fill:parent
                 onClicked: {
-                    gotoopenscreen()
+                    if(b===2)
+                        gotoopenscreen()
+                    else if (b===1){
+                        graphid.enabled=true
+                        graphid.visible=true
+                        valuepageid.visible=false
+                        valuepageid.enabled=false
+                    }
                 }
             }
         }

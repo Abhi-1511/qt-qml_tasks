@@ -23,5 +23,8 @@
         <file>Save_delete_combobox.qml</file>
         <file>Graph.qml</file>
         <file>Slider_valuepopup.qml</file>
+        <file>Slider_screen.qml</file>
+        <file>RangeSliderCustom.qml</file>
+        <file>Graph_setting.qml</file>
     </qresource>
 </RCC>

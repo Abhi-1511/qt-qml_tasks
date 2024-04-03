@@ -21,7 +21,9 @@ Window {
                 openscreenid.visible=false
                 openscreenid.enabled=false
                 graphid.visible=true
-                graphid.enabled=false
+                graphid.enabled=true
+                headerid.visible=true
+                headerid.enabled=true
             }
         }
         onOpenmodepcv: {
@@ -215,12 +217,44 @@ Window {
     Graph{
         id:graphid
         visible:false
+        enabled:false
+        onGotovaluepagefromgraph:{
+            graphid.visible=true
+            graphid.enabled=false
+            valuepageid.visible=true
+            valuepageid.enabled=true
+
+        }
     }
     Slider_valuepopup{
+        id:slidepopupid
+        visible:false
+        enabled: false
+
+    }
+
+    Slider_screen{
         id:slideid
         visible:false
     }
+    Graph_setting{
+        id:graphsettingspage
+        visible: false
+        enabled:false
 
+    }
+    Header{
+        id:headerid2
+
+        onGotograph: {
+            openscreenid.visible=false
+            openscreenid.enabled=false
+            graphid.visible=true
+            graphid.enabled=true
+            headerid2.visible=true
+            headerid2.enabled=true
+        }
+    }
     Component.onCompleted:{
         popuplockid.gotoopenscreenlock.connect(openscreenid.unlockscreen)
         popupunlockid.gotoopenscreen.connect(openscreenid.unlockscreenoncancel)
@@ -229,8 +263,13 @@ Window {
         valuechangepopupid.gotoopenscreen.connect(openscreenid.alotedvalue)
         valuepageid.openvaluechangepopup.connect(valuechangepopupid.assignedvalues)
         valuechangepopupid.gotoopenscreen.connect(valuepageid.alotedvalue)
+        slideid.gotosliderpopup.connect(slidepopupid.getvalues)
+        slidepopupid.gobacktoslidescreen.connect(slideid.getingvalues)
+        openscreenid.gotovaluepage.connect(valuepageid.signalfromopenscreen)
+        graphid.gotovaluepagefromgraph.connect(valuepageid.signalfromgraph)
     }
 
+    //Hold{}
 }
 
 
