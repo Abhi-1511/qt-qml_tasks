@@ -23,21 +23,19 @@ Item {
    }
    Timer {
        id: countdownTimer
-       interval: 1000 // 1 second
-       running: successid.visible===true?true:false // Start the timer when needed
-       repeat: true // Repeat the timer
-
-       property int countdown: 5 // Initial countdown value
-
+       interval: 1000
+       running: successid.visible===true?true:false
+       repeat: true
+       property int countdown: 3
        onTriggered: {
-           countdown--; // Decrement the countdown value
+           countdown--;
            if (countdown <= 0) {
-               // Countdown reached zero, stop the timer
                countdownTimer.stop();
                successid.visible=false
                successid.enabled=false
                devicesettingsid.visible=true
                devicesettingsid.enabled=true
+                devicesettingsid.opacity=1
            }
        }
    }

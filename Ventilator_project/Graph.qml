@@ -14,16 +14,14 @@ Item {
     height: mainwindowid.height
     property real xOffset: 0
     signal gotovaluepagefromgraph(int a)
+
     Timer {
-        interval: 20 // Update interval in milliseconds (adjust for desired speed)
+        interval: 20
         running: true
         repeat: true
 
         onTriggered: {
-            // Update horizontal offset
-            xOffset += 2; // Adjust speed as needed
-
-            // Wrap the wave back to the beginning when it reaches the end
+            xOffset += 2;
             if (xOffset >= 360) {
                 xOffset = 0;
             }
@@ -477,7 +475,35 @@ Item {
             anchors.fill:parent
             onClicked: {
                 gotovaluepagefromgraph(1)
+                graphid.opacity=0.9
             }
         }
     }
+    Rectangle{
+        anchors.bottom: parent.bottom;anchors.bottomMargin: 10
+        anchors.left: parent.left;anchors.leftMargin:10
+        width:parent.width*0.1
+        height:parent.height*0.06
+        color:"lightblue"
+        Text {
+            id: back
+            text: qsTr("back")
+            anchors.centerIn: parent
+            font.pointSize:parent.width*0.05
+            color:"black"
+            font.bold: true
+        }
+        MouseArea{
+            anchors.fill:parent
+            onClicked: {
+
+                graphid.visible=false
+
+                graphid.enabled=false
+                openscreenid.visible=true
+                openscreenid.enabled=true
+            }
+        }
+    }
+
 }

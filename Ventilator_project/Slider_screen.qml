@@ -13,53 +13,80 @@ Item {
     property int firstvalue:25
     property int secondvalue:75
     signal gotosliderpopup(int lval,int hval,int fvalue1,int tovalue1,string units,int ids)
-    function getingvalues(a,b,c,e){
+    function getingvalues(firstvaluefrom,secondvaluefrom,idfrom,e){
 
-        switch(c) {
+        switch(idfrom) {
         case 1:
-            firstrsc.firstvalue=a
-            firstrsc.secondvalue=b
-            if(e){firstrsc.opacity=0.2}else firstrsc.opacity=1
+            firstrsc.firstvalue=firstvaluefrom
+            firstrsc.secondvalue=secondvaluefrom
+            if(e){firstrscopacity.opacity=0.2
+                firstrscopacity.visible=true
+            }else {firstrscopacity.opacity=1
+            firstrscopacity.visible=false}
             break;
         case 2:
-           secondrsc.firstvalue=a
-           secondrsc.secondvalue=b
-            if(e){secondrsc.opacity=0.2}else secondrsc.opacity=0
+           secondrsc.firstvalue=firstvaluefrom
+           secondrsc.secondvalue=secondvaluefrom
+            if(e){secondrscopacity.opacity=0.2
+                secondrscopacity.visible=true
+            }else {secondrscopacity.opacity=1
+            secondrscopacity.visible=false}
             break;
         case 3:
-            thirdrsc.firstvalue=a
-            thirdrsc.secondvalue=b
-             if(e){thirdrsc.opacity=0.2}else thirdrsc.opacity=0
+            thirdrsc.firstvalue=firstvaluefrom
+            thirdrsc.secondvalue=secondvaluefrom
+            if(e){thirdrscopacity.opacity=0.2
+                thirdrscopacity.visible=true
+            }else {thirdrscopacity.opacity=1
+            thirdrscopacity.visible=false}
             break;
         case 4:
-            forthrsc.firstvalue=a
-            forthrsc.secondvalue=b
-             if(e){forthrsc.opacity=0.2}else forthrsc.opacity=0
+            forthrsc.firstvalue=firstvaluefrom
+            forthrsc.secondvalue=secondvaluefrom
+            if(e){forthrscopacity.opacity=0.2
+                forthrscopacity.visible=true
+            }else {forthrscopacity.opacity=1
+            forthrscopacity.visible=false}
             break;
         case 5:
-            firstrsc2.firstvalue=a
-            firstrsc2.secondvalue=b
-             if(e){firstrsc2.opacity=0.2}else firstrsc2.opacity=0
+            firstrsc2.firstvalue=firstvaluefrom
+            firstrsc2.secondvalue=secondvaluefrom
+            if(e){fifthrscopacity.opacity=0.2
+                fifthrscopacity.visible=true
+            }else {fifthrscopacity.opacity=1
+            fifthrscopacity.visible=false}
             break;
         case 6:
-            secondrsc2.firstvalue=a
-            secondrsc2.secondvalue=b
-             if(e){secondrsc2.opacity=0.2}else secondrsc2.opacity=0
+            secondrsc2.firstvalue=firstvaluefrom
+            secondrsc2.secondvalue=secondvaluefrom
+            if(e){sixthrscopacity.opacity=0.2
+                sixthrscopacity.visible=true
+            }else {sixthrscopacity.opacity=1
+            sixthrscopacity.visible=false}
             break;
         case 7:
-            thirdrsc2.firstvalue=a
-            thirdrsc2.secondvalue=b
-             if(e){secondrsc2.opacity=0.2}else thirdrsc2.opacity=0
+            thirdrsc2.firstvalue=firstvaluefrom
+            thirdrsc2.secondvalue=secondvaluefrom
+            if(e){seventhrscopacity.opacity=0.2
+                seventhrscopacity.visible=true
+            }else {seventhrscopacity.opacity=1
+            seventhrscopacity.visible=false}
             break;
         case 8:
-            forthrsc2.firstvalue=a
-            forthrsc2.secondvalue=b
-             if(e){forthrsc2.opacity=0.2}else forthrsc2.opacity=0
+            forthrsc2.firstvalue=firstvaluefrom
+            forthrsc2.secondvalue=secondvaluefrom
+            if(e){eightrscopacity.opacity=0.2
+                eightrscopacity.visible=true
+            }else {eightrscopacity.opacity=1
+            eightrscopacity.visible=false}
             break;
         case 9:
-            firstrsc3.firstvalue=a
-            firstrsc3.secondvalue=b
-             if(e){firstrsc3.opacity=0.2}else firstrsc3.opacity=0
+            firstrsc3.firstvalue=firstvaluefrom
+            firstrsc3.secondvalue=secondvaluefrom
+            if(e){ninthrscopacity.opacity=0.2
+                ninthrscopacity.visible=true
+            }else {ninthrscopacity.opacity=1
+            ninthrscopacity.visible=false}
             break;
         default:
             console.error("Invalid text field ID:", textfieldid);
@@ -93,6 +120,14 @@ Item {
                     gotosliderpopup(firstrsc.firstvalue,firstrsc.secondvalue,firstrsc.fromvalue,firstrsc.tovalue,"Units : cmH2O\t\t\t\tPeak P.",1)
                 }
             }
+            Rectangle{
+                id:firstrscopacity
+                width:parent.width*0.6
+                height:parent.height
+                anchors.centerIn: parent
+                color:"gray"
+                visible:false
+            }
         }
         RangeSliderCustom{
             id:secondrsc
@@ -108,6 +143,14 @@ Item {
                 onClicked:{
                     gotosliderpopup(secondrsc.firstvalue,secondrsc.secondvalue,secondrsc.fromvalue,secondrsc.tovalue,"Units : L\t\t\t\t\tMinute V",2)
                 }
+            }
+            Rectangle{
+                id:secondrscopacity
+                width:parent.width*0.6
+                height:parent.height
+                anchors.centerIn: parent
+                color:"gray"
+                visible:false
             }
         }
         RangeSliderCustom{
@@ -125,6 +168,14 @@ Item {
                     gotosliderpopup(thirdrsc.firstvalue,thirdrsc.secondvalue,thirdrsc.fromvalue,thirdrsc.tovalue,"Units : BPM\t\t\t\tBreath R",3)
                 }
             }
+            Rectangle{
+                id:thirdrscopacity
+                width:parent.width*0.6
+                height:parent.height
+                anchors.centerIn: parent
+                color:"gray"
+                visible:false
+            }
         }
         RangeSliderCustom{
             id:forthrsc
@@ -140,6 +191,14 @@ Item {
                 onClicked:{
                     gotosliderpopup(forthrsc.firstvalue,forthrsc.secondvalue,forthrsc.fromvalue,forthrsc.tovalue,"Units : mL\t\t\t  Tidal(e) Vol",4)
                 }
+            }
+            Rectangle{
+                id:forthrscopacity
+                width:parent.width*0.6
+                height:parent.height
+                anchors.centerIn: parent
+                color:"gray"
+                visible:false
             }
         }
         Rectangle{
@@ -164,13 +223,21 @@ Item {
                     openscreenid.enabled=true
                 }
             }
+            Rectangle{
+                id:fifthrscopacity
+                width:parent.width*0.6
+                height:parent.height
+                anchors.centerIn: parent
+                color:"gray"
+                visible:false
+            }
         }
         Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: 20
             id: lefttbutton
-            color: "black"
+            color: "transparent"
             width: 40
             height: width*2
 
@@ -189,6 +256,14 @@ Item {
                     secondrect.enabled=true
 
                 }
+            }
+            Rectangle{
+                id:sixthrscopacity
+                width:parent.width*0.6
+                height:parent.height
+                anchors.centerIn: parent
+                color:"gray"
+                visible:false
             }
         }
     }
@@ -215,6 +290,14 @@ Item {
                     gotosliderpopup(firstrsc2.firstvalue,firstrsc2.secondvalue,firstrsc2.fromvalue,firstrsc2.tovalue,"Units : cmH2O\t\t\t\t  PEEP",5)
                 }
             }
+            Rectangle{
+                id:seventhrscopacity
+                width:parent.width*0.6
+                height:parent.height
+                anchors.centerIn: parent
+                color:"gray"
+                visible:false
+            }
         }
         RangeSliderCustom{
             id:secondrsc2
@@ -230,6 +313,14 @@ Item {
                 onClicked:{
                     gotosliderpopup(secondrsc2.firstvalue,secondrsc2.secondvalue,secondrsc2.fromvalue,secondrsc2.tovalue,"Units : sec\t        Apnea          \tUnits : BPM",6)
                 }
+            }
+            Rectangle{
+                id:eightrscopacity
+                width:parent.width*0.6
+                height:parent.height
+                anchors.centerIn: parent
+                color:"gray"
+                visible:false
             }
         }
         RangeSliderCustom{
@@ -247,6 +338,14 @@ Item {
                     gotosliderpopup(thirdrsc2.firstvalue,thirdrsc2.secondvalue,thirdrsc2.fromvalue,thirdrsc2.tovalue,"Units : %\t\t\t\t   SPO2",7)
                 }
             }
+            Rectangle{
+                id:ninthrscopacity
+                width:parent.width*0.6
+                height:parent.height
+                anchors.centerIn: parent
+                color:"gray"
+                visible:false
+            }
         }
         RangeSliderCustom{
             id:forthrsc2
@@ -262,6 +361,14 @@ Item {
                 onClicked:{
                     gotosliderpopup(forthrsc2.firstvalue,forthrsc2.secondvalue,forthrsc2.fromvalue,forthrsc2.tovalue,"Units : %\t\t\t\t   FIO2",8)
                 }
+            }
+            Rectangle{
+                id:tenthrscopacity
+                width:parent.width*0.6
+                height:parent.height
+                anchors.centerIn: parent
+                color:"gray"
+                visible:false
             }
         }
         Rectangle{
@@ -286,13 +393,14 @@ Item {
                     openscreenid.enabled=true
                 }
             }
+
         }
         Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: 20
             id: lefttbutton2
-            color: "black"
+            color: "transparent"
             width: 40
             height: width*2
 
@@ -317,7 +425,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 20
             id: rightbutton2
-            color: "black"
+            color: "transparent"
             width: 40
             height: width*2
 

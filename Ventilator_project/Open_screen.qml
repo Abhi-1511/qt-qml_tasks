@@ -18,6 +18,7 @@ Item {
     property real fillPercentage: 0
     property int waittime:3
     property int buffertime:0
+    property int clickedonce:0
     signal gotoholdpage()
     signal openmodepcv()
     signal gotopopuplock()
@@ -118,7 +119,7 @@ Item {
             }
             Drawer {
                 id: drawer
-                width: 0.4 * mainwindowid.width
+                width: 0.6* mainwindowid.width
                 height: midrect.height
                 y:parent.height/10+10
                 Label {
@@ -164,7 +165,7 @@ Item {
                             width:parent.width*0.4
                             height:parent.height*0.12
                             color:"gray"
-                            anchors.left: locid.left;anchors.leftMargin: 200
+                            anchors.left: locid.left;anchors.leftMargin: 300
                             anchors.top:parent.top;anchors.topMargin: 30
                             Text{
                                 text:"FiO2 calibration"
@@ -252,7 +253,7 @@ Item {
                             width:parent.width*0.4
                             height:parent.height*0.12
                             color:"gray"
-                            anchors.left: saveprofilerect.left;anchors.leftMargin: 200
+                            anchors.left: saveprofilerect.left;anchors.leftMargin: 300
                             anchors.top:parent.top;anchors.topMargin: 250
                             Text{
                                 text:"Remove Profile"
@@ -842,7 +843,7 @@ Item {
                             fillPercentage += 0.01;
                             gaugeCanvas.requestPaint();
                         }
-                        else timerforgauge.stop()
+                        else fillPercentage=0
                     }
                 }
             }
@@ -886,7 +887,6 @@ Item {
                     anchors.fill:parent
                     onClicked:{
                         openmodepcv()
-
                     }
                 }
             }
@@ -1118,10 +1118,10 @@ Item {
                     onPressed: {
                         if(startconfirm===false&&changeimage===false){
                             popupforstart.visible = true
-
                             foropacity.opacity = 0.2
                             timer.start()
                             buffertime=0
+                            fillPercentage=0
                         }
 
 
@@ -1135,10 +1135,12 @@ Item {
                             startconfirm=false
                             inpause=true
                             buffertime=0
+                            clickedonce+=1
                             timerforgauge.start()
                         }
                         else if(changeimage===true&&inpause===true){
                             console.log("do you want to pause")
+                            timerforgauge.stop()
                             pausenotificationrect.visible=true
                             midrect.enabled=false
                             foropacity.opacity=0.2
@@ -1147,6 +1149,7 @@ Item {
                     }
 
                     onReleased: {
+                        if(clickedonce!=3){
                         timer.stop()
                         console.log("released")
                         timerstartflag.start()
@@ -1158,17 +1161,23 @@ Item {
                             foropacity.opacity = 0
                         }
                     }
+                    }
+                    onClicked: {
+                        if(changeimage===true&&inpause===true&&clickedonce===3){
+                            console.log("do you want to pause")
+                            timerforgauge.stop()
+                            pausenotificationrect.visible=true
+                            midrect.enabled=false
+                            foropacity.opacity=0.2
+                            inpause=false
+                            clickedonce=1
+                        }
+                    }
                 }
             }
         }
     }
-    Rectangle{
-        id:foropacity
-        width:parent.width
-        height:parent.height
-        color:"lightblue"
-        opacity:openscreenid.enabled?0:0.2
-    }
+
 
 
     Rectangle {
@@ -1305,12 +1314,23 @@ Item {
                 anchors.fill: parent
                 onClicked: {
                     pausenotificationrect.visible=false
+                    timerforgauge.start()
                     foropacity.opacity=0
                     midrect.enabled=true
+                    clickedonce=3
+                    changeimage=true
+                    inpause=true
                 }
             }
         }
 
+    }
+    Rectangle{
+        id:foropacity
+        width:parent.width
+        height:parent.height
+        color:"lightblue"
+        opacity:openscreenid.enabled?0:0.2
     }
 }
 

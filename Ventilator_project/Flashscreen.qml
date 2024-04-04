@@ -23,4 +23,18 @@ Item {
             fillMode: Image.PreserveAspectFit
         }
     }
+    Timer {
+            id: timer
+            interval: 50
+            repeat: false
+            running: true
+
+            onTriggered: {
+               openscreenid.visible=true
+                openscreenid.enabled=true
+                flashscreenid.visible=false
+                flashscreenid.enabled=false
+            }
+        }
+
 }

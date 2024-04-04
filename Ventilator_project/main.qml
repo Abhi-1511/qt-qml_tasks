@@ -7,8 +7,16 @@ Window {
     height: 500
     visible: true
     title: qsTr("Hello World")
+     Flashscreen{
+        id:flashscreenid
+        visible:true
+        enabled:true
+    }
+
     Open_screen{
         id:openscreenid
+        visible: false
+        enabled: false
         Header{
             id:headerid
             onShownotifications: {
@@ -22,8 +30,6 @@ Window {
                 openscreenid.enabled=false
                 graphid.visible=true
                 graphid.enabled=true
-                headerid.visible=true
-                headerid.enabled=true
             }
         }
         onOpenmodepcv: {
@@ -33,13 +39,14 @@ Window {
             openscreenid.enabled=false
         }
         onGotopopuplock: {
-            openscreenid.visible=false
+            //openscreenid.visible=false
             openscreenid.enabled=false
             popuplockid.visible=true
             popuplockid.enabled=true
+            headerid.enabled=false
         }
         onGotopopupunlock: {
-
+            headerid.enabled=true
             openscreenid.enabled=false
             popupunlockid.visible=true
             popupunlockid.enabled=true
@@ -104,6 +111,7 @@ Window {
             openscreenid.enabled=true
             popuplockid.visible=false
             popuplockid.enabled=false
+            headerid.enabled=false
         }
     }
     PopUp_Unlock{
@@ -114,6 +122,7 @@ Window {
             openscreenid.enabled=true
             popupunlockid.visible=false
             popupunlockid.enabled=false
+            headerid.enabled=true
 
         }
     }
@@ -127,6 +136,11 @@ Window {
             popUpCalibrationid.enabled=false
         }
 
+    }
+    Graph{
+        id:graphid
+        visible:false
+        enabled:false
     }
     Value_page{
         id:valuepageid
@@ -202,6 +216,7 @@ Window {
     Success{
         id:successid
         visible:false
+        enabled:false
     }
 
     Value_change_popup{
@@ -214,18 +229,7 @@ Window {
             openscreenid.enabled=true
         }
     }
-    Graph{
-        id:graphid
-        visible:false
-        enabled:false
-        onGotovaluepagefromgraph:{
-            graphid.visible=true
-            graphid.enabled=false
-            valuepageid.visible=true
-            valuepageid.enabled=true
 
-        }
-    }
     Slider_valuepopup{
         id:slidepopupid
         visible:false
@@ -243,18 +247,6 @@ Window {
         enabled:false
 
     }
-    Header{
-        id:headerid2
-
-        onGotograph: {
-            openscreenid.visible=false
-            openscreenid.enabled=false
-            graphid.visible=true
-            graphid.enabled=true
-            headerid2.visible=true
-            headerid2.enabled=true
-        }
-    }
     Component.onCompleted:{
         popuplockid.gotoopenscreenlock.connect(openscreenid.unlockscreen)
         popupunlockid.gotoopenscreen.connect(openscreenid.unlockscreenoncancel)
@@ -269,7 +261,9 @@ Window {
         graphid.gotovaluepagefromgraph.connect(valuepageid.signalfromgraph)
     }
 
-    //Hold{}
-}
+    // //Hold{}
+ //Device_settings{}
+    //Graph{}
+ }
 
 

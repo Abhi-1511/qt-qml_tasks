@@ -19,6 +19,7 @@ Item {
     property string textheading:""
     x:xval
     y:yval
+
     Text {
         id: toptextid
         text: textheading
@@ -125,5 +126,14 @@ Item {
                 }
             }
         }
+    }
+    Rectangle{
+        id:rectfordisable
+        width:parent.width
+        height:parent.height
+        anchors.centerIn: parent
+        color:"gray"
+        opacity:1
+        visible:false
     }
 }

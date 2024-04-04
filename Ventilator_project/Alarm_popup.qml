@@ -14,11 +14,6 @@ Item {
             opacity:0.002
         }
     }
-    // function g(){
-    //     itemid1.visible=true
-    //     itemid1.enabled=true
-    // }
-
     Rectangle{
         width:parent.width*0.8
         height:parent.height*0.75
@@ -122,8 +117,5 @@ Item {
                 }
             }
         }
-
     }
-
-
 }

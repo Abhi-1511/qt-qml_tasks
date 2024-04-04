@@ -9,6 +9,7 @@ Item {
     height:mainwindowid.height
     property bool darkMode: false
     signal gotosuccesspage()
+    property int b:0
     Header{}
     Rectangle{
         id:mainrect
@@ -17,10 +18,10 @@ Item {
         anchors.bottom: parent.bottom
         color:"black"
         Rectangle {  //back arrow
-            width:parent.width/6
+            width:parent.width/8
             height:parent.height/8
             anchors.left: parent.left
-            color:"black"
+            color:"transparent"
 
             Text {
                 id: backtextid
@@ -47,7 +48,7 @@ Item {
             height:parent.height/15
             anchors.left: parent.left;anchors.leftMargin: 180
             anchors.top: parent.top;anchors.topMargin: 10
-            color:"black"
+            color:"transparent"
             Text {
                 id: deviceinfotextid
                 text: qsTr("DEVICE INFO")
@@ -67,6 +68,8 @@ Item {
                     midrectvalues.enabled=true
                     midrectvalue2.visible=false
                     midrectvalue2.enabled=false
+                    midrectvalue3.visible=false
+                    midrectvalue3.enabled=false
                 }
             }
 
@@ -77,7 +80,7 @@ Item {
             height:parent.height/15
             anchors.right: parent.right;anchors.rightMargin: 150
             anchors.top: parent.top;anchors.topMargin: 10
-            color:"black"
+            color:"transparent"
             Text {
                 id: admintextid
                 text: qsTr("ADMINISTRATION")
@@ -96,6 +99,8 @@ Item {
                     midrectvalues.enabled=false
                     midrectvalue2.visible=true
                     midrectvalue2.enabled=true
+                    midrectvalue3.visible=false
+                    midrectvalue3.enabled=false
                 }
             }
         }
@@ -139,7 +144,7 @@ Item {
                 id:first
                 width:parent.width
                 height:parent.height*0.1
-                color:"black"
+                color:"transparent"
 
                 Text {
                     anchors.left:parent.left;anchors.leftMargin: 20
@@ -165,7 +170,7 @@ Item {
                 id:second
                 width:parent.width
                 height:parent.height*0.1
-                color:"black"
+                color:"transparent"
                 anchors.top:first.bottom
 
                 Text {
@@ -192,7 +197,7 @@ Item {
                 id:third
                 width:parent.width
                 height:parent.height*0.1
-                color:"black"
+                color:"transparent"
                 anchors.top:second.bottom
 
                 Text {
@@ -219,7 +224,7 @@ Item {
                 id:fourth
                 width:parent.width
                 height:parent.height*0.1
-                color:"black"
+                color:"transparent"
                 anchors.top:third.bottom
 
                 Text {
@@ -246,7 +251,7 @@ Item {
                 id:fifth
                 width:parent.width
                 height:parent.height*0.1
-                color:"black"
+                color:"transparent"
                 anchors.top:fourth.bottom
 
                 Text {
@@ -270,7 +275,7 @@ Item {
                 id:sixth
                 width:parent.width
                 height:parent.height*0.1
-                color:"black"
+                color:"transparent"
                 anchors.top:fifth.bottom
 
                 Text {
@@ -294,7 +299,7 @@ Item {
                 id:seven
                 width:parent.width
                 height:parent.height*0.1
-                color:"black"
+                color:"transparent"
                 anchors.top:sixth.bottom
 
                 Text {
@@ -318,7 +323,7 @@ Item {
                 id:eight
                 width:parent.width
                 height:parent.height*0.1
-                color:"black"
+                color:"transparent"
                 anchors.top:seven.bottom
 
                 Text {
@@ -342,7 +347,7 @@ Item {
                 id:nine
                 width:parent.width
                 height:parent.height*0.1
-                color:"black"
+                color:"transparent"
                 anchors.top:eight.bottom
 
                 Text {
@@ -366,7 +371,7 @@ Item {
                 id:ten
                 width:parent.width
                 height:parent.height*0.1
-                color:"black"
+                color:"transparent"
                 anchors.top:nine.bottom
 
 
@@ -378,10 +383,10 @@ Item {
                     font.pointSize: 15
                 }
                 Rectangle{
-                     anchors.right:parent.right;anchors.rightMargin: 185
-                     width:parent.width/6
-                     height:parent.height
-                     color:"transparent"
+                    anchors.right:parent.right;anchors.rightMargin: 185
+                    width:parent.width/6
+                    height:parent.height
+                    color:"transparent"
                     Rectangle {
                         id: background
                         anchors.top:parent.top;anchors.topMargin: 2
@@ -493,22 +498,359 @@ Item {
                         anchors.centerIn: parent
                         font.pointSize: 15
                     }
-
                     MouseArea{
                         anchors.fill:parent
                         onClicked: {
                             if(passwordtext.text===""){
                                 textdisplay.text="password cannot be empty"
+                            }else if(passwordtext.text!=="admin"){
+                                textdisplay.text="password is not correct"
                             }else{
+                                midrectvalue3.visible=true
+                                midrectvalue2.visible=false
+                                midrectvalues.visible=false
+                                midrectvalue3.enabled=true
+                                midrectvalue2.enabled=false
+                                midrectvalues.enabled=false
                                 gotosuccesspage()
+                                passwordtext.text===""
                             }
+                        }
+                    }
+                }
+            }
+        }
+        Rectangle{
+            id:midrectvalue3
+            width: parent.width-100
+            height:parent.height*0.85
+            color:"black"
+            visible:false
+            anchors.top:parent.top;anchors.topMargin: 50
+            anchors.left: parent.left;anchors.leftMargin: 20
+            anchors.right: parent.right;anchors.rightMargin: 20
+            Rectangle{
+                id:rightrect
+                width:parent.width-parent.width*0.15-10
+                height:parent.height-50
+                anchors.right: parent.right;anchors.rightMargin: 20
+               anchors.left: parent.left;anchors.leftMargin: 170
+                anchors.top: parent.top;anchors.topMargin: 45
+                color:"transparent"
+                border.width:5
+                border.color:"white"
+                radius:3
+
+
+            }
+            Text {
+                id: setnameid
+                text: qsTr("")
+                color:"white"
+                font.bold: true
+                font.pointSize: 15
+                 anchors.left: parent.left;anchors.leftMargin: 170
+                   anchors.top: parent.top;anchors.topMargin: 10
+            }
+            Rectangle{
+                id: toggleid
+                visible: false
+                 anchors.top: parent.top;anchors.topMargin: 10
+                anchors.right:parent.right;anchors.rightMargin: 185
+                width:parent.width/10
+                height:parent.height/15
+                color:"transparent"
+                Rectangle {
+
+                    anchors.top:parent.top;anchors.topMargin: 2
+                    anchors.left:parent.left;anchors.leftMargin: 2
+
+                    width: parent.width
+                    height: parent.height
+                    color: darkMode ? "#505050" : "#F0F0F0"
+                    border.color: darkMode ? "black" : "gray"
+                    radius: height / 2
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: darkMode ? "Dark" : "Light"
+                        color: darkMode ? "white" : "black"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            darkMode = !darkMode
 
                         }
                     }
                 }
+                Rectangle {
+                    id: switchHandle2
+                    anchors.bottom: toggleid.bottom
+                    anchors.bottomMargin: 1.5
+                    width: height
+                    height: parent.height*0.8
+                    color: "white"
+                    border.color: darkMode ? "black" : "gray"
+                    radius: height / 2
+                    x: darkMode ? 0 : toggleid.width - width
 
+
+                    Behavior on x {
+                        PropertyAnimation {
+                            duration: 200
+                        }
+                    }
+
+                    MouseArea {
+                        id: switchHandleArea2
+                        anchors.fill: parent
+                        onClicked: {
+                            darkMode = !darkMode;
+
+                        }
+                    }
+                }
+            }
+
+            Rectangle{
+                id:violetrect
+                width:parent.width*0.15
+                height:parent.height/7
+                color:"#9400D3"
+                Rectangle{
+                    id:violetenabled
+                    width:parent.width*0.08
+                    height:parent.height
+                    color:"lightblue"
+                    anchors.right:parent.right
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        getborder(1)
+                    }
+                }
+            }
+
+            Rectangle{
+                id:indigorect
+                width:parent.width*0.15
+                height:parent.height/7
+                color:"#4B0082"
+                anchors.top:violetrect.bottom
+
+                Rectangle{
+                    id:indigoenabled
+                    width:parent.width*0.08
+                    height:parent.height
+                    color:"lightblue"
+                    anchors.right:parent.right
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        getborder(2)
+                    }
+                }
+            }
+            Rectangle{
+                id:bluerect
+                width:parent.width*0.15
+                height:parent.height/7
+                color:"#0000FF"
+                anchors.top:indigorect.bottom
+                Rectangle{
+                    id:blueenabled
+                    width:parent.width*0.08
+                    height:parent.height
+                    color:"lightblue"
+                    anchors.right:parent.right
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        getborder(3)
+                    }
+                }
+            }
+            Rectangle{
+                id:greenrect
+                width:parent.width*0.15
+                height:parent.height/7
+                color:"green"
+                anchors.top:bluerect.bottom
+                Rectangle{
+                    id:greenenabled
+                    width:parent.width*0.08
+                    height:parent.height
+                    color:"lightblue"
+                    anchors.right:parent.right
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                       getborder(4)
+                    }
+                }
+            }
+            Rectangle{
+                id:yellowrect
+                width:parent.width*0.15
+                height:parent.height/7
+                color:"yellow"
+                anchors.top:greenrect.bottom
+                Rectangle{
+                    id:yellowenabled
+                    width:parent.width*0.08
+                    height:parent.height
+                    color:"lightblue"
+                    anchors.right:parent.right
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        getborder(5)
+                    }
+                }
+            }
+            Rectangle{
+                id:orangerect
+                width:parent.width*0.15
+                height:parent.height/7
+                color:"orange"
+                anchors.top:yellowrect.bottom
+                Rectangle{
+                    id:orangeenabled
+                    width:parent.width*0.08
+                    height:parent.height
+                    color:"lightblue"
+                    anchors.right:parent.right
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        getborder(6)
+                    }
+                }
+            }
+            Rectangle{
+                id:redrect
+                width:parent.width*0.15
+                height:parent.height/7
+                color:"red"
+                anchors.top:orangerect.bottom
+
+                Rectangle{
+                    id:redenabled
+                    width:parent.width*0.08
+                    height:parent.height
+                    color:"lightblue"
+                    anchors.right:parent.right
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        getborder(7)
+                    }
+                }
             }
         }
     }
+   function getborder(b){
+       switch(b) {
+       case 1:
+           violetrect.border.width=4;violetrect.border.color="black"
+           indigorect.border.width=0;bluerect.border.width=0;greenrect.border.width=0
+           orangerect.border.width=0;yellowrect.border.width=0;redrect.border.width=0
+           violetenabled.color="blue";
+           indigoenabled.color="lightblue"
+           blueenabled.color="lightblue"
+           greenenabled.color="lightblue"
+           yellowenabled.color="lightblue"
+           orangeenabled.color="lightblue"
+           redenabled.color="lightblue"
+           setnameid.text="MQTT Server Settings"
+           toggleid.visible=true
+           break;
+       case 2:
+           indigorect.border.width=4;indigorect.border.color="black"
+           violetrect.border.width=0;bluerect.border.width=0;greenrect.border.width=0
+           orangerect.border.width=0;yellowrect.border.width=0;redrect.border.width=0
+           violetenabled.color="lightblue"
+           indigoenabled.color="blue"
+           blueenabled.color="lightblue"
+           greenenabled.color="lightblue"
+           yellowenabled.color="lightblue"
+           orangeenabled.color="lightblue"
+           redenabled.color="lightblue"
+           setnameid.text="Remote Server Settings"
+           toggleid.visible=false
+           break;
+       case 3:
+           bluerect.border.width=4;bluerect.border.color="black"
+           indigorect.border.width=0;violetrect.border.width=0;greenrect.border.width=0
+           orangerect.border.width=0;yellowrect.border.width=0;redrect.border.width=0
+           violetenabled.color="lightblue"
+           indigoenabled.color="lightblue"
+           blueenabled.color="blue"
+           greenenabled.color="lightblue"
+           yellowenabled.color="lightblue"
+           orangeenabled.color="lightblue"
+           redenabled.color="lightblue"
+           break;
+       case 4:
+           greenrect.border.width=4;greenrect.border.color="black"
+           indigorect.border.width=0;bluerect.border.width=0;violetrect.border.width=0
+           orangerect.border.width=0;yellowrect.border.width=0;redrect.border.width=0
+           violetenabled.color="lightblue"
+           indigoenabled.color="lightblue"
+           blueenabled.color="lightblue"
+           greenenabled.color="blue"
+           yellowenabled.color="lightblue"
+           orangeenabled.color="lightblue"
+           redenabled.color="lightblue"
+           break;
+       case 5:
+           yellowrect.border.width=4;yellowrect.border.color="black"
+           indigorect.border.width=0;bluerect.border.width=0;greenrect.border.width=0
+           orangerect.border.width=0;violetrect.border.width=0;redrect.border.width=0
+           violetenabled.color="lightblue"
+           indigoenabled.color="lightblue"
+           blueenabled.color="lightblue"
+           greenenabled.color="lightblue"
+           yellowenabled.color="blue"
+           orangeenabled.color="lightblue"
+           redenabled.color="lightblue"
+           break;
+       case 6:
+           orangerect.border.width=4;orangerect.border.color="black"
+           indigorect.border.width=0;bluerect.border.width=0;greenrect.border.width=0
+           violetrect.border.width=0;yellowrect.border.width=0;redrect.border.width=0
+           violetenabled.color="lightblue"
+           indigoenabled.color="lightblue"
+           blueenabled.color="lightblue"
+           greenenabled.color="lightblue"
+           yellowenabled.color="lightblue"
+           orangeenabled.color="blue"
+           redenabled.color="lightblue"
+           break;
+       case 7:
+           redrect.border.width=4;redrect.border.color="black"
+           indigorect.border.width=0;bluerect.border.width=0;greenrect.border.width=0
+           orangerect.border.width=0;yellowrect.border.width=0;violetrect.border.width=0
+           violetenabled.color="lightblue"
+           indigoenabled.color="lightblue"
+           blueenabled.color="lightblue"
+           greenenabled.color="lightblue"
+           yellowenabled.color="lightblue"
+           orangeenabled.color="lightblue"
+           redenabled.color="blue"
+           break;
+       default:
+           console.error("Invalid text field ID:", textfieldid);
+       }
+
+   }
 }
 

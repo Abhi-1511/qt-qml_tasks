@@ -2,24 +2,25 @@ import QtQuick 2.15
 
 Rectangle {
     id:itemid1
-    width:mainwindowid.width
-    height:mainwindowid.height
+    width:mainwindowid.width/3
+    height:mainwindowid.height/3
+    anchors.centerIn: parent
     signal gotoopenscreen()
     signal gotoopenscreenlock()
 
-    Open_screen{
-    enabled:false
+    // Open_screen{
+    // enabled:false
+    // Rectangle{
+    //     width:parent.width
+    //     height:parent.height
+    //     color:"white"
+    //     opacity:0.1
+    // }
+    // }
+
     Rectangle{
         width:parent.width
         height:parent.height
-        color:"white"
-        opacity:0.1
-    }
-    }
-
-    Rectangle{
-        width:parent.width/3
-        height:parent.height/3
         color:"lightblue"
         border.width:2
         border.color: "red"

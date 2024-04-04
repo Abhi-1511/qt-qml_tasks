@@ -18,6 +18,11 @@ Item {
         b=c
     }
     function signalfromgraph(d){
+        graphid.visible=true
+        graphid.enabled=false
+        valuepageid.visible=true
+        valuepageid.enabled=true
+
         b=d
     }
 
@@ -501,6 +506,7 @@ Item {
                         graphid.visible=true
                         valuepageid.visible=false
                         valuepageid.enabled=false
+                         graphid.opacity=1
                     }
                 }
             }
@@ -725,6 +731,7 @@ Item {
                         graphid.visible=true
                         valuepageid.visible=false
                         valuepageid.enabled=false
+                         graphid.opacity=1
                     }
                 }
             }

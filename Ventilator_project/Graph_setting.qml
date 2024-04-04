@@ -18,11 +18,11 @@ Item {
         width: parent.width
         height: parent.height*0.89
         anchors.bottom: parent.bottom
-        color:"lightgrey"
+        color:"gray"
 
         ComboBox{
             id: mannualComboBox
-            width: parent.width/5
+            width: parent.width/3
             height: parent.height/10
             anchors.top:parent.top;anchors.topMargin: 50
             anchors.horizontalCenter: parent.horizontalCenter
@@ -35,14 +35,14 @@ Item {
 
                 textColor: "white"
                 background: Rectangle {
-                    color: "gray"
+                    color: "black"
                 }
 
             }
             Rectangle {
-                width: 20
+                width: 40
                 height: mannualComboBox.height
-                color: "gray"
+                color: "black"
                 anchors.right: parent.right;anchors.rightMargin: 10
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
@@ -84,7 +84,7 @@ Item {
             id: cancleRect
             width: parent.width * 0.3
             height: parent.height * 0.1
-            color: "gray"
+            color: "lightgray"
             anchors.bottom: parent.bottom;anchors.bottomMargin: 50
             anchors.right: parent.right;anchors.rightMargin: 100
             border.width: 2
