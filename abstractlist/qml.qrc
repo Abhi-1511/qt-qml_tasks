@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Functionalities_page.qml</file>
+        <file>Edit_page.qml</file>
+        <file>Crud_screen.qml</file>
+        <file>View_page.qml</file>
+        <file>Popup.qml</file>
+    </qresource>
+</RCC>

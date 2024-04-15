@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Crud_screen.qml</file>
+        <file>Functionalities_page.qml</file>
+        <file>Back_button.qml</file>
+    </qresource>
+</RCC>
