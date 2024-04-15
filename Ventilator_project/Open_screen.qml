@@ -85,7 +85,11 @@ Item {
         width:parent.width
         height:parent.height
         color:"black"
-        Header{}
+        Header{
+            id:headersubid
+            enabled:lockconfirm?false:true
+
+        }
         Rectangle{
             id:linerect
             color:"gray"
@@ -98,8 +102,8 @@ Item {
             anchors.top:linerect.bottom;anchors.topMargin: 5
             width:parent.width
             height:parent.height/1.6
-            color: "black"
-            enabled: lockconfirm===true?false:true
+            color: "transparent"
+            enabled: lockconfirm?false:true
             Rectangle {
                 id: drawRect
                 width: parent.width / 10
@@ -283,7 +287,7 @@ Item {
                         visible:false
                         enabled:false
                         Text {
-                            anchors.right: parent.right;anchors.rightMargin: 220
+                            anchors.right: parent.right;anchors.rightMargin: 320
                             anchors.top:parent.top;anchors.topMargin: 40
                             id: bedidtext
                             text: qsTr("Bed Id")
@@ -293,14 +297,14 @@ Item {
                         }
                         TextField {
                             id: bedinputid
-                            anchors.right: parent.right;anchors.rightMargin: 50
+                            anchors.right: parent.right;anchors.rightMargin: 150
                             anchors.top:parent.top;anchors.topMargin: 40
                             width: 150
                             height: 30
                             placeholderText: "Enter Bed Id"
                         }
                         Text {
-                            anchors.right: parent.right;anchors.rightMargin: 220
+                            anchors.right: parent.right;anchors.rightMargin: 320
                             anchors.top:parent.top;anchors.topMargin: 80
                             id: roomidtext
                             text: qsTr("Room Id")
@@ -310,14 +314,14 @@ Item {
                         }
                         TextField {
                             id: roominputid
-                            anchors.right: parent.right;anchors.rightMargin: 50
+                            anchors.right: parent.right;anchors.rightMargin: 150
                             anchors.top:parent.top;anchors.topMargin: 80
                             width: 150
                             height: 30
                             placeholderText: "Enter Room Id"
                         }
                         Text {
-                            anchors.right: parent.right;anchors.rightMargin: 220
+                            anchors.right: parent.right;anchors.rightMargin: 320
                             anchors.top:parent.top;anchors.topMargin: 120
                             id: facilityidtext
                             text: qsTr("facility Id")
@@ -327,7 +331,7 @@ Item {
                         }
                         TextField {
                             id: facilityid
-                            anchors.right: parent.right;anchors.rightMargin: 50
+                            anchors.right: parent.right;anchors.rightMargin: 150
                             anchors.top:parent.top;anchors.topMargin: 120
                             width: 150
                             height: 30
@@ -342,10 +346,11 @@ Item {
                             border.width:2
                             border.color:"black"
                             color:"gray"
+                            radius:5
                             Text{
                                 text:"ok"
                                 anchors.centerIn: parent
-                                font.pointSize: parent.width*0.15
+                                font.pointSize: parent.width*0.12
                                 color:"white"
                             }
                             MouseArea{
@@ -355,6 +360,9 @@ Item {
                                     mainrectinsidedrawer.enabled=true
                                     mainrectinsidelocationid.visible=false
                                     mainrectinsidelocationid.enabled=false
+                                    bedinputid.text=""
+                                    roominputid.text=""
+                                    facilityid.text=""
 
                                 }
                             }
@@ -368,10 +376,11 @@ Item {
                             color:"gray"
                             border.width:2
                             border.color:"black"
+                            radius:5
                             Text{
                                 text:"cancel"
                                 anchors.centerIn: parent
-                                font.pointSize: parent.width*0.15
+                                font.pointSize: parent.width*0.12
                                 color:"white"
                             }
                             MouseArea{
@@ -381,7 +390,9 @@ Item {
                                     mainrectinsidedrawer.enabled=true
                                     mainrectinsidelocationid.visible=false
                                     mainrectinsidelocationid.enabled=false
-
+                                    bedinputid.text=""
+                                    roominputid.text=""
+                                    facilityid.text=""
                                 }
                             }
                         }
@@ -433,7 +444,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                        foropacity.opacity=0.1
+                        foropacity.opacity=0.2
                         openvaluechangepopup(1,peekpmvalue.text)
                     }
                 }
@@ -481,6 +492,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
+                        foropacity.opacity=0.2
                         openvaluechangepopup(2,breathratemvalue.text)
                     }
                 }
@@ -528,6 +540,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
+                        foropacity.opacity=0.2
                         openvaluechangepopup(3,spontbrmvalue.text)
                     }
                 }
@@ -575,6 +588,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
+                        foropacity.opacity=0.2
                         openvaluechangepopup(4,tviemvalue.text)
                     }
                 }
@@ -623,6 +637,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
+                        foropacity.opacity=0.2
                         openvaluechangepopup(5,fio2mvalue.text)
                     }
                 }
@@ -663,6 +678,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
+                        foropacity.opacity=0.2
                         openvaluechangepopup(6,ieratiomvalue.text)
                     }
                 }
@@ -712,6 +728,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
+                        foropacity.opacity=0.2
                         openvaluechangepopup(7,spo2hrmvalue.text)
                     }
                 }
@@ -771,7 +788,7 @@ Item {
                 anchors.rightMargin: 40
                 width: itemid.width / 6
                 height: parent.height
-                color: "black"
+                color: "transparent"
                 focus:true
 
 
@@ -784,7 +801,7 @@ Item {
                     onPaint: {
                         var ctx = getContext("2d");
                         ctx.clearRect(0, 0, width, height);
-                        ctx.fillStyle = "black";
+                        ctx.fillStyle = "transparent";
                         ctx.fillRect(0, 0, width, height);
                         ctx.fillStyle = "#FF0000";
                         ctx.fillRect(0, height * (1 - fillPercentage), width, height * fillPercentage);
@@ -803,7 +820,7 @@ Item {
                     height: itemid.height / 1.6
                     style: GaugeStyle {
                         valueBar: Rectangle {
-                            color: "#e34c22"
+                            color: "green"
                             implicitWidth: 28
                         }
                         foreground: null
@@ -1086,11 +1103,13 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         if (lockconfirm===false) {
+                            foropacity.opacity=0.2
                             gotopopuplock()
 
                         } else if(lockconfirm===true) {
                             foropacity.opacity=0.2
                             gotopopupunlock()
+
                         }
                     }
                 }
@@ -1108,7 +1127,7 @@ Item {
                 Image {
                     width: parent.width * 0.8
                     height: parent.height * 0.8
-                    source: changeimage===false?"file:///C:/Users/Abhi/Desktop/play.png":"file:///C:/Users/Abhi/Desktop/pause.jpg"
+                    source: changeimage===false?"file:///C:/Users/Abhi/Desktop/play.png":"file:///C:/Users/Abhi/Desktop/pause.png"
                     anchors.centerIn: parent
                     fillMode: Image.PreserveAspectFit
                 }
@@ -1118,26 +1137,35 @@ Item {
                     onPressed: {
                         if(startconfirm===false&&changeimage===false){
                             popupforstart.visible = true
+                            changingtext2.visible=false
                             foropacity.opacity = 0.2
                             timer.start()
                             buffertime=0
-                            fillPercentage=0
+                            waittime=3
+                              timerwaittime.start()
+                             timerwaittime.running=true
+
                         }
 
 
-                        else if(startconfirm===true&&changeimage===false&&buffertime<=3) {
+                        else if(startconfirm===true&&changeimage===false&&buffertime<3) {
+                            console.log("g")
                             timerstartflag.stop()
                             changeimage=true
                             waittime=3
                             console.log("machine started")
                             console.log(buffertime+" else buffertime")
-                            changingtext.text="Hold for "+waittime+" sec"
+
                             startconfirm=false
                             inpause=true
                             buffertime=0
                             clickedonce+=1
                             timerforgauge.start()
                         }
+                        // else if(startconfirm===true&&changeimage===false&&buffertime===3) {
+                        //     console.log("press agian")
+                        // }
+
                         else if(changeimage===true&&inpause===true){
                             console.log("do you want to pause")
                             timerforgauge.stop()
@@ -1149,18 +1177,22 @@ Item {
                     }
 
                     onReleased: {
-                        if(clickedonce!=3){
-                        timer.stop()
-                        console.log("released")
-                        timerstartflag.start()
-                        timerstartflag.running=true
-                        buffertime=0
-
-                        if (popupforstart.visible) {
-                            popupforstart.visible = false
-                            foropacity.opacity = 0
+                        if(startconfirm===true&&changeimage===false){
+                            timerstartflag.start()
+                            timerstartflag.running=true
                         }
-                    }
+
+                        if(clickedonce!=3){
+                            timer.stop()
+                            console.log("released")
+
+                            buffertime=0
+
+                            if (popupforstart.visible) {
+                                popupforstart.visible = false
+                                foropacity.opacity = 0
+                            }
+                        }
                     }
                     onClicked: {
                         if(changeimage===true&&inpause===true&&clickedonce===3){
@@ -1177,8 +1209,6 @@ Item {
             }
         }
     }
-
-
 
     Rectangle {
         id: popupforstart
@@ -1207,15 +1237,29 @@ Item {
             font.bold: true
             color: "white"
         }
+        Text {
+            id:changingtext2
+            anchors.top: parent.top
+            anchors.topMargin: 30
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Now release the button and press to start"
+            font.pointSize: parent.width * 0.02
+            font.bold: true
+            color: "white"
+            visible:false
+        }
     }
     Timer {
         id: timerwaittime
         interval:1000
-        running: popupforstart.visible === true ? true : false
+        running: false
         repeat: true
         onTriggered: {
             if(waittime>0){
                 waittime-=1
+            }else if(waittime===0){
+                timerwaittime.running=false
+                timerwaittime.stop()
             }
         }
     }
@@ -1226,8 +1270,9 @@ Item {
         repeat: true
         onTriggered: {
             buffertime+=1
+            console.log("timer flag buffer "+buffertime)
             if(buffertime>=3){
-                timerstartflag.repeat=false
+                //timerstartflag.repeat=false
                 timerstartflag.running=false
                 startconfirm=false
             }
@@ -1240,7 +1285,7 @@ Item {
         repeat: true
         onTriggered: {
             timer.running = false;
-            changingtext.text="Now release the button and click to start"
+            changingtext2.visible=true
             startconfirm=true
         }
     }
@@ -1309,7 +1354,6 @@ Item {
                 color: "white"
                 font.pointSize: 15
             }
-
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
@@ -1323,14 +1367,13 @@ Item {
                 }
             }
         }
-
     }
     Rectangle{
         id:foropacity
         width:parent.width
         height:parent.height
         color:"lightblue"
-        opacity:openscreenid.enabled?0:0.2
+        opacity:openscreenid.enabled?0:0.02
     }
 }
 

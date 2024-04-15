@@ -37,6 +37,19 @@ Item {
                     devicesettingsid.enabled=false
                     openscreenid.visible=true
                     openscreenid.enabled=true
+                    deviceinfotextid.font.bold=true
+                    admintextid.font.bold=false
+                    systemline.visible=true
+                    deviceline.visible=false
+                    midrectvalues.visible=true
+                    midrectvalues.enabled=true
+                    midrectvalue2.visible=false
+                    midrectvalue2.enabled=false
+                    midrectvalue3.visible=false
+                    midrectvalue3.enabled=false
+                    textdisplay.text=""
+                    passwordtext.text=""
+
                 }
             }
 
@@ -469,12 +482,14 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
-                TextField{
-                    id:passwordtext
-                    width:parent.width*0.6
-                    height:parent.height*0.2
+
+                TextField {
+                    id: passwordtext
+                    width: parent.width * 0.6
+                    height: parent.height * 0.2
                     anchors.centerIn: parent
-                    placeholderText:"Enter the password"
+                    placeholderText: "Enter the password"
+                    echoMode: TextInput.Password
                 }
                 Text{
                     id:textdisplay
@@ -513,7 +528,7 @@ Item {
                                 midrectvalue2.enabled=false
                                 midrectvalues.enabled=false
                                 gotosuccesspage()
-                                passwordtext.text===""
+
                             }
                         }
                     }

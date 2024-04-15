@@ -12,6 +12,10 @@ Item {
     height:mainwindowid.height
     signal gotoopenscreen()
     property string currentText:"PVC"
+   property int patienttypecurrentindex:0
+   property int circuittypecurrentindex:0
+   property int ventilatormodecurrentindex:0
+   property int breathoptionscurrentindex:0
     Header{}
     function updatePvcText() {
         switch (breathcombo.currentText) {
@@ -229,6 +233,7 @@ Item {
                 ListElement { text: "Support" }
                 ListElement { text: "Intermittent" }
             }
+
             currentIndex: 0
             onCurrentIndexChanged: {
                 updatePvcText();
@@ -275,6 +280,10 @@ Item {
             MouseArea{
                 anchors.fill:parent
                 onClicked:{
+                    patienttypecurrentindex=patientcombo.currentIndex
+                    circuittypecurrentindex=circuitcombo.currentIndex
+                    ventilatormodecurrentindex=ventmodecombo.currentIndex
+                    breathoptionscurrentindex=breathcombo.currentIndex
                     gotoopenscreen()
 
                 }
@@ -299,8 +308,11 @@ Item {
             MouseArea{
                 anchors.fill:parent
                 onClicked:{
+                    patientcombo.currentIndex=patienttypecurrentindex
+                    circuitcombo.currentIndex=circuittypecurrentindex
+                    ventmodecombo.currentIndex=ventilatormodecurrentindex
+                    breathcombo.currentIndex=breathoptionscurrentindex
                     gotoopenscreen()
-
                 }
             }
         }

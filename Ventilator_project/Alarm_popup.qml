@@ -5,15 +5,15 @@ Item {
     width:mainwindowid.width
     height:mainwindowid.height
     signal gotoopenscreen()
-    Open_screen{
-        enabled:false
-        Rectangle{
-            width:parent.width
-            height:parent.height
-            color:"lightblue"
-            opacity:0.002
-        }
-    }
+    // Open_screen{
+    //     enabled:false
+    //     Rectangle{
+    //         width:parent.width
+    //         height:parent.height
+    //         color:"white"
+    //         opacity:0.2
+    //     }
+    // }
     Rectangle{
         width:parent.width*0.8
         height:parent.height*0.75

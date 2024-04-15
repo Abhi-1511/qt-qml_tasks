@@ -22,7 +22,7 @@ Window {
             onShownotifications: {
                 alarmpopupid.visible=true
                 alarmpopupid.enabled=true
-                openscreenid.visible=false
+                openscreenid.visible=true
                 openscreenid.enabled=false
             }
             onGotograph: {
@@ -250,20 +250,23 @@ Window {
     Component.onCompleted:{
         popuplockid.gotoopenscreenlock.connect(openscreenid.unlockscreen)
         popupunlockid.gotoopenscreen.connect(openscreenid.unlockscreenoncancel)
-        openscreenid.gotovaluepage.connect(valuepageid.openvaluedrawer)
-        openscreenid.openvaluechangepopup.connect(valuechangepopupid.assignedvalues)
-        valuechangepopupid.gotoopenscreen.connect(openscreenid.alotedvalue)
-        valuepageid.openvaluechangepopup.connect(valuechangepopupid.assignedvalues)
-        valuechangepopupid.gotoopenscreen.connect(valuepageid.alotedvalue)
-        slideid.gotosliderpopup.connect(slidepopupid.getvalues)
-        slidepopupid.gobacktoslidescreen.connect(slideid.getingvalues)
-        openscreenid.gotovaluepage.connect(valuepageid.signalfromopenscreen)
-        graphid.gotovaluepagefromgraph.connect(valuepageid.signalfromgraph)
-    }
 
-    // //Hold{}
- //Device_settings{}
-    //Graph{}
+
+
+        openscreenid.openvaluechangepopup.connect(valuechangepopupid.assignedvalues)//assign the popup value from openscreen
+        valuechangepopupid.gotoopenscreen.connect(openscreenid.alotedvalue)//reassign the values back to openscreen
+
+        valuepageid.openvaluechangepopup.connect(valuechangepopupid.assignedvalues)//sending data
+        valuechangepopupid.gotoopenscreen.connect(valuepageid.alotedvalue)//receiving data
+
+        slideid.gotosliderpopup.connect(slidepopupid.getvalues)//sending values
+        slidepopupid.gobacktoslidescreen.connect(slideid.getingvalues)//receving values back
+
+        openscreenid.gotovaluepage.connect(valuepageid.signalfromopenscreen)//navigation
+        graphid.gotovaluepagefromgraph.connect(valuepageid.signalfromgraph)//navigation
+
+        openscreenid.gotovaluepage.connect(valuepageid.openvaluedrawer)//to make the midrect visible
+    }
  }
 
 

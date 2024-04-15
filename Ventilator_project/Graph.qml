@@ -123,6 +123,7 @@ Item {
             ctx.stroke();
         }
 
+
         function drawGradientLine(ctx, y, length, ...colors) {
             var gradient = ctx.createLinearGradient(0, y, length, y);
             for (var i = 0; i < colors.length; i++) {
@@ -131,6 +132,7 @@ Item {
             ctx.fillStyle = gradient;
             ctx.fillRect(0, y, length, 1);
         }
+
     }
 
 
@@ -487,18 +489,16 @@ Item {
         color:"lightblue"
         Text {
             id: back
-            text: qsTr("back")
+            text: qsTr("Back")
             anchors.centerIn: parent
-            font.pointSize:parent.width*0.05
+            font.pointSize:parent.width*0.1
             color:"black"
             font.bold: true
         }
         MouseArea{
             anchors.fill:parent
             onClicked: {
-
                 graphid.visible=false
-
                 graphid.enabled=false
                 openscreenid.visible=true
                 openscreenid.enabled=true

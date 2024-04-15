@@ -12,18 +12,18 @@ Item {
     width:mainwindowid.width*0.8
     height:mainwindowid.height/1.55
     y:parent.height*0.11
-    property int b:0
+    property int differntnavigation:0
     signal openvaluechangepopup(int ids,int val1)
-    function signalfromopenscreen(c){
-        b=c
+    function signalfromopenscreen(openscreennav){
+        differntnavigation=openscreennav
     }
-    function signalfromgraph(d){
+    function signalfromgraph(graphnav){
         graphid.visible=true
         graphid.enabled=false
         valuepageid.visible=true
         valuepageid.enabled=true
 
-        b=d
+        differntnavigation=graphnav
     }
 
     function alotedvalue(textfieldid,alotval){
@@ -499,14 +499,14 @@ Item {
             MouseArea{
                 anchors.fill:parent
                 onClicked: {
-                    if(b===2)
+                    if(differntnavigation===2)
                         gotoopenscreen()
-                    else if(b===1){
+                    else if(differntnavigation===1){
                         graphid.enabled=true
                         graphid.visible=true
                         valuepageid.visible=false
                         valuepageid.enabled=false
-                         graphid.opacity=1
+                        graphid.opacity=1
                     }
                 }
             }
@@ -724,14 +724,18 @@ Item {
             MouseArea{
                 anchors.fill:parent
                 onClicked: {
-                    if(b===2)
+                    if(differntnavigation===2){
                         gotoopenscreen()
-                    else if (b===1){
+                        midrect2.visible=false
+                        midrect2.enabled=false
+                    }
+                    else if (differntnavigation===1){
                         graphid.enabled=true
                         graphid.visible=true
                         valuepageid.visible=false
                         valuepageid.enabled=false
-                         graphid.opacity=1
+                        graphid.opacity=1
+
                     }
                 }
             }

@@ -8,16 +8,6 @@ Rectangle {
     signal gotoopenscreen()
     signal gotoopenscreenlock()
 
-    // Open_screen{
-    // enabled:false
-    // Rectangle{
-    //     width:parent.width
-    //     height:parent.height
-    //     color:"white"
-    //     opacity:0.1
-    // }
-    // }
-
     Rectangle{
         width:parent.width
         height:parent.height
@@ -48,8 +38,6 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    // Add your confirm action here
-                    console.log("Confirm clicked")
                     gotoopenscreenlock()
                 }
             }

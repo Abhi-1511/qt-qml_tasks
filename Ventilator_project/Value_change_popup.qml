@@ -169,6 +169,7 @@ Item {
             anchors.fill:parent
             onClicked: {
                 gotoopenscreen(givenid,givenvalueupdater)
+                openscreenid.opacity=1
             }
         }
     }

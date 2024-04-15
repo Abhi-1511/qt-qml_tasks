@@ -132,20 +132,68 @@ Item {
                         backgroundColor: "black"
                         alternateBackgroundColor: "black"
                         headerDelegate: Rectangle {
-                            color: "black"
+                            color: "lightgray"
+                            border.width: 2
                             border.color: "white"
                         }
                     }
                     rowDelegate: Rectangle {
-                        height: 30
+                        height: 40
                         color: "black"
-                        border.color: "white"
-                        border.width: 2
+
                     }
                     model: ListModel {
                         id: detailsModel
                         ListElement {
                             timestamp:"Time Stamp"
+                            parameterid: "Parameter ID"
+                            parametervalue: "Parameter Value"
+                            parametervalue2: "Parameter Value2"
+                            parametervalue3: "Parameter Value3"
+
+                        }
+                        ListElement {
+                            timestamp:"Time Stamp "
+                            parameterid: "Parameter ID"
+                            parametervalue: "Parameter Value"
+                            parametervalue2: "Parameter Value2"
+                            parametervalue3: "Parameter Value3"
+
+                        }
+                        ListElement {
+                            timestamp:"Time Stamp "
+                            parameterid: "Parameter ID"
+                            parametervalue: "Parameter Value"
+                            parametervalue2: "Parameter Value2"
+                            parametervalue3: "Parameter Value3"
+
+                        }
+                        ListElement {
+                            timestamp:"Time Stamp "
+                            parameterid: "Parameter ID"
+                            parametervalue: "Parameter Value"
+                            parametervalue2: "Parameter Value2"
+                            parametervalue3: "Parameter Value3"
+
+                        }
+                        ListElement {
+                            timestamp:"Time Stamp "
+                            parameterid: "Parameter ID"
+                            parametervalue: "Parameter Value"
+                            parametervalue2: "Parameter Value2"
+                            parametervalue3: "Parameter Value3"
+
+                        }
+                        ListElement {
+                            timestamp:"Time Stamp "
+                            parameterid: "Parameter ID"
+                            parametervalue: "Parameter Value"
+                            parametervalue2: "Parameter Value2"
+                            parametervalue3: "Parameter Value3"
+
+                        }
+                        ListElement {
+                            timestamp:"Time Stamp "
                             parameterid: "Parameter ID"
                             parametervalue: "Parameter Value"
                             parametervalue2: "Parameter Value2"
@@ -182,9 +230,6 @@ Item {
                             width: parent.width
                             height: detailsTable.rowHeight
                             color: "black"
-                            //radius: 10
-                            border.width:1
-                            border.color:"black"
                             Text {
                                 anchors.centerIn: parent
                                 text: "Parameter ID"
@@ -276,8 +321,7 @@ Item {
                     rowDelegate: Rectangle {
                         height: 30
                         color: "black"
-                        border.color: "white"
-                        border.width: 2
+
                     }
                     model: ListModel {
                         id: detailsModel2
@@ -285,8 +329,33 @@ Item {
                             timestamp:"Time Stamp"
                             parameterid: "Parameter ID"
                             parametervalue: "Parameter Value"
-
                         }
+                        ListElement {
+                            timestamp:"Time Stamp"
+                            parameterid: "Parameter ID"
+                            parametervalue: "Parameter Value"
+                        }
+                        ListElement {
+                            timestamp:"Time Stamp"
+                            parameterid: "Parameter ID"
+                            parametervalue: "Parameter Value"
+                        }
+                        ListElement {
+                            timestamp:"Time Stamp"
+                            parameterid: "Parameter ID"
+                            parametervalue: "Parameter Value"
+                        }
+                        ListElement {
+                            timestamp:"Time Stamp"
+                            parameterid: "Parameter ID"
+                            parametervalue: "Parameter Value"
+                        }
+                        ListElement {
+                            timestamp:"Time Stamp"
+                            parameterid: "Parameter ID"
+                            parametervalue: "Parameter Value"
+                        }
+
 
 
                     }
@@ -329,7 +398,7 @@ Item {
                     }
                     TableViewColumn {
                         role: "parametervalue"
-                        //title: "Pet Name"
+
                         width: detailsTable2.width / 3
                         delegate: Rectangle {
                             width: parent.width

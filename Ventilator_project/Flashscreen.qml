@@ -25,7 +25,7 @@ Item {
     }
     Timer {
             id: timer
-            interval: 50
+            interval: 20
             repeat: false
             running: true
 
