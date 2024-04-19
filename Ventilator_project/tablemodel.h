@@ -37,7 +37,8 @@ public:
     Q_INVOKABLE void previousPage();
 protected:
     QHash<int, QByteArray> roleNames() const override;
-
+signals:
+    void currentPageChanged(int currentPage);
 private:
     QList<QVariantMap> m_data; // Data retrieved from the database
     QModelIndex m_currentIndex;

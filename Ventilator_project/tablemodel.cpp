@@ -11,6 +11,7 @@ TableModel::TableModel(QObject *parent)
     m_db.setDatabaseName(dbFilePath);
     m_db.open();
      fetchData(m_currentPage);
+    updatePagination();
 }
 
 void TableModel::fetchData(int page)
@@ -35,6 +36,8 @@ void TableModel::fetchData(int page)
         row["parametervalue"] = query.value("parametervalue").toString();
         m_data.append(row);
     }
+    updatePagination();
+    //fetchData(m_currentPage);
     emit dataChanged(createIndex(0, 0), createIndex(rowCount() - 1, columnCount() - 1));
 }
 
@@ -125,6 +128,7 @@ void TableModel::insertData(const QString &timestamp, const QString &parameterId
 
     // If insertion is successful, fetch the updated data
    fetchData(m_currentPage);
+    updatePagination();
     emit layoutChanged();
     // Notify views that the data has changed
     emit dataChanged(createIndex(0, 0), createIndex(rowCount() - 1, columnCount() - 1));
@@ -149,6 +153,7 @@ void TableModel::removeRow(int row)
         return;
     }
     fetchData(m_currentPage);
+    updatePagination();
     // Remove the row from the internal data structure (m_data)
     beginRemoveRows(QModelIndex(), row, row);
     m_data.removeAt(row);
@@ -177,4 +182,5 @@ void TableModel::updatePagination()
         int totalRows = countQuery.value(0).toInt();
         m_totalPages = totalRows / m_pageSize + (totalRows % m_pageSize == 0 ? 0 : 1);
     }
+     emit currentPageChanged(m_currentPage);
 }

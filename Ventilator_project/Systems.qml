@@ -9,6 +9,7 @@ import com.ventilatorproject.tablemodel2 1.0
 Item {
     width: mainwindowid.width
     height: mainwindowid.height
+    property int currentindex:0
 
 
     TableModel2 {
@@ -115,11 +116,11 @@ Item {
     }
 
     Component.onCompleted: {
-        //tableModel2.fetchData();
+        tableModel2.fetchData(currentindex);
     }
 
     onVisibleChanged: {
-        //tableModel2.fetchData();
+        tableModel2.fetchData(currentindex);
     }
 
     Connections {
@@ -211,4 +212,10 @@ Item {
             }
         }
     }
+    Connections {
+            target: tableModel2
+            function onCurrentPageChanged(currentPage) {
+                console.log("Current page:", currentPage);
+            }
+        }
 }

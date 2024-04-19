@@ -16,24 +16,24 @@ TableModel2::TableModel2(QObject *parent)
      fetchData(m_currentPage);
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout, this, &TableModel2::onTimerTimeout);
-    m_timer->start(60000); // 1 minutes in milliseconds
+    m_timer->start(30000); // 1 minutes in milliseconds
     updatePagination();
 }
 bool TableModel2::onTimerTimeout()
 {
     // Delete the oldest two rows
     if (rowCount() >= 2) {
-        removeRow(0);
-        removeRow(0);
-        return true;
+        removeRow(rowCount()-1);
+        removeRow(rowCount()-1);
+        return false;
     } else if (rowCount() == 1) {
-        removeRow(0);
-        return true;
+        removeRow(1);
+        return false;
     }
 
     // Fetch data again
     fetchData(m_currentPage);
-    return true;
+    return false;
 }
 
 void TableModel2::fetchData(int page)
@@ -129,12 +129,6 @@ QHash<int, QByteArray> TableModel2::roleNames() const
 }
 void TableModel2::insertData(const QString &timestamp, const QString &category, const QString &eventname, const QString &eventvalue, const QString &source)
 {
-    if (rowCount() >= 12) {
-        qDebug() << "Maximum capacity reached. Deleting oldest row and inserting new data.";
-
-        // Delete the oldest row (first row)
-        removeRow(1);
-    }
 
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO system_log (timestamp, category, eventname, eventvalue, source) VALUES (:timestamp, :category, :eventname, :eventvalue, :source)");
@@ -150,10 +144,11 @@ void TableModel2::insertData(const QString &timestamp, const QString &category, 
     }
 
    fetchData(m_currentPage);
+    updatePagination();
     emit layoutChanged();
     // Notify views that the data has changed
     emit dataChanged(createIndex(0, 0), createIndex(rowCount() - 1, columnCount() - 1));
-// updatePagination();
+
 }
 
 void TableModel2::removeRow(int row)
@@ -208,5 +203,6 @@ void TableModel2::updatePagination()
         m_totalPages = totalRows / m_pageSize + (totalRows % m_pageSize == 0 ? 0 : 1);
         qDebug()<<m_totalPages<<" total pages ";
     }
+    emit currentPageChanged(m_currentPage);
 }
 

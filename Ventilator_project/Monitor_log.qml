@@ -8,9 +8,9 @@ import com.ventilatorproject.tablemodel 1.0
 Item {
     width: mainwindowid.width
     height: mainwindowid.height
-
+    property int currentindex:0
     function fetchingdata(){
-        // tableModel.fetchData();
+        tableModel.fetchData(currentindex);
     }
 
     TableModel {
@@ -85,10 +85,10 @@ Item {
         horizontalScrollBarPolicy: ScrollBar.AlwaysOff
     }
     Component.onCompleted: {
-        //tableModel.fetchData();
+        tableModel.fetchData(currentindex);
     }
     onVisibleChanged: {
-        // tableModel.fetchData();
+         tableModel.fetchData(currentindex);
     }
     Connections {
         target: tableModel
@@ -175,4 +175,10 @@ Item {
             }
         }
     }
+    Connections {
+            target: tableModel
+            function onCurrentPageChanged(currentPage) {
+                console.log("Current page:", currentPage);
+            }
+        }
 }
