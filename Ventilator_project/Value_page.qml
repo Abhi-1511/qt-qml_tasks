@@ -6,7 +6,7 @@ import QtQuick.Extras 1.4
 import QtGraphicalEffects 1.12
 import QtQuick.Controls 1.4
 import QtQuick 2.4
-
+import com.ventilatorproject.database 1.0
 Item {
     id: itemid
     width:mainwindowid.width*0.8
@@ -14,15 +14,41 @@ Item {
     y:parent.height*0.11
     property int differntnavigation:0
     signal openvaluechangepopup(int ids,int val1)
+    signal senddatatoopenpage(string inspss, string peep,string brval,string insptime)
+    signal gotosaveprofiledbvaluedetails(int insppress,int insptime,int br,int ie,int rise,int insptrig,int tidal,int minutevol,int peep,int breathrate,int presssup)
+    Database {
+        id: db
+    }
     function signalfromopenscreen(openscreennav){
         differntnavigation=openscreennav
+    }
+    function changingvaluebasedonprofile(profileNames){
+        var valueDetails = db.fetchValueDetails(profileNames)
+        if (valueDetails["pname"] !== undefined) {
+            // Update UI elements only if patient details are found
+            console.log("Patient details")
+            insppressmvalue.text = valueDetails["insppress"]
+            insptimemvalue.text= valueDetails["insptime"]
+            braethratemvalue.text= valueDetails["br"]
+            iemvalue.text= valueDetails["ie"]
+            risetimemvalue.text= valueDetails["risetime"]
+            insptrigmvalue.text= valueDetails["insptrig"]
+            tidalvolmvalue.text= valueDetails["tidalvol"]
+            minutevolmvalue.text= valueDetails["minutevol"]
+            peepvalue.text= valueDetails["peep"]
+            exptrigvalue.text= valueDetails["breathrate"]
+            presssup.text= valueDetails["presssup"]
+
+            // Update other UI elements as needed
+        } else {
+
+        }
     }
     function signalfromgraph(graphnav){
         graphid.visible=true
         graphid.enabled=false
         valuepageid.visible=true
         valuepageid.enabled=true
-
         differntnavigation=graphnav
     }
 
@@ -31,39 +57,50 @@ Item {
         switch(textfieldid) {
         case 11:
             insppressmvalue.text = alotval;
+            gotosaveprofiledbvaluedetails(insppressmvalue.text,insptimemvalue.text,braethratemvalue.text,iemvalue.text,risetimemvalue.text,insptrigmvalue.text,tidalvolmvalue.text,minutevolmvalue.text,peepvalue.text,exptrigvalue.text ,presssup.text)
             break;
         case 12:
             insptimemvalue.text = alotval;
+            gotosaveprofiledbvaluedetails(insppressmvalue.text,insptimemvalue.text,braethratemvalue.text,iemvalue.text,risetimemvalue.text,insptrigmvalue.text,tidalvolmvalue.text,minutevolmvalue.text,peepvalue.text,exptrigvalue.text ,presssup.text)
             break;
         case 13:
             braethratemvalue.text = alotval;
+            gotosaveprofiledbvaluedetails(insppressmvalue.text,insptimemvalue.text,braethratemvalue.text,iemvalue.text,risetimemvalue.text,insptrigmvalue.text,tidalvolmvalue.text,minutevolmvalue.text,peepvalue.text,exptrigvalue.text ,presssup.text)
             break;
         case 14:
             iemvalue.text = alotval;
+            gotosaveprofiledbvaluedetails(insppressmvalue.text,insptimemvalue.text,braethratemvalue.text,iemvalue.text,risetimemvalue.text,insptrigmvalue.text,tidalvolmvalue.text,minutevolmvalue.text,peepvalue.text,exptrigvalue.text ,presssup.text)
             break;
         case 15:
             risetimemvalue.text = alotval;
+            gotosaveprofiledbvaluedetails(insppressmvalue.text,insptimemvalue.text,braethratemvalue.text,iemvalue.text,risetimemvalue.text,insptrigmvalue.text,tidalvolmvalue.text,minutevolmvalue.text,peepvalue.text,exptrigvalue.text ,presssup.text)
             break;
         case 16:
             insptrigmvalue.text = alotval;
+            gotosaveprofiledbvaluedetails(insppressmvalue.text,insptimemvalue.text,braethratemvalue.text,iemvalue.text,risetimemvalue.text,insptrigmvalue.text,tidalvolmvalue.text,minutevolmvalue.text,peepvalue.text,exptrigvalue.text ,presssup.text)
             break;
         case 17:
             tidalvolmvalue.text = alotval;
+            gotosaveprofiledbvaluedetails(insppressmvalue.text,insptimemvalue.text,braethratemvalue.text,iemvalue.text,risetimemvalue.text,insptrigmvalue.text,tidalvolmvalue.text,minutevolmvalue.text,peepvalue.text,exptrigvalue.text ,presssup.text)
             break;
         case 18:
             minutevolmvalue.text = alotval;
+            gotosaveprofiledbvaluedetails(insppressmvalue.text,insptimemvalue.text,braethratemvalue.text,iemvalue.text,risetimemvalue.text,insptrigmvalue.text,tidalvolmvalue.text,minutevolmvalue.text,peepvalue.text,exptrigvalue.text ,presssup.text)
             break;
         case 19:
             peepvalue.text = alotval;
+            gotosaveprofiledbvaluedetails(insppressmvalue.text,insptimemvalue.text,braethratemvalue.text,iemvalue.text,risetimemvalue.text,insptrigmvalue.text,tidalvolmvalue.text,minutevolmvalue.text,peepvalue.text,exptrigvalue.text ,presssup.text)
             break;
         case 20:
             exptrigvalue.text = alotval;
+            gotosaveprofiledbvaluedetails(insppressmvalue.text,insptimemvalue.text,braethratemvalue.text,iemvalue.text,risetimemvalue.text,insptrigmvalue.text,tidalvolmvalue.text,minutevolmvalue.text,peepvalue.text,exptrigvalue.text ,presssup.text)
             break;
         case 21:
             presssup.text = alotval;
+            gotosaveprofiledbvaluedetails(insppressmvalue.text,insptimemvalue.text,braethratemvalue.text,iemvalue.text,risetimemvalue.text,insptrigmvalue.text,tidalvolmvalue.text,minutevolmvalue.text,peepvalue.text,exptrigvalue.text ,presssup.text)
             break;
         default:
-            console.error("Invalid text field ID:", textfieldid);
+
         }
 
     }
@@ -103,15 +140,19 @@ Item {
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.1
+
                 }
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: insppressmvalue
-                    text: "15"
+                    text: "0"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
+                    onTextChanged: {
+                        senddatatoopenpage(insppressmvalue.text,peepvalue.text,braethratemvalue.text,insptimemvalue.text)
+                    }
                 }
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
@@ -156,10 +197,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: insptimemvalue
-                    text: "2"
+                    text: "0"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
+                    onTextChanged: {
+                        senddatatoopenpage(insppressmvalue.text,peepvalue.text,braethratemvalue.text,insptimemvalue.text)
+                    }
                 }
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
@@ -204,10 +248,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: braethratemvalue
-                    text: qsTr("12")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
+                    onTextChanged: {
+                        senddatatoopenpage(insppressmvalue.text,peepvalue.text,braethratemvalue.text,insptimemvalue.text)
+                    }
                 }
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
@@ -252,7 +299,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: iemvalue
-                    text: qsTr("3")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -292,7 +339,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: risetimemvalue
-                    text: qsTr("1")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -383,7 +430,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: tidalvolmvalue
-                    text: qsTr("300")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.1
@@ -431,7 +478,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: minutevolmvalue
-                    text: qsTr("4")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -545,10 +592,13 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 id: peepvalue
-                text: qsTr("2")
+                text: qsTr("0")
                 color:"white"
                 font.bold: true
                 font.pointSize: parent.width*0.2
+                onTextChanged: {
+                    senddatatoopenpage(insppressmvalue.text,peepvalue.text,braethratemvalue.text,insptimemvalue.text)
+                }
             }
             Text {
                 anchors.bottom: parent.bottom;anchors.bottomMargin: 5
@@ -593,7 +643,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 id: exptrigvalue
-                text: qsTr("5")
+                text: qsTr("0")
                 color:"white"
                 font.bold: true
                 font.pointSize: parent.width*0.2

@@ -145,8 +145,6 @@ Item {
             anchors.fill:parent
             onClicked: {
                 alotedvalue=givenvalue
-                console.log(givenvalue+" givenvalues")
-                console.log(alotedvalue+" alotedvalues")
                 gotoopenscreen(givenid,popuptextid.text)
             }
         }

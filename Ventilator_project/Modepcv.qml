@@ -6,33 +6,50 @@ import QtQuick.Extras 1.4
 import QtGraphicalEffects 1.12
 import QtQuick.Controls 1.4
 import QtQuick 2.2
+import com.ventilatorproject.database 1.0
 
 Item {
     width:mainwindowid.width
     height:mainwindowid.height
+    anchors.bottom: parent.bottom
     signal gotoopenscreen()
     property string currentText:"PVC"
-   property int patienttypecurrentindex:0
-   property int circuittypecurrentindex:0
-   property int ventilatormodecurrentindex:0
-   property int breathoptionscurrentindex:0
-    Header{}
+    property int patienttypecurrentindex:0
+    property int circuittypecurrentindex:0
+    property int ventilatormodecurrentindex:0
+    property int breathoptionscurrentindex:0
+    signal gotosaveprofiledbventmode(int ptype,int ctype,int vtype,int btype)
+    Database {
+        id: db
+    }
+    function gettingname(names){
+        var ventDetails = db.fetchVentilatorMode(names)
+        if (ventDetails["pname"] !== undefined) {
+            patientcombo.currentIndex=ventDetails["patientType"]
+            circuitcombo.currentIndex=ventDetails["circuitType"]
+            ventmodecombo.currentIndex=ventDetails["ventMode"]
+            breathcombo.currentIndex=ventDetails["breathOptions"]
+        } else {
+
+        }
+    }
+
     function updatePvcText() {
         switch (breathcombo.currentText) {
         case "Assist/Control                        ":
             if(ventmodecombo.currentText==="Volume")
-            pcvtext.text = "VCV";
+                pcvtext.text = "VCV";
             if(ventmodecombo.currentText==="Pressure                              ")
-            pcvtext.text = "PCV";
+                pcvtext.text = "PCV";
             break;
         case "Support":
             pcvtext.text = "CPAP";
             break;
         case "Intermittent":
             if(ventmodecombo.currentText==="Volume")
-           pcvtext.text = "VC-SIMV (PS)";
+                pcvtext.text = "VC-SIMV (PS)";
             if(ventmodecombo.currentText==="Pressure                              ")
-            pcvtext.text = "PC-SIMV(PS)";
+                pcvtext.text = "PC-SIMV(PS)";
             break;
         case "PRVC":
             pcvtext.text = "PRVC";
@@ -180,12 +197,12 @@ Item {
 
                 if (currentIndex === 0) {
                     breathcombo.model = ["Assist/Control                        " ,
-                                          "Support" ,
-                                        "Intermittent"];
+                                         "Support" ,
+                                         "Intermittent"];
                 } else if (currentIndex === 1) {
                     breathcombo.model = ["Assist/Control                        " ,
                                          "PRVC" ,
-                                       "Intermittent"];
+                                         "Intermittent"];
                 }
 
             }
@@ -284,8 +301,8 @@ Item {
                     circuittypecurrentindex=circuitcombo.currentIndex
                     ventilatormodecurrentindex=ventmodecombo.currentIndex
                     breathoptionscurrentindex=breathcombo.currentIndex
+                    gotosaveprofiledbventmode(patientcombo.currentIndex,circuitcombo.currentIndex,ventmodecombo.currentIndex,breathcombo.currentIndex)
                     gotoopenscreen()
-
                 }
             }
         }
@@ -317,5 +334,4 @@ Item {
             }
         }
     }
-
 }

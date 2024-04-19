@@ -6,6 +6,7 @@ import QtQuick.Extras 1.4
 import QtGraphicalEffects 1.12
 import QtQuick.Controls 1.4
 import QtQuick 2.2
+import com.ventilatorproject.database 1.0
 
 Item {
     id:itemid
@@ -19,6 +20,7 @@ Item {
     property int waittime:3
     property int buffertime:0
     property int clickedonce:0
+    property string profname:""
     signal gotoholdpage()
     signal openmodepcv()
     signal gotopopuplock()
@@ -30,6 +32,11 @@ Item {
     signal gotodevicelogpage()
     signal gotocalibrationpopup()
     signal openvaluechangepopup(int ids,int val1)
+    signal gotosaveprofiledbHospital(string bedids,string roomids,string facilityids)
+    signal gotosaveprofiledb(int peepval,int breathrateval,int spontbrval,int tvval,int fio2val,int ieratioval,int spo2hrval,int minuteval,int gaugeval)
+    Database {
+        id: db
+    }
     function unlockscreen(){
         lockconfirm=true
         foropacity.opacity=0
@@ -75,11 +82,31 @@ Item {
             minutevolmvalue.text = alotval;
             break;
         default:
-            console.error("Invalid text field ID:", textfieldid);
         }
 
     }
+    function changingvaluesbasedonprofile(profileNames){
+        var patientDetails = db.fetchPatientDetails(profileNames)
+        if (patientDetails["pname"] !== undefined) {
+            // Update UI elements only if patient details are found
+            console.log("Patient details")
+            peekpmvalue.text = patientDetails["peekp"]
+            breathratemvalue.text=patientDetails["breathrate"]
+            spontbrmvalue.text=patientDetails["spontbr"]
+            tviemvalue.text=patientDetails["tv"]
+            fio2mvalue.text=patientDetails["fio2"]
+            ieratiomvalue.text=patientDetails["ieratio"]
+            spo2hrmvalue.text=patientDetails["spo2hr"]
+            minutevolmvalue.text=patientDetails["minutevol"]
+            fillPercentage=patientDetails["gaugeval"]
+            // Update other UI elements as needed
+        } else {
 
+        }
+    }
+    function recevingdatafromvaluepage(inspss,peep,brate,insptime){
+        inspvaluetext.text=inspss;peepvaluetext.text=peep;bratevaluetext.text=brate;inspvalue2text.text=insptime;
+    }
     Rectangle{
         id:openScreenMainRect
         width:parent.width
@@ -360,9 +387,10 @@ Item {
                                     mainrectinsidedrawer.enabled=true
                                     mainrectinsidelocationid.visible=false
                                     mainrectinsidelocationid.enabled=false
-                                    bedinputid.text=""
-                                    roominputid.text=""
-                                    facilityid.text=""
+                                    // bedinputid.text=""
+                                    // roominputid.text=""
+                                    // facilityid.text=""
+                                    gotosaveprofiledbHospital(bedinputid.text,roominputid.text,facilityid.text)
 
                                 }
                             }
@@ -390,9 +418,9 @@ Item {
                                     mainrectinsidedrawer.enabled=true
                                     mainrectinsidelocationid.visible=false
                                     mainrectinsidelocationid.enabled=false
-                                    bedinputid.text=""
-                                    roominputid.text=""
-                                    facilityid.text=""
+                                    // bedinputid.text=""
+                                    // roominputid.text=""
+                                    // facilityid.text=""
                                 }
                             }
                         }
@@ -427,10 +455,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: peekpmvalue
-                    text: "5"
+                    text: "0"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
+                    onTextChanged: {
+                        gotosaveprofiledb(peekpmvalue.text,breathratemvalue.text,spontbrmvalue.text,tviemvalue.text,fio2mvalue.text,ieratiomvalue.text,spo2hrmvalue.text,minutevolmvalue.text,fillPercentage)
+                    }
                 }
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
@@ -475,10 +506,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: breathratemvalue
-                    text: "8"
+                    text: "0"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
+                    onTextChanged: {
+                        gotosaveprofiledb(peekpmvalue.text,breathratemvalue.text,spontbrmvalue.text,tviemvalue.text,fio2mvalue.text,ieratiomvalue.text,spo2hrmvalue.text,minutevolmvalue.text,fillPercentage)
+                    }
                 }
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
@@ -523,10 +557,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: spontbrmvalue
-                    text: qsTr("12")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
+                    onTextChanged: {
+                        gotosaveprofiledb(peekpmvalue.text,breathratemvalue.text,spontbrmvalue.text,tviemvalue.text,fio2mvalue.text,ieratiomvalue.text,spo2hrmvalue.text,minutevolmvalue.text,fillPercentage)
+                    }
                 }
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
@@ -571,10 +608,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: tviemvalue
-                    text: qsTr("6")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
+                    onTextChanged: {
+                        gotosaveprofiledb(peekpmvalue.text,breathratemvalue.text,spontbrmvalue.text,tviemvalue.text,fio2mvalue.text,ieratiomvalue.text,spo2hrmvalue.text,minutevolmvalue.text,fillPercentage)
+                    }
                 }
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
@@ -620,10 +660,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: fio2mvalue
-                    text: qsTr("15")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
+                    onTextChanged: {
+                        gotosaveprofiledb(peekpmvalue.text,breathratemvalue.text,spontbrmvalue.text,tviemvalue.text,fio2mvalue.text,ieratiomvalue.text,spo2hrmvalue.text,minutevolmvalue.text,fillPercentage)
+                    }
                 }
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
@@ -665,15 +708,19 @@ Item {
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.1
+
                 }
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: ieratiomvalue
-                    text: qsTr("23")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
+                    onTextChanged: {
+                        gotosaveprofiledb(peekpmvalue.text,breathratemvalue.text,spontbrmvalue.text,tviemvalue.text,fio2mvalue.text,ieratiomvalue.text,spo2hrmvalue.text,minutevolmvalue.text,fillPercentage)
+                    }
                 }
                 MouseArea{
                     anchors.fill: parent
@@ -711,10 +758,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: spo2hrmvalue
-                    text: qsTr("11")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
-                    font.pointSize: parent.width*0.1
+                    font.pointSize: parent.width*0.2
+                    onTextChanged: {
+                        gotosaveprofiledb(peekpmvalue.text,breathratemvalue.text,spontbrmvalue.text,tviemvalue.text,fio2mvalue.text,ieratiomvalue.text,spo2hrmvalue.text,minutevolmvalue.text,fillPercentage)
+                    }
                 }
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
@@ -761,10 +811,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: minutevolmvalue
-                    text: qsTr("26")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
+                    onTextChanged: {
+                        gotosaveprofiledb(peekpmvalue.text,breathratemvalue.text,spontbrmvalue.text,tviemvalue.text,fio2mvalue.text,ieratiomvalue.text,spo2hrmvalue.text,minutevolmvalue.text,fillPercentage)
+                    }
                 }
                 Text {
                     anchors.bottom: parent.bottom;anchors.bottomMargin: 5
@@ -792,21 +845,22 @@ Item {
                 focus:true
 
 
-                Canvas {
-                    id: gaugeCanvas
-                    anchors.left:parent.left;anchors.leftMargin: 40
-                    anchors.bottom: parent.bottom
-                    width:parent.width-40
-                    height:parent.height
-                    onPaint: {
-                        var ctx = getContext("2d");
-                        ctx.clearRect(0, 0, width, height);
-                        ctx.fillStyle = "transparent";
-                        ctx.fillRect(0, 0, width, height);
-                        ctx.fillStyle = "#FF0000";
-                        ctx.fillRect(0, height * (1 - fillPercentage), width, height * fillPercentage);
-                    }
-                }
+                // Canvas {
+                //     id: gaugeCanvas
+                //     anchors.left:parent.left;anchors.leftMargin: 40
+                //     anchors.bottom: parent.bottom
+                //     width:parent.width-40
+                //     height:parent.height
+                //     onPaint: {
+                //         var ctx = getContext("2d");
+                //         var startY = height * (1 - fillPercentage);
+                //         ctx.clearRect(0, 0, width, height);
+                //         ctx.fillStyle = "transparent";
+                //         ctx.fillRect(0, 0, width, height);
+                //         ctx.fillStyle = "green";
+                //         ctx.fillRect(0, startY, width, height * fillPercentage);
+                //     }
+                // }
 
                 Gauge {
                     id: gauge
@@ -818,10 +872,16 @@ Item {
                     anchors.centerIn: parent
                     anchors.horizontalCenterOffset: -4
                     height: itemid.height / 1.6
+                    value:fillPercentage
+                    onValueChanged: {
+                        gotosaveprofiledb(peekpmvalue.text,breathratemvalue.text,spontbrmvalue.text,tviemvalue.text,fio2mvalue.text,ieratiomvalue.text,spo2hrmvalue.text,minutevolmvalue.text,fillPercentage)
+                    }
+
                     style: GaugeStyle {
                         valueBar: Rectangle {
+                            x: -45
                             color: "green"
-                            implicitWidth: 28
+                            width:150
                         }
                         foreground: null
                         tickmark: Item {
@@ -856,9 +916,9 @@ Item {
                     running: false
                     repeat: true
                     onTriggered: {
-                        if (fillPercentage < 1) {
-                            fillPercentage += 0.01;
-                            gaugeCanvas.requestPaint();
+                        if (fillPercentage < 60) {
+                            fillPercentage += 1;
+                            //gaugeCanvas.requestPaint();
                         }
                         else fillPercentage=0
                     }
@@ -929,7 +989,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: inspvaluetext
-                    text: "15"
+                    text: "0"
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -972,7 +1032,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: peepvaluetext
-                    text: qsTr("2")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -1015,7 +1075,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: bratevaluetext
-                    text: qsTr("12")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -1058,7 +1118,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     id: inspvalue2text
-                    text: qsTr("1.5")
+                    text: qsTr("0")
                     color:"white"
                     font.bold: true
                     font.pointSize: parent.width*0.2
@@ -1095,9 +1155,7 @@ Item {
                     anchors.centerIn: parent
                     fillMode: Image.PreserveAspectFit
                     source: lockconfirm===false?"file:///C:/Users/Abhi/Desktop/lock.png" : "file:///C:/Users/Abhi/Desktop/locked.png"
-                    onSourceChanged: {
-                        console.log("lockImage"+lockImage.source)
-                    }
+
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -1142,32 +1200,24 @@ Item {
                             timer.start()
                             buffertime=0
                             waittime=3
-                              timerwaittime.start()
-                             timerwaittime.running=true
+                            timerwaittime.start()
+                            timerwaittime.running=true
 
                         }
 
 
                         else if(startconfirm===true&&changeimage===false&&buffertime<3) {
-                            console.log("g")
                             timerstartflag.stop()
                             changeimage=true
                             waittime=3
-                            console.log("machine started")
-                            console.log(buffertime+" else buffertime")
-
                             startconfirm=false
                             inpause=true
                             buffertime=0
                             clickedonce+=1
                             timerforgauge.start()
                         }
-                        // else if(startconfirm===true&&changeimage===false&&buffertime===3) {
-                        //     console.log("press agian")
-                        // }
 
                         else if(changeimage===true&&inpause===true){
-                            console.log("do you want to pause")
                             timerforgauge.stop()
                             pausenotificationrect.visible=true
                             midrect.enabled=false
@@ -1184,10 +1234,7 @@ Item {
 
                         if(clickedonce!=3){
                             timer.stop()
-                            console.log("released")
-
                             buffertime=0
-
                             if (popupforstart.visible) {
                                 popupforstart.visible = false
                                 foropacity.opacity = 0
@@ -1196,7 +1243,6 @@ Item {
                     }
                     onClicked: {
                         if(changeimage===true&&inpause===true&&clickedonce===3){
-                            console.log("do you want to pause")
                             timerforgauge.stop()
                             pausenotificationrect.visible=true
                             midrect.enabled=false
@@ -1270,7 +1316,6 @@ Item {
         repeat: true
         onTriggered: {
             buffertime+=1
-            console.log("timer flag buffer "+buffertime)
             if(buffertime>=3){
                 //timerstartflag.repeat=false
                 timerstartflag.running=false

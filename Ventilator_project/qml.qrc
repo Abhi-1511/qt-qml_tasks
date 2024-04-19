@@ -26,5 +26,7 @@
         <file>Slider_screen.qml</file>
         <file>RangeSliderCustom.qml</file>
         <file>Graph_setting.qml</file>
+        <file>Systems.qml</file>
+        <file>Monitor_log.qml</file>
     </qresource>
 </RCC>

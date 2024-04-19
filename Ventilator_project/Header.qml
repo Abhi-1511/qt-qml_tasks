@@ -7,28 +7,38 @@ import QtGraphicalEffects 1.12
 import QtQuick.Controls 1.4
 import QtQuick 2.2
 import QtQuick.Layouts 1.15
+import com.ventilatorproject.database 1.0
 Item {
     id:itemid
     width: mainwindowid.width
     height: mainwindowid.height
     signal gotograph()
+    signal gotoopenscreendbdata(string profileName)
     property bool checkalarmtimer: true
     signal shownotifications()
+    signal sendcurrentindexval(string profileName)
     property int countDownValue: 5
-    function appendvalue(name){
-        mannualComboBox.model.append({text: name});
-        openscreenid.visible=true
-        openscreenid.enabled=true
-        saveprofileid.visible=false
-        saveprofileid.enabled=false
+    Database {
+        id: db
     }
-    function deletevalue(val){
-        mannualComboBox.model.remove(val);
-        openscreenid.visible=true
-        openscreenid.enabled=true
-        saveprofileid.visible=false
-        saveprofileid.enabled=false
+    onVisibleChanged: {
+        mannualComboBox.model=db.getPNames()
+        // mannualComboBox.currentText="default"
     }
+    // function appendvalue(name){
+    //     mannualComboBox.model=db.getPNames()
+    //     openscreenid.visible=true
+    //     openscreenid.enabled=true
+    //     saveprofileid.visible=false
+    //     saveprofileid.enabled=false
+    // }
+    // function deletevalue(val){
+    //     mannualComboBox.model=db.getPNames()
+    //     openscreenid.visible=true
+    //     openscreenid.enabled=true
+    //     saveprofileid.visible=false
+    //     saveprofileid.enabled=false
+    // }
 
     Rectangle{
         id:toprect
@@ -48,20 +58,17 @@ Item {
                 id: mannualComboBox
                 width: parent.width
                 height: parent.height
-                model: ListModel {
-                    ListElement { text: "Default           " }
-                    ListElement { text: "Abhishek" }
+                model:db.getPNames()
+                onCurrentIndexChanged: {
+                    gotoopenscreendbdata(currentText)
+                    sendcurrentindexval(currentText)
                 }
-                currentIndex: 0
                 style: ComboBoxStyle {
-
                     textColor: "white"
                     background: Rectangle {
                         color: "transparent"
                     }
-
                 }
-
                 Rectangle {
                     width: 20
                     height: mannualComboBox.height
@@ -183,7 +190,7 @@ Item {
                     onClicked: {
                         slideid.visible=true
                         slideid.enabled=true
-                        openscreenid.visible=false
+                        //openscreenid.visible=false
                         openscreenid.enabled=false
                     }
                 }
@@ -233,7 +240,7 @@ Item {
             MouseArea{
                 anchors.fill:parent
                 onClicked: {
-                    openscreenid.visible=false
+                    //openscreenid.visible=false
                     openscreenid.enabled=false
                     graphid.enabled=true
                     graphid.visible=true

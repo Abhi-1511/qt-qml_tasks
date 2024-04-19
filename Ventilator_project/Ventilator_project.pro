@@ -6,7 +6,10 @@ QT +=core
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp
+        database.cpp \
+        main.cpp \
+        tablemodel.cpp \
+        tablemodel2.cpp
 
 RESOURCES += qml.qrc
 
@@ -21,4 +24,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-HEADERS +=
+HEADERS += \
+    database.h \
+    tablemodel.h \
+    tablemodel2.h

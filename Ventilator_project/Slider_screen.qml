@@ -6,87 +6,131 @@ import QtQuick.Extras 1.4
 import QtGraphicalEffects 1.12
 import QtQuick.Controls 1.4
 import QtQuick 2.2
-
+import com.ventilatorproject.database 1.0
 Item {
     width: mainwindowid.width
     height: mainwindowid.height
-    property int firstvalue:25
-    property int secondvalue:75
-    signal gotosliderpopup(int lval,int hval,int fvalue1,int tovalue1,string units,int ids)
-    function getingvalues(firstvaluefrom,secondvaluefrom,idfrom,e){
+    property int firstvalue:0
+    property int secondvalue:0
 
+
+    signal gotosliderpopup(int lval,int hval,int fvalue1,int tovalue1,string units,int ids)
+    signal gotosaveprofiledbsettings(int peekH, int peekL, int minuteVolH, int minuteVolL, int breathRH, int breathRL, int tidalH, int tidalL, int peepH, int peepL, int apneaH, int apneaL, int spo2H, int spo2L, int fio2H, int fio2L, int circuitDiscH, int circuitDiscL)
+    Database {
+        id: db
+    }
+    function getcurrentindexval(val){
+        var settingsDetails = db.fetchSettings(val)
+        if (settingsDetails["pname"] !== undefined) {
+            firstrsc.firstvalue = settingsDetails["peekH"]
+            firstrsc.secondvalue=settingsDetails["peekL"]
+            secondrsc.firstvalue=settingsDetails["minuteVolH"]
+            secondrsc.secondvalue=settingsDetails["minuteVolL"]
+            thirdrsc.firstvalue=settingsDetails["breathRH"]
+            thirdrsc.secondvalue=settingsDetails["breathRL"]
+            forthrsc.firstvalue=settingsDetails["tidalH"]
+            forthrsc.secondvalue=settingsDetails["tidalL"]
+            firstrsc2.firstvalue=settingsDetails["peepH"]
+            firstrsc2.secondvalue=settingsDetails["peepL"]
+            secondrsc2.firstvalue=settingsDetails["apneaH"]
+            secondrsc2.secondvalue=settingsDetails["apneaL"]
+            thirdrsc2.firstvalue=settingsDetails["spo2H"]
+            thirdrsc2.secondvalue=settingsDetails["spo2L"]
+            forthrsc2.firstvalue=settingsDetails["fio2H"]
+            forthrsc2.secondvalue=settingsDetails["fio2L"]
+            firstrsc3.firstvalue=settingsDetails["circuitDiscH"]
+            firstrsc3.secondvalue=settingsDetails["circuitDiscL"]
+
+
+            // Update other UI elements as needed
+        } else {
+
+        }
+
+    }
+
+    function getingvalues(firstvaluefrom,secondvaluefrom,idfrom,e){
         switch(idfrom) {
         case 1:
             firstrsc.firstvalue=firstvaluefrom
             firstrsc.secondvalue=secondvaluefrom
+            gotosaveprofiledbsettings(firstrsc.firstvalue,firstrsc.secondvalue,secondrsc.firstvalue,secondrsc.secondvalue,thirdrsc.firstvalue,thirdrsc.secondvalue,forthrsc.firstvalue,forthrsc.secondvalue,firstrsc2.firstvalue,firstrsc2.secondvalue,secondrsc2.firstvalue,secondrsc2.secondvalue,thirdrsc2.firstvalue,thirdrsc2.secondvalue,forthrsc2.firstvalue,forthrsc2.secondvalue,firstrsc3.firstvalue,firstrsc3.secondvalue)
             if(e){firstrscopacity.opacity=0.2
                 firstrscopacity.visible=true
             }else {firstrscopacity.opacity=1
-            firstrscopacity.visible=false}
+                firstrscopacity.visible=false}
             break;
         case 2:
-           secondrsc.firstvalue=firstvaluefrom
-           secondrsc.secondvalue=secondvaluefrom
+            secondrsc.firstvalue=firstvaluefrom
+            secondrsc.secondvalue=secondvaluefrom
+            gotosaveprofiledbsettings(firstrsc.firstvalue,firstrsc.secondvalue,secondrsc.firstvalue,secondrsc.secondvalue,thirdrsc.firstvalue,thirdrsc.secondvalue,forthrsc.firstvalue,forthrsc.secondvalue,firstrsc2.firstvalue,firstrsc2.secondvalue,secondrsc2.firstvalue,secondrsc2.secondvalue,thirdrsc2.firstvalue,thirdrsc2.secondvalue,forthrsc2.firstvalue,forthrsc2.secondvalue,firstrsc3.firstvalue,firstrsc3.secondvalue)
             if(e){secondrscopacity.opacity=0.2
                 secondrscopacity.visible=true
             }else {secondrscopacity.opacity=1
-            secondrscopacity.visible=false}
+                secondrscopacity.visible=false}
             break;
         case 3:
             thirdrsc.firstvalue=firstvaluefrom
             thirdrsc.secondvalue=secondvaluefrom
+            gotosaveprofiledbsettings(firstrsc.firstvalue,firstrsc.secondvalue,secondrsc.firstvalue,secondrsc.secondvalue,thirdrsc.firstvalue,thirdrsc.secondvalue,forthrsc.firstvalue,forthrsc.secondvalue,firstrsc2.firstvalue,firstrsc2.secondvalue,secondrsc2.firstvalue,secondrsc2.secondvalue,thirdrsc2.firstvalue,thirdrsc2.secondvalue,forthrsc2.firstvalue,forthrsc2.secondvalue,firstrsc3.firstvalue,firstrsc3.secondvalue)
             if(e){thirdrscopacity.opacity=0.2
                 thirdrscopacity.visible=true
             }else {thirdrscopacity.opacity=1
-            thirdrscopacity.visible=false}
+                thirdrscopacity.visible=false}
             break;
         case 4:
             forthrsc.firstvalue=firstvaluefrom
             forthrsc.secondvalue=secondvaluefrom
+            gotosaveprofiledbsettings(firstrsc.firstvalue,firstrsc.secondvalue,secondrsc.firstvalue,secondrsc.secondvalue,thirdrsc.firstvalue,thirdrsc.secondvalue,forthrsc.firstvalue,forthrsc.secondvalue,firstrsc2.firstvalue,firstrsc2.secondvalue,secondrsc2.firstvalue,secondrsc2.secondvalue,thirdrsc2.firstvalue,thirdrsc2.secondvalue,forthrsc2.firstvalue,forthrsc2.secondvalue,firstrsc3.firstvalue,firstrsc3.secondvalue)
             if(e){forthrscopacity.opacity=0.2
                 forthrscopacity.visible=true
             }else {forthrscopacity.opacity=1
-            forthrscopacity.visible=false}
+                forthrscopacity.visible=false}
             break;
         case 5:
             firstrsc2.firstvalue=firstvaluefrom
             firstrsc2.secondvalue=secondvaluefrom
+            gotosaveprofiledbsettings(firstrsc.firstvalue,firstrsc.secondvalue,secondrsc.firstvalue,secondrsc.secondvalue,thirdrsc.firstvalue,thirdrsc.secondvalue,forthrsc.firstvalue,forthrsc.secondvalue,firstrsc2.firstvalue,firstrsc2.secondvalue,secondrsc2.firstvalue,secondrsc2.secondvalue,thirdrsc2.firstvalue,thirdrsc2.secondvalue,forthrsc2.firstvalue,forthrsc2.secondvalue,firstrsc3.firstvalue,firstrsc3.secondvalue)
             if(e){fifthrscopacity.opacity=0.2
                 fifthrscopacity.visible=true
             }else {fifthrscopacity.opacity=1
-            fifthrscopacity.visible=false}
+                fifthrscopacity.visible=false}
             break;
         case 6:
             secondrsc2.firstvalue=firstvaluefrom
             secondrsc2.secondvalue=secondvaluefrom
+            gotosaveprofiledbsettings(firstrsc.firstvalue,firstrsc.secondvalue,secondrsc.firstvalue,secondrsc.secondvalue,thirdrsc.firstvalue,thirdrsc.secondvalue,forthrsc.firstvalue,forthrsc.secondvalue,firstrsc2.firstvalue,firstrsc2.secondvalue,secondrsc2.firstvalue,secondrsc2.secondvalue,thirdrsc2.firstvalue,thirdrsc2.secondvalue,forthrsc2.firstvalue,forthrsc2.secondvalue,firstrsc3.firstvalue,firstrsc3.secondvalue)
             if(e){sixthrscopacity.opacity=0.2
                 sixthrscopacity.visible=true
             }else {sixthrscopacity.opacity=1
-            sixthrscopacity.visible=false}
+                sixthrscopacity.visible=false}
             break;
         case 7:
             thirdrsc2.firstvalue=firstvaluefrom
             thirdrsc2.secondvalue=secondvaluefrom
+            gotosaveprofiledbsettings(firstrsc.firstvalue,firstrsc.secondvalue,secondrsc.firstvalue,secondrsc.secondvalue,thirdrsc.firstvalue,thirdrsc.secondvalue,forthrsc.firstvalue,forthrsc.secondvalue,firstrsc2.firstvalue,firstrsc2.secondvalue,secondrsc2.firstvalue,secondrsc2.secondvalue,thirdrsc2.firstvalue,thirdrsc2.secondvalue,forthrsc2.firstvalue,forthrsc2.secondvalue,firstrsc3.firstvalue,firstrsc3.secondvalue)
             if(e){seventhrscopacity.opacity=0.2
                 seventhrscopacity.visible=true
             }else {seventhrscopacity.opacity=1
-            seventhrscopacity.visible=false}
+                seventhrscopacity.visible=false}
             break;
         case 8:
             forthrsc2.firstvalue=firstvaluefrom
             forthrsc2.secondvalue=secondvaluefrom
+            gotosaveprofiledbsettings(firstrsc.firstvalue,firstrsc.secondvalue,secondrsc.firstvalue,secondrsc.secondvalue,thirdrsc.firstvalue,thirdrsc.secondvalue,forthrsc.firstvalue,forthrsc.secondvalue,firstrsc2.firstvalue,firstrsc2.secondvalue,secondrsc2.firstvalue,secondrsc2.secondvalue,thirdrsc2.firstvalue,thirdrsc2.secondvalue,forthrsc2.firstvalue,forthrsc2.secondvalue,firstrsc3.firstvalue,firstrsc3.secondvalue)
             if(e){eightrscopacity.opacity=0.2
                 eightrscopacity.visible=true
             }else {eightrscopacity.opacity=1
-            eightrscopacity.visible=false}
+                eightrscopacity.visible=false}
             break;
         case 9:
             firstrsc3.firstvalue=firstvaluefrom
             firstrsc3.secondvalue=secondvaluefrom
+            gotosaveprofiledbsettings(firstrsc.firstvalue,firstrsc.secondvalue,secondrsc.firstvalue,secondrsc.secondvalue,thirdrsc.firstvalue,thirdrsc.secondvalue,forthrsc.firstvalue,forthrsc.secondvalue,firstrsc2.firstvalue,firstrsc2.secondvalue,secondrsc2.firstvalue,secondrsc2.secondvalue,thirdrsc2.firstvalue,thirdrsc2.secondvalue,forthrsc2.firstvalue,forthrsc2.secondvalue,firstrsc3.firstvalue,firstrsc3.secondvalue)
             if(e){ninthrscopacity.opacity=0.2
                 ninthrscopacity.visible=true
             }else {ninthrscopacity.opacity=1
-            ninthrscopacity.visible=false}
+                ninthrscopacity.visible=false}
             break;
         default:
             console.error("Invalid text field ID:", textfieldid);
@@ -95,10 +139,10 @@ Item {
 
     }
 
-    Header{
-        id:headerids
-        enabled:false
-    }
+    // Header{
+    //     id:headerids
+    //     enabled:false
+    // }
     Rectangle{
         id:firstrect
         width: mainwindowid.width
@@ -110,8 +154,8 @@ Item {
             xval:10
             yval:30
             textheading: "Peak P."
-            firstvalue:5
-            secondvalue:25
+            firstvalue:0
+            secondvalue:0
             fromvalue:0
             tovalue:100
             MouseArea{
@@ -134,8 +178,8 @@ Item {
             xval:mainwindowid.width/4.2
             yval:30
             textheading: "Minute V"
-            firstvalue:2
-            secondvalue:10
+            firstvalue:0
+            secondvalue:0
             fromvalue:0
             tovalue:50
             MouseArea{
@@ -158,8 +202,8 @@ Item {
             xval:(2*mainwindowid.width)/4.2
             yval:30
             textheading: "Breath R"
-            firstvalue:7
-            secondvalue:30
+            firstvalue:0
+            secondvalue:0
             fromvalue:0
             tovalue:100
             MouseArea{
@@ -182,8 +226,8 @@ Item {
             xval:(3*mainwindowid.width)/4.2
             yval:30
             textheading: "Tidal(e) Vol"
-            firstvalue:200
-            secondvalue:700
+            firstvalue:0
+            secondvalue:0
             fromvalue:0
             tovalue:1000
             MouseArea{
@@ -280,8 +324,8 @@ Item {
             xval:10
             yval:30
             textheading: "PEEP"
-            firstvalue:5
-            secondvalue:25
+            firstvalue:0
+            secondvalue:0
             fromvalue:0
             tovalue:100
             MouseArea{
@@ -304,8 +348,8 @@ Item {
             xval:mainwindowid.width/4.2
             yval:30
             textheading: "Apnea"
-            firstvalue:2
-            secondvalue:10
+            firstvalue:0
+            secondvalue:0
             fromvalue:0
             tovalue:50
             MouseArea{
@@ -328,8 +372,8 @@ Item {
             xval:(2*mainwindowid.width)/4.2
             yval:30
             textheading: "SPO2"
-            firstvalue:7
-            secondvalue:30
+            firstvalue:0
+            secondvalue:0
             fromvalue:0
             tovalue:100
             MouseArea{
@@ -352,8 +396,8 @@ Item {
             xval:(3*mainwindowid.width)/4.2
             yval:30
             textheading: "FIO2"
-            firstvalue:200
-            secondvalue:700
+            firstvalue:0
+            secondvalue:0
             fromvalue:0
             tovalue:1000
             MouseArea{
@@ -407,7 +451,7 @@ Item {
             Text {
                 anchors.centerIn: parent
                 text: "►"
-                      font.pixelSize: parent.width
+                font.pixelSize: parent.width
                 color: "blue"
             }
             MouseArea{
@@ -459,8 +503,8 @@ Item {
             xval:10
             yval:30
             textheading: "Circuit Disc."
-            firstvalue:5
-            secondvalue:60
+            firstvalue:0
+            secondvalue:0
             fromvalue:0
             tovalue:60
             MouseArea{

@@ -1,6 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
-
+import com.ventilatorproject.database 1.0
 Window {
     id:mainwindowid
     width: 1000
@@ -35,7 +35,7 @@ Window {
         onOpenmodepcv: {
             modepcvid.visible=true
             modepcvid.enabled=true
-            openscreenid.visible=false
+
             openscreenid.enabled=false
         }
         onGotopopuplock: {
@@ -63,7 +63,7 @@ Window {
             openscreenid.enabled=false
         }
         onGotosaveprofile: {
-            openscreenid.visible=false
+            //openscreenid.visible=false
             openscreenid.enabled=false
             saveprofileid.enabled=true
             saveprofileid.visible=true
@@ -74,13 +74,14 @@ Window {
             openscreenid.enabled=false
             deleteprofileid.enabled=true
             deleteprofileid.visible=true
-
         }
         onGotodevicelogpage: {
             openscreenid.visible=false
             openscreenid.enabled=false
             devicelogid.visible=true
             devicelogid.enabled=true
+            systemlogids.visible=true
+            systemlogids.enabled=true
         }
         onGotodevicesettings:{
             openscreenid.visible=false
@@ -163,8 +164,8 @@ Window {
             saveprofileid.enabled=false
         }
         onGotoheader: {
-            headerid.appendvalue(str)
-            deleteprofileid.appendvalue(str)
+            //headerid.appendvalue(str)
+            //deleteprofileid.appendvalue(str)
             saveprofileid.visible=false
             saveprofileid.enabled=false
             openscreenid.visible=true
@@ -181,7 +182,7 @@ Window {
             deleteprofileid.enabled=false
         }
         onGotoheader: {
-            headerid.deletevalue(removeid)
+            //headerid.deletevalue(removeid)
             openscreenid.visible=true
             openscreenid.enabled=true
             deleteprofileid.visible=false
@@ -247,6 +248,17 @@ Window {
         enabled:false
 
     }
+    Monitor_log{
+        id:monitorlogid
+        visible:false
+        enabled:false
+    }
+    Systems{
+        id:systemlogids
+        visible:false
+        enabled:false
+    }
+
     Component.onCompleted:{
         popuplockid.gotoopenscreenlock.connect(openscreenid.unlockscreen)
         popupunlockid.gotoopenscreen.connect(openscreenid.unlockscreenoncancel)
@@ -266,7 +278,22 @@ Window {
         graphid.gotovaluepagefromgraph.connect(valuepageid.signalfromgraph)//navigation
 
         openscreenid.gotovaluepage.connect(valuepageid.openvaluedrawer)//to make the midrect visible
+        headerid.sendcurrentindexval.connect(slideid.getcurrentindexval)
+        headerid.sendcurrentindexval.connect(modepcvid.gettingname)
+        valuepageid.senddatatoopenpage.connect(openscreenid.recevingdatafromvaluepage)
+         openscreenid.gotosaveprofiledb.connect(graphid.getvaluesfromopenscreen)
+        devicelogid.gotomonlog.connect(monitorlogid.fetchingdata)
+
+        //database connection --> signals and slot
+        openscreenid.gotosaveprofiledb.connect(saveprofileid.gettingdatafromopenscreen)//sendingdata to db
+        headerid.gotoopenscreendbdata.connect(openscreenid.changingvaluesbasedonprofile)//recevingdata from db
+        openscreenid.gotosaveprofiledbHospital.connect(saveprofileid.gettingfromopenscreenhospitaldetails)//sending location to db
+        slideid.gotosaveprofiledbsettings.connect(saveprofileid.gettingfromsettingsdb)//sending settings to db
+        modepcvid.gotosaveprofiledbventmode.connect(saveprofileid.gettingfromventmodedb)
+        valuepageid.gotosaveprofiledbvaluedetails.connect(saveprofileid.gettingfromvaluepage)
+         headerid.gotoopenscreendbdata.connect(valuepageid.changingvaluebasedonprofile)
     }
+    //Device_log{}
  }
 
 

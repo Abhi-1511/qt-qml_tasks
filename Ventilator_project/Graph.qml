@@ -12,8 +12,13 @@ Item {
     id:itemid
     width: mainwindowid.width
     height: mainwindowid.height
+    anchors.bottom: parent.bottom
     property real xOffset: 0
     signal gotovaluepagefromgraph(int a)
+
+    function getvaluesfromopenscreen(peekpval,brateval,spontbrval,tvieval,insptval,ieval,xyz,mvval,abc){
+       peekpmvalue.text=peekpval;breathmvalue.text=brateval;spontbrvalue.text=spontbrval;tviepmvalue.text=tvieval;insptvalue.text=insptval;ievalue.text=ieval;pmvalue.text=mvval;
+    }
 
     Timer {
         interval: 20
@@ -31,7 +36,7 @@ Item {
         }
     }
 
-    Header{}
+
     Rectangle{
         width: parent.width
         height: parent.height*0.89
@@ -103,7 +108,7 @@ Item {
 
             // Draw sine wave
             ctx.strokeStyle = "blue"; // Set line color to blue
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 5;
             ctx.beginPath();
             var yStart = canvas.height / 2; // Start drawing from the middle of the canvas
             ctx.moveTo(0, yStart);
